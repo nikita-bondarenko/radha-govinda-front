@@ -2339,7 +2339,7 @@ export type PageSeoQueryVariables = Exact<{
 }>;
 
 
-export type PageSeoQuery = { __typename?: 'Query', page?: { __typename?: 'Page', SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null } | null };
+export type PageSeoQuery = { __typename?: 'Query', page?: { __typename?: 'Page', SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string } } | null };
 
 export type PagesConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2362,7 +2362,7 @@ export type PostSeoQueryVariables = Exact<{
 }>;
 
 
-export type PostSeoQuery = { __typename?: 'Query', post?: { __typename?: 'Post', SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null } | null } | null };
+export type PostSeoQuery = { __typename?: 'Query', post?: { __typename?: 'Post', SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string } } | null };
 
 export type PostsConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2736,6 +2736,11 @@ export const PageSeoDocument = gql`
       }
     }
   }
+  logo {
+    logo {
+      url
+    }
+  }
 }
     `;
 
@@ -2935,6 +2940,11 @@ export const PostSeoDocument = gql`
       Preview510x230 {
         url
       }
+    }
+  }
+  logo {
+    logo {
+      url
     }
   }
 }

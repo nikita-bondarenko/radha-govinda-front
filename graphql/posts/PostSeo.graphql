@@ -11,4 +11,9 @@ query PostSeo($documentId: ID!, $locale: I18NLocaleCode) {
       }
     }
   }
+  logo {
+    logo {
+      url
+    }
+  }
 }

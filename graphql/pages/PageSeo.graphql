@@ -11,4 +11,9 @@ query PageSeo($documentId: ID!, $locale: I18NLocaleCode) {
       }
     }
   }
+  logo {
+    logo {
+      url
+    }
+  }
 }

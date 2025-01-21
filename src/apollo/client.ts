@@ -10,7 +10,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 const authLink = setContext((_, { headers }) => {
   // Здесь можно получить токен из localStorage, Cookies или откуда вам нужно
   // Для примера возьмём из process.env, но обычно токен берут из cookies или Redux
-  const token = process.env.NEXT_PUBLIC_API_TOKEN || '109cb6258627be26a0000792590539ef68dde6be14e0f014fb2a3aa29b6c6a8e0971343b69dc018a74bf6ff1ae3f91cda58cacbc7a92bfa71a3c53873414c91407a75f4606164a72f1216f518a8ef1d4eb2341644bf2dfc63a9a84021d7b0973ea976da1e3d7cdff1756222572b067318cfce592f1ad7a8cddfb19cdb501b003';
+  const token = process.env.NEXT_PUBLIC_API_TOKEN || '40b924662fc782f87ee1d68407afe0e62bcd1a4199adc108891281ac7d105dae71295b5e7f35ce8fc1110bc55450b938cfa6c721946fe58facfcf7b8ff62ae270065360c29675d3973d07e7ece8c6eddeca2428da8864e8daa60a78eab298fd90663603af3ddd462fb6008664ccc1e22fc74bdae8a09de1f4f45f61527a0a789';
 
   // Возвращаем объект с заголовками
   return {
