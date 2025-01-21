@@ -1,0 +1,7 @@
+query MoviesPagination($sort: [String], $pagination: PaginationArg, $filters: MovieFiltersInput, $locale: I18NLocaleCode) {
+  movies(sort: $sort, pagination: $pagination, filters: $filters, locale: $locale) {
+    YoutubeLink
+    createdAt
+    documentId
+  }
+}

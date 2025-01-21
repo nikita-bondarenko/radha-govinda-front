@@ -1,0 +1,71 @@
+query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
+  post(documentId: $documentId, locale: $locale) {
+    Date
+    PostCategory {
+      Name
+    }
+    PostPreviewContent
+    PostTitle
+    PostContent
+    SEO {
+      Title
+      Description
+      Preview510x230 {
+        url
+      }
+      Preview1200x630 {
+        url
+      }
+    }
+  }
+  menu(locale: $menuLocale2) {
+    Menu {
+      Text
+      PageLink {
+        Slug
+      }
+      id
+    }
+  }
+  footer(locale: $footerLocale2) {
+    SIteName
+    Documents {
+      Text
+      id
+      Document {
+        url
+      }
+    }
+    SocialMedia {
+      Name
+      Icon {
+        url
+      }
+      id
+      Href
+    }
+    SupportForm {
+      Title
+      TextWithDocument {
+        Text
+        LinkText
+        id
+        Document {
+          url
+        }
+      }
+      Inputs {
+        id
+        Placeholder
+        InputType
+      }
+    }
+  }
+  logo {
+    logo {
+      url
+      formats
+      alternativeText
+    }
+  }
+}

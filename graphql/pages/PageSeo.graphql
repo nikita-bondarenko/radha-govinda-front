@@ -1,0 +1,14 @@
+query PageSeo($documentId: ID!, $locale: I18NLocaleCode) {
+  page(documentId: $documentId, locale: $locale) {
+    SEO {
+      Title
+      Description
+      Preview510x230 {
+        url
+      }
+      Preview1200x630 {
+        url
+      }
+    }
+  }
+}

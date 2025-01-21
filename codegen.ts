@@ -3,7 +3,7 @@ import { createHook } from "async_hooks";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema:process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://localhost:1338/graphql",
+  schema:process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1338/graphql",
   documents: "./graphql/**/*.graphql",
   generates: {
     "./src/gql/generated/graphql.tsx": {

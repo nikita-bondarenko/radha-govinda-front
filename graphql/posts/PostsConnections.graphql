@@ -1,0 +1,8 @@
+query PostsConnections {
+  posts_connection {
+    nodes {
+      Slug
+      documentId
+    }
+  }
+}

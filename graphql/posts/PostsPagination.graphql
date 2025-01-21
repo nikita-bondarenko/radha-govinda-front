@@ -1,0 +1,9 @@
+query PostsPagination( $locale: I18NLocaleCode, $sort: [String], $pagination: PaginationArg, $filters: PostFiltersInput) {
+  posts(locale: $locale, sort: $sort, pagination: $pagination, filters: $filters) {
+    Date
+    PostPreviewContent
+    PostTitle
+    Slug
+    documentId
+  }
+}

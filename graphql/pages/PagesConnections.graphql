@@ -1,0 +1,8 @@
+query PagesConnections {
+  pages_connection {
+    nodes {
+      Slug
+      documentId
+    }
+  }
+}

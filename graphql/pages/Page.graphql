@@ -1,0 +1,185 @@
+query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $postsPagination2: PaginationArg, $postsSort2: [String], $moviesSort2: [String], $moviesPagination2: PaginationArg, $locale: I18NLocaleCode, $audiorecordsLocale2: I18NLocaleCode, $audioCategoriesLocale2: I18NLocaleCode, $postCategoriesLocale2: I18NLocaleCode, $postsLocale2: I18NLocaleCode, $moviesLocale2: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
+  page(documentId: $documentId, locale: $locale) {
+    Slug
+    PageName
+    PageConstructor {
+      ... on ComponentHeaderWithImagePervyjBlokSIzobrazheniem {
+        Title
+        Subtitle
+        IsLanguageButtonVisible
+        IsBigButtonVisible
+        BigButton {
+          ButtonText
+          page {
+            Slug
+          }
+        }
+        Image {
+          url
+          formats
+          alternativeText
+        }
+      }
+      ... on ComponentHeaderWithTextPervyjBlokSTekstom {
+        Title
+        Subtitle
+        IsLanguageButtonVisible
+        IsBigButtonVisible
+        BigButton {
+          page {
+            Slug
+          }
+          ButtonText
+        }
+      }
+      ... on ComponentHomePageParampara {
+        SectionTitle
+        LineageMember {
+          Description
+          Name
+          Role
+          id
+          Image {
+            url
+            formats
+            alternativeText
+          }
+        }
+      }
+      ... on ComponentHomePageBiografiya {
+        SectionTitle
+        BioigrafyPeriods {
+          PeriodName
+          PeriodDescription
+          id
+        }
+        Image {
+          url
+          formats
+          alternativeText
+        }
+      }
+      ... on ComponentCommonSectionRaspisanie {
+        TextBelow
+        SectionTitle
+        ScheduleItem {
+          Place
+          Period
+          Name
+          MoreButtonHref
+          EventDescription
+          id
+        }
+      }
+      ... on ComponentHomePagePrevyuRazdelaSajta {
+        Title
+        DivisionName
+      }
+      ... on ComponentCommonSectionIzobrazhenie {
+        image {
+          alternativeText
+          url
+          formats
+        }
+      }
+      ... on ComponentVideoKatalogVideo {
+        id
+      }
+      ... on ComponentPostKatalogStatej {
+        id
+      }
+      ... on ComponentAudioKatalogAudiozopisej {
+        id
+      }
+    }
+  }
+  audiorecords(sort: $sort, pagination: $pagination, locale: $audiorecordsLocale2) {
+    createdAt
+    Place
+    Name
+    Duration
+    Date
+    AudioCategory {
+      Name
+      documentId
+    }
+    Audio {
+      url
+      size
+    }
+    Image {
+      url
+      formats
+      alternativeText
+    }
+  }
+  posts(pagination: $postsPagination2, sort: $postsSort2, locale: $postsLocale2) {
+    documentId
+    Slug
+    PostTitle
+    PostPreviewContent
+  }
+  movies(sort: $moviesSort2, pagination: $moviesPagination2, locale: $moviesLocale2) {
+    createdAt
+    YoutubeLink
+    documentId
+  }
+  audioCategories(locale: $audioCategoriesLocale2) {
+    Name
+    documentId
+  }
+  postCategories(locale: $postCategoriesLocale2) {
+    Name
+    documentId
+  }
+  menu(locale: $menuLocale2) {
+    Menu {
+      PageLink {
+        Slug
+      }
+      Text
+      id
+    }
+  }
+  logo {
+    logo {
+      formats
+      url
+      alternativeText
+    }
+  }
+  footer(locale: $footerLocale2) {
+    SIteName
+    Documents {
+      Text
+      id
+      Document {
+        url
+      }
+    }
+    SocialMedia {
+      Href
+      Icon {
+        url
+      }
+      Name
+      id
+    }
+    SupportForm {
+      id
+      Title
+      TextWithDocument {
+        Text
+        LinkText
+        Document {
+          url
+        }
+      }
+      Inputs {
+        Placeholder
+        InputType
+        id
+      }
+    }
+  }
+}
