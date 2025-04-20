@@ -6,23 +6,39 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  
+
   theme: {
     screens: {
-      lg: { max: "1510px" },
+      lg: { max: "1210px" },
       md: { max: "1022px" },
       sm: { max: "724px" },
     },
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        main:  { purple: "#7A66D5", brown: '#3D322B'},
-        light: { grey: "#CACACA", purple: "#6351B5"}
+        bg: {
+          black: "#121212",
+          "light-grey": "#F8F8F8",
+          white: "#FFFFFF",
+        },
+        black: "#121212",
+        grey: {
+          DEFAULT: "#CACACA",
+          dark: "#818181",
+          light: "#EDEDED",
+        },
+        purple: {
+          DEFAULT: "#7A66D5",
+          light: "#B6A9F1",
+        },
+        transparent: {
+          black: "rgba(0, 0, 0, 0.50)",
+          white: "rgba(255, 255, 255, 0.50)",
+          white2: "rgba(255, 255, 255, 0.70)"
+        },
       },
       fontFamily: {
-        mulish: "var(--font-mulish)"
-      }
+        mulish: "var(--font-mulish)",
+      },
     },
   },
   plugins: [],

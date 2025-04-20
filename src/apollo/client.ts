@@ -10,20 +10,20 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 const authLink = setContext((_, { headers }) => {
   // Здесь можно получить токен из localStorage, Cookies или откуда вам нужно
   // Для примера возьмём из process.env, но обычно токен берут из cookies или Redux
-  const token = process.env.NEXT_PUBLIC_API_TOKEN || '40b924662fc782f87ee1d68407afe0e62bcd1a4199adc108891281ac7d105dae71295b5e7f35ce8fc1110bc55450b938cfa6c721946fe58facfcf7b8ff62ae270065360c29675d3973d07e7ece8c6eddeca2428da8864e8daa60a78eab298fd90663603af3ddd462fb6008664ccc1e22fc74bdae8a09de1f4f45f61527a0a789';
+  const token = process.env.NEXT_PUBLIC_API_TOKEN || '6eec5aa3198bca325795a3361ba118a5c48de4f0c86bb744d8e0349c9c54655f7f0c0725962c2620b8c8c03f0b28f7438ca285a06bc76f7cd0b04aa8320d35fe9bed7ae4246809d708d87b6874bf0474c2260b4fd868456f96dc5f383fda30de67ab423bc13d4005452afda315e2517235e5694bf00df1986063fc88c3415bea';
 
   // Возвращаем объект с заголовками
   return {
     headers: {
       ...headers,
-      Authorization: token ? `Bearer ${token}` : '',
+      Authorization: 'Bearer 6eec5aa3198bca325795a3361ba118a5c48de4f0c86bb744d8e0349c9c54655f7f0c0725962c2620b8c8c03f0b28f7438ca285a06bc76f7cd0b04aa8320d35fe9bed7ae4246809d708d87b6874bf0474c2260b4fd868456f96dc5f383fda30de67ab423bc13d4005452afda315e2517235e5694bf00df1986063fc88c3415bea',
     },
   };
 });
 
 function createApolloClient() {
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1338/graphql", // Используйте 127.0.0.1 вместо strapi
+    uri: process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1338/graphql", 
     fetch,
   });
 
