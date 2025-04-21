@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
 import "./globals.css";
+import StyledComponentsRegistry from "@/lib/styled-components/StyledComponentsRegistry";
+import { ThemeProvider } from "styled-components";
+import { theme } from "@/lib/styled-components/theme";
+import Providers from "@/components/Providers";
 
 const mulish = Mulish({
-  subsets: ['latin', 'cyrillic'], weight: ['400', '500', '600', '700'],
-  variable: '--font-mulish',
-
-})
-
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-mulish",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,10 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${mulish.variable} antialiased`}
-      >
-        {children}
+      <body className={`${mulish.variable} antialiased`}>
+        <Providers key={102293}>{children}</Providers>
       </body>
     </html>
   );

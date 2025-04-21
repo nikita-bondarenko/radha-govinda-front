@@ -1,4 +1,4 @@
-import { initializeApollo } from "@/apollo/client";
+import { initializeApollo } from "@/lib/apollo/client";
 import PageGenerator from "@/components/PageGenerator";
 import {
   PagesConnectionsQuery,

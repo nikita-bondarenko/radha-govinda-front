@@ -1,5 +1,5 @@
 import React from "react";
-import Container from "./Container.styled";
+import Container from "../../styled/Container.styled";
 
 type HeaderProps = {
   menu?: {
@@ -30,12 +30,9 @@ type HeaderProps = {
     } | null;
   };
 };
-export default function Header({ menu, section }: HeaderProps) {
+export default function HeroWithImage({ menu, section }: HeaderProps) {
   return (
-    <header className="header">
       <Container>
-        <div className="header__top"></div>
       </Container>
-    </header>
   );
 }

@@ -1,4 +1,4 @@
-import { initializeApollo } from "@/apollo/client";
+import { initializeApollo } from "@/lib/apollo/client";
 import { PagesConnectionsQuery, PagesConnectionsDocument, PageSeoDocument, PageSeoQuery, PageSeoQueryVariables, PageDocument, PageQuery, PageQueryVariables } from "@/gql/generated/graphql";
 import getDynamicMetadata from "@/utils/getDynamicMetadata";
 import { notFound } from "next/navigation";
