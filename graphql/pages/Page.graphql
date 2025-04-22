@@ -2,6 +2,7 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
   page(documentId: $documentId, locale: $locale) {
     Slug
     PageName
+    locale
     PageConstructor {
       ... on ComponentHeaderWithImagePervyjBlokSIzobrazheniem {
         Title
@@ -136,6 +137,7 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     Menu {
       PageLink {
         Slug
+        locale
       }
       Text
       id

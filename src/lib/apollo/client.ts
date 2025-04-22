@@ -23,7 +23,7 @@ const authLink = setContext((_, { headers }) => {
 
 function createApolloClient() {
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1338/graphql", 
+    uri: process.env.NEXT_PUBLIC_STRAPI_API_URL, 
     fetch,
   });
 
