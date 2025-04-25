@@ -1,0 +1,66 @@
+.header__button {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.36px;
+  text-transform: uppercase;
+  color: var(--white);
+  border-radius: 40px;
+  background: var(--main-purple);
+  padding: 8px 31px;
+  @apply md:text-[12px] md:leading-[110%] md:tracking-[0.24px] md:px-[19px] md:py-[9px]
+    sm:mt-[5px] sm:py-[13.5px] sm:text-center sm:w-full;
+}
+
+.header__nav {
+}
+.header__nav-list {
+  @apply flex items-center gap-[40px] md:flex-col md:gap-[14px] md:items-end;
+}
+.header__nav-item {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: 0.18px;
+  text-transform: uppercase;
+  @apply md:text-[16px] md:tracking-[0.32px] sm:text-[14px]
+}
+
+.header__nav-item.white,  .header__lang-button.white {
+    color: var(--white);
+}
+
+.header {
+  @apply relative z-10 mt-[22px] flex items-center justify-between md:mt-[14px] sm:mt-[20px];
+}
+.header__left {
+  @apply flex items-center gap-[140px];
+}
+.header__right {
+  @apply flex items-center gap-[20px];
+}
+.header__burger {
+    @apply hidden md:block h-[16px] w-[20px]
+}
+.mobile-menu {
+  @apply h-full  bg-white
+}
+.mobile-menu__body {
+  @apply bg-[var(--black-2)] h-full flex flex-col items-end gap-[32px] py-[28px] px-[20px]
+}
+.mobule-menu__close-button {
+  @apply w-[20px] h-[20px] mr-[-8px]
+}
+
+.header__lang-button {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: 0.18px;
+  text-transform: uppercase;
+}
+
+.header__logo {
+  @apply w-[40px] h-[40px] md:w-[30px] md:h-[30px];
+  background: no-repeat center / contain var(--header-logo-url);
+}

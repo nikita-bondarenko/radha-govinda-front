@@ -16,11 +16,11 @@ type Formats = {
 };
 
 export type Image = {
-  __typename?: "UploadFile";
+  __typename?: string;
   url?: string;
   formats?: Formats | null;
   alternativeText?: string | null;
-};
+} | null | undefined;
 
 export type MyPicture = {
   className?: string;
@@ -30,13 +30,14 @@ export default memo(function Picture({
   url,
   formats,
   alternativeText,
+  className
 }: MyPicture) {
   return (
-    <div>
+    <div className={className}>
       <picture>
         <source srcSet={formats?.medium.url} media="(max-width: 764px)" />
         <source srcSet={formats?.large.url} media="(max-width: 1200px)" />
-        <img src={url} alt={alternativeText || ""} />
+        <img className="image" src={url} alt={alternativeText || ""} />
       </picture>
     </div>
   );

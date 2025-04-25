@@ -1,8 +1,14 @@
 import React, { memo, ReactNode } from "react";
+import ReactMarkdown from "react-markdown";
 
 import Header from "@/components/header/Header";
-import Picture from "@/components/utils/Picture";
+import Picture, { Image } from "@/components/utils/Picture";
 import TextEditorInterpreter from "@/components/utils/TextEditorInterpreter";
+import HeaderLogo, { HeaderLogoProps } from "@/components/header/HeaderLogo";
+import HeaderLectureBar from "@/components/header/HeaderLectureBar";
+import styles from "./HeroWithImage.module.css";
+import clsx from "clsx";
+import Background from "@/components/utils/Background";
 
 export type HeroWithImageProps = {
   menu?: {
@@ -32,26 +38,54 @@ export type HeroWithImageProps = {
       alternativeText?: string | null;
     } | null;
   };
-  header: ReactNode;
+  logo?: Image;
+  locale?: string | null;
+  pageSlug: string;
 };
 export default memo(function HeroWithImage({
   menu,
   section,
-  header,
+  logo,
+  locale,
+  pageSlug,
 }: HeroWithImageProps) {
   return (
-    <section className="hero-with-image">
-      <div className="container">
-        {header}
-        <Picture
-          className="hero-with-image__picture"
-          {...section.Image}
-        ></Picture>
-        <div className="hero-with-image__content">
-          <p className="hero-with-image__subtitle">
-            <TextEditorInterpreter>{section.Subtitle}</TextEditorInterpreter>
-          </p>
-          <h1 className="hero-with-image__title">{section.Title}</h1>
+    <section className={styles["hero-with-image"]}>
+      <div className={styles['hero-with-image__gradient']} ></div>
+      <Background
+        className={styles["hero-with-image__background"]}
+        image={section.Image}
+        mdImageUrl={section.Image?.url}
+        smImageUrl={section.Image?.url}
+      ></Background>
+      {/* <Picture
+        className={styles["hero-with-image__picture"]}
+        {...section.Image}
+      ></Picture> */}
+      <div className={clsx("container", styles.container)}>
+        <Header
+          {...section}
+          logo={<HeaderLogo {...logo} locale={locale} />}
+          menu={menu}
+          pageSlug={pageSlug}
+          locale={locale}
+        ></Header>
+
+        <div className={styles["hero-with-image__body"]}>
+          <div className={styles["hero-with-image__content"]}>
+            <div className={styles["hero-with-image__subtitle"]}>
+              <ReactMarkdown>{section.Subtitle}</ReactMarkdown>
+            </div>
+            <h1 className={styles["hero-with-image__title"]}>
+              {section.Title}
+            </h1>
+            {section.IsBigButtonVisible && (
+              <HeaderLectureBar
+                button={section.BigButton}
+                className={styles["hero-with-image__big-button"]}
+              ></HeaderLectureBar>
+            )}
+          </div>
         </div>
       </div>
     </section>

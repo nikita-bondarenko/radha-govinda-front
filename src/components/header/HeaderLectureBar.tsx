@@ -1,5 +1,7 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 import React, { memo } from 'react'
+import style from "./Header.module.css"
 
 export type HeaderButton = {
     __typename?: "ComponentBigButtonBolshayaKnopka";
@@ -12,10 +14,11 @@ export type HeaderButton = {
 
 export type HeaderLectureBarProps = {
     button?: HeaderButton
+    className?: string
 }
 
-export default memo(function HeaderLectureBar({button}:HeaderLectureBarProps) {
+export default memo(function HeaderLectureBar({button, className}:HeaderLectureBarProps) {
   return (
-    <Link className='header__button' href={`/${button?.page?.Slug}`}>{button?.ButtonText}</Link>
+    <Link className={clsx(className, style.header__button)} href={`/${button?.page?.Slug}`}>{button?.ButtonText}</Link>
   )
 })

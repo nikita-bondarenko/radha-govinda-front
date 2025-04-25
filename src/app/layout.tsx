@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mulish } from "next/font/google";
+import { Mulish, Unbounded } from "next/font/google";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/styled-components/StyledComponentsRegistry";
 import { ThemeProvider } from "styled-components";
@@ -8,9 +8,16 @@ import Providers from "@/components/Providers";
 
 const mulish = Mulish({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-mulish",
 });
+
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
+  variable: "--font-unbounded",
+});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,8 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mulish.variable} antialiased`}>
-        <Providers key={102293}>{children}</Providers>
+      <body className={`${mulish.variable} ${unbounded.variable} antialiased`}>
+       {children}
+       <div id="modal-root"></div>
       </body>
     </html>
   );

@@ -1,7 +1,12 @@
-import React, { memo } from 'react'
+import React, { memo, ReactNode } from "react";
 
-export default memo(function TextEditorInterpreter() {
-  return (
-    <div>TextEditorInterpreter</div>
-  )
-})
+export type TextEditorInterpreterProps = {
+  children: ReactNode;
+};
+
+export default memo(function TextEditorInterpreter({
+  children,
+}: TextEditorInterpreterProps) {
+  console.log(children)
+  return <span dangerouslySetInnerHTML={{__html: children || ''}}></span>;
+});

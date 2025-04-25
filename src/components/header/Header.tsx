@@ -1,9 +1,14 @@
-import React, { memo, ReactNode, useState } from "react";
-import HeaderNavItem from "./HeaderNavItem";
+"use client";
+import React, { memo, ReactNode, useEffect, useState } from "react";
+import HeaderNavItem from "./NavItem";
 import HeaderLectureBar, { HeaderButton } from "./HeaderLectureBar";
 import HeaderLangButton from "./HeaderLangButton";
 import { Maybe } from "@/gql/generated/graphql";
-import Modal from "../utils/Modal";
+import Modal from "../utils/module/Modal";
+import styles from "./Header.module.css";
+import clsx from "clsx";
+import Burger from "../svg/Burger";
+import CloseIcon from "../svg/CloseIcon";
 
 export type MenuItem = {
   __typename?: "ComponentMenuElementMenyu";
@@ -53,12 +58,14 @@ export default memo(function Header({
   const closeMobileMenuButtonHandler = () => {
     setIsModalOpen(false);
   };
+
   const nav = (
-    <nav className="header__nav">
-      <ul className="header__nav-list">
+    <nav className={styles["header__nav"]}>
+      <ul className={styles["header__nav-list"]}>
         {menu?.Menu?.map((menuItem) => (
           <HeaderNavItem
-            className="header__nav-item"
+            onClick={closeMobileMenuButtonHandler}
+            className={clsx(styles["header__nav-item"], styles.white)}
             data={menuItem}
             key={menuItem?.id}
           ></HeaderNavItem>
@@ -67,30 +74,37 @@ export default memo(function Header({
     </nav>
   );
   return (
-    <header className="header">
-      <div className="header__left">
+    <header className={styles["header"]}>
+      <div className={styles["header__left"]}>
         {logo}
-        {nav}
+        <div className="desktop-only">{nav}</div>
       </div>
-      <div className="header__right">
+      <div className={clsx(styles["header__right"])}>
         {IsBigButtonVisible && (
-          <HeaderLectureBar button={BigButton}></HeaderLectureBar>
+          <HeaderLectureBar className="non-mobile" button={BigButton}></HeaderLectureBar>
         )}
         {IsLanguageButtonVisible && (
           <HeaderLangButton
+            className={clsx(styles.white, "desktop-only")}
             pageSlug={pageSlug}
             locale={locale}
           ></HeaderLangButton>
         )}
-        <button onClick={burgerHandler} className="header__burger"></button>
+        <button onClick={burgerHandler} className={styles["header__burger"]}>
+        <Burger></Burger>
+      </button>
       </div>
+      
+
       <Modal isOpen={isModalOpen}>
-        <div className="mobile-menu">
-          <div className="mobile-menu__body">
+        <div className={styles["mobile-menu"]}>
+          <div className={styles["mobile-menu__body"]}>
             <button
               onClick={closeMobileMenuButtonHandler}
-              className="mobule-menu__close-button"
-            ></button>
+              className={styles["mobule-menu__close-button"]}
+            >
+              <CloseIcon></CloseIcon>
+            </button>
             {nav}
           </div>
         </div>

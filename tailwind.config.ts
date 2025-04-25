@@ -9,9 +9,9 @@ export default {
 
   theme: {
     screens: {
-      lg: { max: "1210px" },
-      md: { max: "1022px" },
-      sm: { max: "724px" },
+      lg: { max: "1500px" },
+      md: { max: "1200px" },
+      sm: { max: "740px" },
     },
     extend: {
       colors: {
@@ -38,6 +38,7 @@ export default {
       },
       fontFamily: {
         mulish: "var(--font-mulish)",
+        bounded: "var(--font-bounded)"
       },
     },
   },

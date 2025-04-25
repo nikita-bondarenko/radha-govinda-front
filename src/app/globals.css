@@ -2,7 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Bounded";
+  src: url("/fonts/Bounded-Black.woff2") format("woff2");
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "Bounded";
+  src: url("/fonts/Bounded-Regular.woff2") format("woff2");
+  font-weight: 400;
+}
+
+:root {
+  --font-bounded: "Bounded";
+  --black: #000000;
+  --black-2: rgba(0, 0, 0, 0.5);
+  --bg-light-grey: #f8f8f8;
+  --white: #ffffff;
+  --white-2: rgba(255, 255, 255, 0.5);
+  --white-3: rgba(255, 255, 255, 0.7);
+  --grey-1: #cacaca;
+  --grey-2: #818181;
+  --grey-3: #ededed;
+  --main-purple: #7a66d5;
+  --purple-2: #b6a9f1;
+}
 
 * {
-  font-family:  var(--font-mulish);
+  font-family: var(--font-mulish);
+}
+
+.container {
+  margin-inline: auto;
+  max-width: 1512px;
+  padding-inline: 40px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.desktop-only {
+  @apply md:hidden !important;
+}
+
+.non-mobile {
+  @apply sm:hidden
+}
+
+.background {
+  @apply h-full w-full bg-cover  bg-no-repeat;
+  background-image: var(--lg-image-url);
+  @media (max-width: 1200px) {
+    background-image: var(--md-image-url);
+  }
+  @media (max-width: 740px) {
+    background-image: var(--sm-image-url);
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding-inline: 20px;
+  }
+}
+
+@media (max-width: 740px) {
+  .container {
+  }
 }
