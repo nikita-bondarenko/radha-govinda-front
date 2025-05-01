@@ -17,8 +17,8 @@ export default memo(function Background({ image, className, lgImageUrl, mdImageU
       style={
         {
           "--lg-image-url": `url(${lgImageUrl || image?.url})`,
-          "--md-image-url": `url(${mdImageUrl || image?.formats?.medium.url})`,
-          "--sm-image-url": `url(${smImageUrl || image?.formats?.small.url})`,
+          "--md-image-url": `url(${mdImageUrl || image?.formats?.medium?.url})`,
+          "--sm-image-url": `url(${smImageUrl || image?.formats?.small?.url})`,
         } as React.CSSProperties
       }
       className={clsx("background", className)}

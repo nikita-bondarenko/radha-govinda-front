@@ -20,7 +20,7 @@ export default {
           "light-grey": "#F8F8F8",
           white: "#FFFFFF",
         },
-        black: "#121212",
+        black: "var(--black)",
         grey: {
           DEFAULT: "#CACACA",
           dark: "#818181",

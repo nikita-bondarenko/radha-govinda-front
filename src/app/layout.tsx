@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
-import { Mulish, Unbounded } from "next/font/google";
+// import { Mulish } from "next/font/google";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/styled-components/StyledComponentsRegistry";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/lib/styled-components/theme";
 import Providers from "@/components/Providers";
 
-const mulish = Mulish({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-mulish",
-});
+// const mulish = Mulish({
+//   subsets: ["latin", "cyrillic"],
+//   weight: ["400", "500", "600", "700", "800"],
+//   variable: "--font-mulish",
+// });
 
-const unbounded = Unbounded({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600"],
-  variable: "--font-unbounded",
-});
+
 
 
 export const metadata: Metadata = {
@@ -31,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mulish.variable} ${unbounded.variable} antialiased`}>
+      <body className={` antialiased`}>
        {children}
        <div id="modal-root"></div>
       </body>

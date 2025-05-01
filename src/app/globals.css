@@ -14,8 +14,14 @@
   font-weight: 400;
 }
 
+@font-face {
+  font-family: "Mulish";
+  src: url("/fonts/Mulish-VariableFont.woff2") format("woff2");
+}
+
 :root {
   --font-bounded: "Bounded";
+  --font-mulish: "Mulish";
   --black: #000000;
   --black-2: rgba(0, 0, 0, 0.5);
   --bg-light-grey: #f8f8f8;
@@ -53,6 +59,26 @@
   @apply sm:hidden
 }
 
+body {
+  @apply flex flex-col gap-[120px] md:gap-[90px]
+}
+
+section {
+  @apply w-full 
+}
+
+.section-heading {
+  @apply text-[30px] tracking-[0.6px] uppercase font-bold leading-[120%] text-black
+  md:text-[20px] md:tracking-[0.4px]
+}
+
+.small-text {
+  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[10px] sm:leading-[100%]
+}
+.small-text.grey {
+  @apply text-[var(--black-2)]
+}
+
 .background {
   @apply h-full w-full bg-cover  bg-no-repeat;
   background-image: var(--lg-image-url);
@@ -63,6 +89,7 @@
     background-image: var(--sm-image-url);
   }
 }
+
 
 @media (max-width: 1200px) {
   .container {

@@ -51,9 +51,13 @@ export default async function Page({ params }: MetadataPropsType) {
     query: PageDocument,
     variables: {
       documentId,
+      sort: ["Date:DESC"],
+      pagination: {
+        start: 0,
+        limit: 6
+      }
     },
   });
-  console.log(pageData);
   return (
    <PageGenerator {...pageData}></PageGenerator>
   );

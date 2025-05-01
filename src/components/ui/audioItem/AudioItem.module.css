@@ -1,0 +1,95 @@
+.audio {
+  @apply rounded-[10px] bg-[var(--grey-3)] p-[10px] pb-[7px] pr-[22px] flex gap-[7px] min-h-[100px]
+  md:pr-[10px] md:min-h-[80px]
+  sm:rounded-[5px] sm:p-[3px] sm:pr-[5px]
+  ;
+}
+
+.controls {
+  @apply relative overflow-hidden w-[80px] h-[80px] rounded-[10px] shrink-0
+  md:w-[60px] md:h-[60px]
+  sm:w-[56px] sm:h-[56px] sm:rounded-[5px];
+}
+
+.controls__background {
+  @apply absolute top-0 left-0 w-full h-full z-0 
+  after:z-10 after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black after:opacity-40;
+}
+
+
+
+.controls__button {
+  @apply w-[45px] h-[45px] rounded-full bg-[var(--grey-2)] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-20
+  md:w-[35px] md:h-[35px] 
+  sm:w-[28px] sm:h-[28px] ;
+}
+
+.play-icon {
+  @apply w-[28px] h-[28px] absolute top-[50%] left-[50%] translate-x-[-42%] translate-y-[-50%] opacity-0
+  md:w-[15px] md:h-[15px];
+}
+.pause-icon {
+  @apply w-[24px] h-[24px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
+  md:w-[15px] md:h-[15px];
+}
+
+
+
+.icon-visible.play-icon, .icon-visible.pause-icon {
+    @apply opacity-100
+}
+
+.info {
+    @apply flex flex-col gap-[10px] justify-between w-full
+}
+
+.info__top, .info__bottom {
+    @apply flex justify-between gap-[30px]
+}
+
+.info__name {
+    @apply text-start max-w-[404px] sm:max-w-[200px] 
+}
+
+
+
+.info__bottom {
+}
+
+.info__date-place {
+}
+
+.info__duration {
+}
+
+
+.share {
+  @apply w-[20px] h-[20px]
+}
+
+.options {
+
+  @apply relative
+
+}
+
+.options__open-button {
+  @apply w-[17px] h-[17px]
+}
+
+.options__share-button {
+  @apply absolute right-[-21px] bottom-[100%] flex items-center gap-[16px] px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] opacity-0 pointer-events-none
+} 
+
+.options__share-button.open {
+  @apply opacity-100 pointer-events-auto
+}
+
+.options__share-icon {
+  @apply w-[20px] h-[20px]
+}
+
+.options__text {
+
+}
+
