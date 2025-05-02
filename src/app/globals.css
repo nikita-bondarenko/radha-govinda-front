@@ -73,7 +73,7 @@ section {
 }
 
 .small-text {
-  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[10px] sm:leading-[100%]
+  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%]
 }
 .small-text.grey {
   @apply text-[var(--black-2)]

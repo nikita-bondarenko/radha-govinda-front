@@ -1,14 +1,14 @@
 .audio {
   @apply rounded-[10px] bg-[var(--grey-3)] p-[10px] pb-[7px] pr-[22px] flex gap-[7px] min-h-[100px]
-  md:pr-[10px] md:min-h-[80px]
-  sm:rounded-[5px] sm:p-[3px] sm:pr-[5px]
+  md:pr-[7px] md:min-h-[80px] md:gap-[27px] md:pb-[9px]
+  sm:rounded-[5px] sm:p-[3px] sm:pb-[5px] sm:pr-[5px] sm:min-h-[62px] sm:gap-[7px]
   ;
 }
 
 .controls {
-  @apply relative overflow-hidden w-[80px] h-[80px] rounded-[10px] shrink-0
-  md:w-[60px] md:h-[60px]
-  sm:w-[56px] sm:h-[56px] sm:rounded-[5px];
+  @apply relative overflow-hidden w-[80px] h-full  rounded-[10px] shrink-0
+  md:w-[60px] 
+  sm:w-[56px]  sm:rounded-[10px];
 }
 
 .controls__background {
@@ -26,11 +26,11 @@
 
 .play-icon {
   @apply w-[28px] h-[28px] absolute top-[50%] left-[50%] translate-x-[-42%] translate-y-[-50%] opacity-0
-  md:w-[15px] md:h-[15px];
+  md:w-[22px] md:h-[22px];
 }
 .pause-icon {
   @apply w-[24px] h-[24px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
-  md:w-[15px] md:h-[15px];
+  md:w-[19px] md:h-[19px];
 }
 
 
@@ -48,7 +48,7 @@
 }
 
 .info__name {
-    @apply text-start max-w-[404px] sm:max-w-[200px] 
+    @apply text-start max-w-[404px] sm:max-w-[200px]  sm:text-[10px]
 }
 
 
@@ -56,7 +56,8 @@
 .info__bottom {
 }
 
-.info__date-place {
+.info__date-place, .info__duration {
+  @apply sm:text-[10px]
 }
 
 .info__duration {
@@ -74,7 +75,7 @@
 }
 
 .options__open-button {
-  @apply w-[17px] h-[17px]
+  @apply w-[17px] h-[17px] md:translate-y-[-5px] md:translate-x-[-7px] sm:translate-y-[-8px] sm:translate-x-[-8px] sm:p-[4px]
 }
 
 .options__share-button {
@@ -93,3 +94,7 @@
 
 }
 
+
+.duration-box {
+  @apply sm:w-[35px] sm:flex sm:justify-center
+}

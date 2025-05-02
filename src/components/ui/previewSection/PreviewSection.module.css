@@ -1,9 +1,9 @@
 .title {
-  @apply mb-[22px] md:mb-[10px];
+  @apply mb-[22px] md:mb-[12px];
 }
 
 .link {
-  @apply block text-[18px] leading-[100%] mb-[20px] 
+  @apply block text-[18px] text-[var(--black-2)] leading-[100%] mb-[20px] 
   md:leading-[110%] md:tracking-[0.32px] md:text-[16px] md:mb-[25px]
   sm:text-[14px] sm:mb-[20px];
 }

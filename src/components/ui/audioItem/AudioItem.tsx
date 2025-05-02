@@ -48,11 +48,11 @@ export default memo(function AudioPreviewItem({
     }
   }, [areOptionsOpen])
   return (
-    <button onClick={controlsClickHandler} className={clsx(styles.audio)}>
-      <div className={styles.controls}>
+    <div  className={clsx(styles.audio)}>
+      <button onClick={controlsClickHandler} className={styles.controls}>
         <Background
           className={styles.controls__background}
-          image={audio?.Image}
+                      imageUrl={audio?.Image.url}
         ></Background>
         <div className={styles.controls__button}>
           <PauseIcon
@@ -70,7 +70,7 @@ export default memo(function AudioPreviewItem({
             )}
           ></PlayIcon>
         </div>
-      </div>
+      </button>
       <div className={styles.info}>
         <div className={styles.info__top}>
           <h4 className={clsx("small-text", styles.info__name)}>
@@ -94,11 +94,14 @@ export default memo(function AudioPreviewItem({
           >{`${parseDate(audio?.Date)} ${
             audio?.Place ? `, ${audio?.Place}` : ""
           }`}</span>
+          <div className={styles['duration-box']}>
           <span className={clsx(styles["info__duration"], "small-text grey")}>
             {audio?.Duration}
           </span>
+          </div>
+          
         </div>
       </div>
-    </button>
+    </div>
   );
 });
