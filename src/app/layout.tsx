@@ -5,6 +5,8 @@ import StyledComponentsRegistry from "@/lib/styled-components/StyledComponentsRe
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/lib/styled-components/theme";
 import Providers from "@/components/Providers";
+import StoreProvider from "@/components/providers/StoreProvider";
+import Player from "@/components/player/Player";
 
 // const mulish = Mulish({
 //   subsets: ["latin", "cyrillic"],
@@ -28,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` antialiased`}>
+       <StoreProvider>
        {children}
+       </StoreProvider>
+     
        <div id="modal-root"></div>
       </body>
     </html>

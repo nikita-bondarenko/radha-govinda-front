@@ -1,3 +1,4 @@
+"use client"
 import React, { memo, ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import clsx from "clsx";
@@ -5,9 +6,10 @@ import styles from './Modal.module.css'
 export type ModalProps = {
   isOpen: boolean;
   children: ReactNode;
+  className?: string
 };
 
-export default memo(function Modal({ isOpen, children }: ModalProps) {
+export default memo(function Modal({ isOpen, children, className }: ModalProps) {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null)
   useEffect(() => {
    const modalRoot = document.getElementById("modal-root");
@@ -22,7 +24,7 @@ export default memo(function Modal({ isOpen, children }: ModalProps) {
     }
       }, [isOpen])
   const modal = (
-    <div className={clsx(styles["modal"],  isOpen && styles["open"])}>
+    <div className={clsx(styles["modal"],  isOpen && styles["open"], className)}>
       <div className={styles["modal__wrapper"]}>
         <div className={styles["modal__window"]}>{children}</div>
       </div>

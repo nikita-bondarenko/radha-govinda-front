@@ -1,9 +1,11 @@
 import { localizeHref } from '@/utils/localizeHref';
 import { Maybe } from 'graphql/jsutils/Maybe';
 import Link from 'next/link';
-import React, { memo, ReactNode } from 'react'
+import React, { memo, ReactNode, useEffect } from 'react'
 import styles from './PreviewSection.module.css'
 import clsx from 'clsx';
+
+
 export type PreviewSectionProps = {
     children: ReactNode;
     title: Maybe<string>;
@@ -16,8 +18,10 @@ export type PreviewSectionProps = {
 }
 
 export default memo(function PreviewSection({children,title,locale,directedPageSlug, linkText} : PreviewSectionProps) {
+
   return (
     <section>
+
     <div className="container">
       <h2 className={clsx(styles.title, "section-heading")}>{title}</h2>
 

@@ -4,7 +4,7 @@ import HeaderNavItem from "./NavItem";
 import HeaderLectureBar, { HeaderButton } from "./HeaderLectureBar";
 import HeaderLangButton from "./HeaderLangButton";
 import { Maybe } from "@/gql/generated/graphql";
-import Modal from "../utils/module/Modal";
+import Modal from "../utils/modal/Modal";
 import styles from "./Header.module.css";
 import clsx from "clsx";
 import Burger from "../svg/Burger";

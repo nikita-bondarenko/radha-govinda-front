@@ -1,12 +1,14 @@
+"use client"
 import { Audiorecord } from "@/gql/generated/graphql";
 import { Maybe } from "graphql/jsutils/Maybe";
 import Link from "next/link";
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import AudioPreviewItem from "../../ui/audioItem/AudioItem";
 import { localizeHref } from "@/utils/localizeHref";
 import styles from "./AudioPreview.module.css";
 import PreviewSection from "@/components/ui/previewSection/PreviewSection";
-
+import { useAppDispatch } from "@/lib/store/hooks";
+import { setAudio } from "@/lib/store/audioSlice";
 
 export type PreviewSectionProps = {
   title: Maybe<string>;
@@ -43,6 +45,10 @@ export default memo(function AudioPreview({
   locale,
   audiorecords,
 }: AudioPreviewProps) {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setAudio(audiorecords[0]));
+  }, []);
   return (
     <PreviewSection
       title={title}
@@ -52,7 +58,11 @@ export default memo(function AudioPreview({
     >
       <div className={styles.body}>
         {audiorecords?.map((audio, index) => (
-          <AudioPreviewItem locale={locale} key={index} audio={audio}></AudioPreviewItem>
+          <AudioPreviewItem
+            locale={locale}
+            key={index}
+            audio={audio}
+          ></AudioPreviewItem>
         ))}
       </div>
     </PreviewSection>

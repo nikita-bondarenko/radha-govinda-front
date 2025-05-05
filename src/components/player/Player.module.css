@@ -1,0 +1,132 @@
+.modal {
+  @apply fixed z-40 top-0 left-0 right-0 bottom-0 pointer-events-none;
+}
+
+.modal.open {
+}
+
+.wrapper {
+  @apply absolute bottom-[15px] left-[50%] translate-x-[-50%] w-[90vw] max-w-[1163px];
+}
+
+.body {
+  @apply flex gap-[50px] justify-between pointer-events-auto rounded-[10px] p-[10px] md:p-[7px] sm:p-[10px];
+  background: linear-gradient(0deg, #ededed 0%, #d6d2e8 100%);
+}
+
+.right {
+    @apply flex flex-col justify-between
+}
+
+.left {
+  @apply flex gap-[10px];
+}
+
+.image {
+  @apply rounded-[10px] overflow-hidden shrink-0 w-[100px] h-[100px] md:w-[70px] md:h-[70px] sm:rounded-[5px] sm:w-[70px] sm:h-[70px];
+}
+
+.info {
+  @apply flex flex-col justify-between max-w-[355px] md:max-w-[305px] sm:max-w-none;
+}
+
+.name {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+}
+
+.description {
+}
+
+.controls {
+    @apply flex gap-[125px] items-center
+}
+
+.controls__left {
+  @apply flex items-center gap-[20px];
+}
+
+.controls__right {
+    @apply flex items-center gap-[52px]
+}
+
+.flow__circle, .flow__random {
+    @apply w-[24px] h-[24px]
+}
+
+.flow__random {
+}
+
+.playing-button {
+  @apply relative w-[28px] h-[28px];
+}
+
+.play,
+.pause {
+  @apply absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0 pointer-events-none;
+}
+
+.play.active,
+.pause.active {
+  @apply opacity-100 pointer-events-auto;
+}
+.play, .pause {
+  @apply w-[28px] h-[28px];
+}
+
+/* .pause {
+  @apply w-[28px] h-[28px];
+} */
+
+.prev, .next {
+    @apply w-[28px] h-[28px]
+}
+
+.next {
+    @apply rotate-180
+}
+
+.player-icon-button path, .player-icon-button rect  {
+    @apply fill-[var(--grey-2)] stroke-[var(--grey-2)]
+}
+
+.player-icon-button {
+    @apply shrink-0
+} 
+
+.playlist {
+@apply w-[23px] h-[23px]
+}
+
+.volume {
+    @apply flex items-center gap-[20px]
+}
+
+.volume__icon {
+    @apply w-[31px] h-[22px]
+}
+
+.volume__input {
+}
+
+.duration {
+    @apply flex flex-col gap-[6px] md:gap-[2px] sm:gap-[7px] w-[360px] md:w-[290px] sm:w-full
+}
+
+.duration__input {
+@apply  w-full
+}
+
+.duration__passed {
+}
+
+.duration__left {
+}
+
+.duration__bottom {
+    @apply flex justify-between
+}
+

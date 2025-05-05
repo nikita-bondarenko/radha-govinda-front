@@ -51,32 +51,36 @@
   max-width: none;
 }
 
+.no-fill {
+  fill: none !important;
+}
+
 .desktop-only {
   @apply md:hidden !important;
 }
 
 .non-mobile {
-  @apply sm:hidden
+  @apply sm:hidden;
 }
 
 body {
-  @apply flex flex-col gap-[120px] md:gap-[90px]
+  @apply flex flex-col gap-[120px] md:gap-[90px];
 }
 
 section {
-  @apply w-full 
+  @apply w-full;
 }
 
 .section-heading {
   @apply text-[30px] tracking-[0.6px] uppercase font-bold leading-[120%] text-black
-  md:text-[20px] md:tracking-[0.4px]
+  md:text-[20px] md:tracking-[0.4px];
 }
 
 .small-text {
-  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%]
+  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%];
 }
 .small-text.grey {
-  @apply text-[var(--black-2)]
+  @apply text-[var(--black-2)];
 }
 
 .background {
@@ -90,7 +94,6 @@ section {
   }
 }
 
-
 @media (max-width: 1200px) {
   .container {
     padding-inline: 20px;
@@ -100,4 +103,101 @@ section {
 @media (max-width: 740px) {
   .container {
   }
+}
+
+input[type="range"].progress-bar {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    var(--main-purple) 0%,
+    var(--main-purple) var(--percent),
+    var(--white) var(--percent),
+    var(--white) 100%
+  );
+  /* border-radius: 9px; */
+  cursor: pointer;
+}
+
+/* — WebKit — */
+input[type="range"].progress-bar::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 10px;
+  /* background: var(--white); */
+}
+
+input[type="range"].progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4px;
+  height: 4px;
+  margin-top: 0px;
+  background: var(--main-purple);
+  border-radius: 50%;
+}
+
+input[type="range"].progress-bar.with-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -3px;
+  background: var(--main-purple);
+  border-radius: 50%;
+}
+
+/* — Firefox — */
+input[type="range"].progress-bar::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--white);
+}
+input[type="range"].progress-bar::-moz-range-progress {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--main-purple);
+
+}
+input[type="range"].progress-bar::-moz-range-thumb {
+  width: 4px;
+  height: 4px;
+  background: var(--main-purple);
+  border-radius: 50%;
+}
+input[type="range"].progress-bar.with-thumb::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--main-purple);
+  border-radius: 50%;
+}
+
+/* — IE / Edge — */
+input[type="range"].progress-bar::-ms-track {
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type="range"].progress-bar::-ms-fill-lower {
+  border-radius: 4px;
+  background: var(--main-purple);
+}
+input[type="range"].progress-bar::-ms-fill-upper {
+  background: var(--white);
+  border-radius: 4px;
+}
+input[type="range"].progress-bar::-ms-thumb {
+  width: 4px;
+  height: 4px;
+  background: var(--main-purple);
+  border-radius: 50%;
+}
+input[type="range"].progress-bar.with-thumb::-ms-thumb {
+  width: 10px;
+  height: 10px;
+  background: var(--main-purple);
+  border-radius: 50%;
 }

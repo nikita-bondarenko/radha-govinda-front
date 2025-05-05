@@ -1,3 +1,3 @@
-export const parseDate = (date: string) => {
-return date.split('-').join('.')
+export const parseDate = (date?: string) => {
+return date?.split('-').join('.')
 }

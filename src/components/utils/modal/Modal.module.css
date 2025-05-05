@@ -10,5 +10,5 @@
   @apply h-full ;
 }
 .modal__window {
-    @apply h-full
+    @apply h-full relative
 }

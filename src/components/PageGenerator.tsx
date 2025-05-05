@@ -4,6 +4,7 @@ import HeroWithImage from "./sections/hero-with-image/HeroWithImage";
 import Header from "./header/Header";
 import HeaderLogo from "./header/HeaderLogo";
 import AudioPreview from "./sections/audio-preview/AudioPreview";
+import Player from "./player/Player";
 
 export default function PageGenerator({
   page,
@@ -28,7 +29,6 @@ export default function PageGenerator({
             );
           }
           case "ComponentHomePagePrevyuRazdelaSajta": {
-            console.log(section);
 
             switch (section?.DivisionName) {
               case "Lekczii": {
@@ -49,6 +49,7 @@ export default function PageGenerator({
           }
         }
       })}
+       <Player></Player>
     </>
   );
 }
