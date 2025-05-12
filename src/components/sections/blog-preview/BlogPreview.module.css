@@ -1,0 +1,13 @@
+.wrapper {
+@apply sm:overflow-x-auto;
+scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.list {
+@apply flex flex-col gap-[20px] md:gap-[10px] sm:flex-row 
+}

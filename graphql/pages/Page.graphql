@@ -119,6 +119,8 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     Slug
     PostTitle
     PostPreviewContent
+    locale
+    Date
   }
   movies(sort: $moviesSort2, pagination: $moviesPagination2, locale: $moviesLocale2) {
     createdAt

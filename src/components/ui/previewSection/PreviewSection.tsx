@@ -1,7 +1,7 @@
 import { localizeHref } from '@/utils/localizeHref';
 import { Maybe } from 'graphql/jsutils/Maybe';
 import Link from 'next/link';
-import React, { memo, ReactNode, useEffect } from 'react'
+import React, { memo, ReactNode } from 'react'
 import styles from './PreviewSection.module.css'
 import clsx from 'clsx';
 

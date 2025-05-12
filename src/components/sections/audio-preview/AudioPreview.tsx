@@ -46,9 +46,9 @@ export default memo(function AudioPreview({
   audiorecords,
 }: AudioPreviewProps) {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(setAudio(audiorecords[0]));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setAudio(audiorecords[0]));
+  // }, []);
   return (
     <PreviewSection
       title={title}

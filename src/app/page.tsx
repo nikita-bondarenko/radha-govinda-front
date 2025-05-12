@@ -51,10 +51,15 @@ export default async function Page({ params }: MetadataPropsType) {
     query: PageDocument,
     variables: {
       documentId,
+      postsLocale2: "ru",
       sort: ["Date:DESC"],
       pagination: {
         start: 0,
         limit: 6
+      },
+      postsPagination2: {
+          start: 0,
+        limit: 3
       }
     },
   });

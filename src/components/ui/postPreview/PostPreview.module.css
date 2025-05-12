@@ -1,0 +1,31 @@
+.body {
+ @apply px-[20px] py-[40px] h-full rounded-[10px] overflow-hidden flex flex-col justify-between min-h-[320px] gap-[20px] md:min-h-[276px] sm:min-h-[410px] sm:w-[320px] sm:gap-[10px] sm:p-0;
+ background: linear-gradient(0deg, #E5E5E5 0%, #D6D2E8 100%);
+}
+
+.content {
+@apply sm:p-[20px] 
+}
+
+.content__top {
+@apply flex items-start justify-between gap-[50px] sm:flex-col-reverse sm:gap-[21px]
+}
+
+.title {
+
+@apply text-[24px] font-semibold leading-[120%] mb-[15px] md:text-[18px] sm:text-[16px] sm:mb-[14px]
+}
+
+
+
+.text {
+     overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+    @apply max-w-[915px] line-clamp-5 sm:line-clamp-[10];
+}
+
+.button {
+    @apply [&]:sm:h-[70px] [&]:sm:w-full [&]:sm:rounded-none [&]:sm:flex [&]:sm:items-center  [&]:sm:justify-center [&]:sm:text-[18px]
+}

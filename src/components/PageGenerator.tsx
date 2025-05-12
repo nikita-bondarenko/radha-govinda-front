@@ -5,12 +5,14 @@ import Header from "./header/Header";
 import HeaderLogo from "./header/HeaderLogo";
 import AudioPreview from "./sections/audio-preview/AudioPreview";
 import Player from "./player/Player";
+import BlogPreview from "./sections/blog-preview/BlogPreview";
 
 export default function PageGenerator({
   page,
   menu,
   logo,
   audiorecords,
+  posts
 }: PageQuery) {
   return (
     <>
@@ -42,14 +44,23 @@ export default function PageGenerator({
                 );
               }
               case "Video": {
+                break;
               }
               case "Stati": {
+                   return (
+                  <BlogPreview
+                  key={index}
+                    locale={page.locale}
+                    title={section.Title}
+                    posts={posts}
+                  ></BlogPreview>
+                );
               }
             }
           }
         }
       })}
-       <Player></Player>
+       {/* <Player></Player> */}
     </>
   );
 }
