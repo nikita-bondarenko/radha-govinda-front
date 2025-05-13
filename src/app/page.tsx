@@ -55,15 +55,17 @@ export default async function Page({ params }: MetadataPropsType) {
       sort: ["Date:DESC"],
       pagination: {
         start: 0,
-        limit: 6
+        limit: 6,
       },
       postsPagination2: {
-          start: 0,
-        limit: 3
-      }
+        start: 0,
+        limit: 3,
+      },
+      moviesPagination2: {
+        start: 0,
+        limit: 10,
+      },
     },
   });
-  return (
-   <PageGenerator {...pageData}></PageGenerator>
-  );
+  return <PageGenerator {...pageData}></PageGenerator>;
 }

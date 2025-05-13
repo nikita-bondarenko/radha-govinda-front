@@ -20,7 +20,7 @@ export type PreviewSectionProps = {
 export default memo(function PreviewSection({children,title,locale,directedPageSlug, linkText} : PreviewSectionProps) {
 
   return (
-    <section>
+    <section className={styles.section}> 
 
     <div className="container">
       <h2 className={clsx(styles.title, "section-heading")}>{title}</h2>

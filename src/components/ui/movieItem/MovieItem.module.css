@@ -1,0 +1,11 @@
+.item {
+    @apply relative shrink-0 overflow-hidden rounded-[10px] sm:rounded-[5px] border-[1px] border-[#3D322B]
+}
+
+.smoke {
+    @apply absolute top-0 left-0 w-full h-full bg-[#D9D9D9] bg-opacity-80 pointer-events-none
+}
+
+.movie {
+ @apply h-[544px] w-[888px] md:w-[543px] md:h-[342px]  sm:w-[320px] sm:h-[199px]
+}

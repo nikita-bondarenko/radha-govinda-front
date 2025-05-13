@@ -1,0 +1,54 @@
+.body  {
+  @apply w-[100vw] -ml-[calc((100vw-1512px)/2+40px)];
+}
+
+.container {
+   /* @apply  overflow-x-auto */
+}
+
+.list, .scrollbar {
+@apply px-[calc((100vw-1512px)/2+40px)] 
+}
+
+@media (max-width: 1512px) {
+  .body  {
+    @apply ml-[-40px] md:ml-[-20px];
+  }
+  .list, .scrollbar {
+    @apply px-[40px] md:px-[20px]
+  }
+}
+
+
+
+
+
+.wrapper {
+    @apply relative overflow-x-scroll
+}
+
+.wrapper::-webkit-scrollbar {
+    @apply hidden
+}
+
+.scrollbar {
+    @apply  w-full 
+}
+
+.scrollbar__wrapper {
+    @apply relative h-[6px] md:h-[3px] 
+}
+
+.track {
+    @apply absolute top-0 left-0 h-full w-full bg-[var(--grey-1)] rounded-full
+}
+
+.thumb {
+    @apply z-10 absolute left-0 top-0 will-change-transform h-full bg-[var(--main-purple)] rounded-full
+}
+
+.list {
+  @apply absolute top-0 left-0  flex gap-[20px] pb-[24px] md:gap-[10px] md:pb-[15px] sm:pb-[20px];
+}
+
+

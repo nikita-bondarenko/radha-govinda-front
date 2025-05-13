@@ -31,6 +31,7 @@ export default {
           light: "#B6A9F1",
         },
         transparent: {
+          DEFAULT: "transparent",
           black: "rgba(0, 0, 0, 0.50)",
           white: "rgba(255, 255, 255, 0.50)",
           white2: "rgba(255, 255, 255, 0.70)"

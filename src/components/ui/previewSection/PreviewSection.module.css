@@ -1,3 +1,7 @@
+.section {
+  @apply overflow-x-hidden overflow-y-visible
+}
+
 .title {
   @apply mb-[22px] md:mb-[12px];
 }

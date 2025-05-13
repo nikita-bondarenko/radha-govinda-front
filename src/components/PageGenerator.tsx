@@ -6,13 +6,15 @@ import HeaderLogo from "./header/HeaderLogo";
 import AudioPreview from "./sections/audio-preview/AudioPreview";
 import Player from "./player/Player";
 import BlogPreview from "./sections/blog-preview/BlogPreview";
+import VideoPreview from "./sections/video-preview/VideoPreview";
 
 export default function PageGenerator({
   page,
   menu,
   logo,
   audiorecords,
-  posts
+  posts,
+  movies,
 }: PageQuery) {
   return (
     <>
@@ -31,12 +33,11 @@ export default function PageGenerator({
             );
           }
           case "ComponentHomePagePrevyuRazdelaSajta": {
-
             switch (section?.DivisionName) {
               case "Lekczii": {
                 return (
                   <AudioPreview
-                  key={index}
+                    key={index}
                     locale={page.locale}
                     title={section.Title}
                     audiorecords={audiorecords}
@@ -44,12 +45,19 @@ export default function PageGenerator({
                 );
               }
               case "Video": {
-                break;
+                return (
+                  <VideoPreview
+                    key={index}
+                    locale={page.locale}
+                    title={section.Title}
+                    movies={movies}
+                  ></VideoPreview>
+                );
               }
               case "Stati": {
-                   return (
+                return (
                   <BlogPreview
-                  key={index}
+                    key={index}
                     locale={page.locale}
                     title={section.Title}
                     posts={posts}
@@ -60,7 +68,7 @@ export default function PageGenerator({
           }
         }
       })}
-       {/* <Player></Player> */}
+      {/* <Player></Player> */}
     </>
   );
 }
