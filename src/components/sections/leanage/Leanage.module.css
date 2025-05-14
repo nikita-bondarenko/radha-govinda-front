@@ -1,0 +1,54 @@
+.title {
+  @apply mb-[29px] md:mb-[22px] sm:mb-[19px];
+}
+
+.list {
+  @apply flex gap-[20px] md:gap-[16px] sm:flex-col sm:gap-[20px] xs:flex-col;
+}
+
+.member:not(.first) {
+    @apply flex-1 sm:w-full
+}
+
+.top {
+    @apply flex items-end h-[581px] md:h-[33vw] sm:h-auto mb-[15px] md:mb-[20px] sm:mb-[10px]
+}
+
+.first.member {
+  @apply  w-[591px] shrink-0 md:w-[33vw] sm:w-full;
+}
+
+.member:nth-child(2) .member__picture img {
+    @apply translate-y-[-10%]
+}
+
+.member:nth-child(3) .member__picture img {
+    @apply translate-y-[-4%]
+}
+
+.member__picture {
+  @apply overflow-hidden rounded-[10px] aspect-square   sm:aspect-[320/199];
+}
+
+.first.member .member__picture {
+  @apply aspect-[591/581]  sm:aspect-[320/332];
+}
+
+.member__content {
+  @apply flex flex-col gap-[8px] md:gap-[5px] sm:gap-[8px];
+}
+
+.name {
+    @apply text-[#3D322B] font-manrope font-semibold text-[20px] leading-[120%] md:text-[16px] sm:text-[14px]
+}
+.role {
+    @apply text-[18px] tracking-[0.36px] leading-[120%] text-[#3D322B] md:text-[14px]
+}
+
+.description {
+    @apply text-[16px] leading-[110%] tracking-[0.32px] text-[#3D322B] opacity-75 md:text-[14px]
+}
+
+.first.member .description {
+    @apply max-w-[527px] md:max-w-none
+}

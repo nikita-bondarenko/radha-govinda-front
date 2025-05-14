@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-// import { Mulish } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import StyledComponentsRegistry from "@/lib/styled-components/StyledComponentsRegistry";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/lib/styled-components/theme";
-import Providers from "@/components/Providers";
 import StoreProvider from "@/components/providers/StoreProvider";
 import Player from "@/components/player/Player";
 
-// const mulish = Mulish({
-//   subsets: ["latin", "cyrillic"],
-//   weight: ["400", "500", "600", "700", "800"],
-//   variable: "--font-mulish",
-// });
+const manrope = Manrope({
+  subsets: ["latin", "cyrillic"],
+  weight: [ "600"],
+  variable: "--font-manrope",
+});
 
 
 
@@ -29,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` antialiased`}>
+      <body className={`${manrope.variable} antialiased`}>
        <StoreProvider>
        {children}
        </StoreProvider>

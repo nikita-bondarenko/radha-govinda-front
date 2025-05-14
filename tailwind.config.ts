@@ -12,6 +12,7 @@ export default {
       lg: { max: "1500px" },
       md: { max: "1200px" },
       sm: { max: "740px" },
+        xs: { max: "572px" },
     },
     extend: {
       colors: {
@@ -34,12 +35,13 @@ export default {
           DEFAULT: "transparent",
           black: "rgba(0, 0, 0, 0.50)",
           white: "rgba(255, 255, 255, 0.50)",
-          white2: "rgba(255, 255, 255, 0.70)"
+          white2: "rgba(255, 255, 255, 0.70)",
         },
       },
       fontFamily: {
         mulish: "var(--font-mulish)",
-        bounded: "var(--font-bounded)"
+        bounded: "var(--font-bounded)",
+        manrope: "var(--font-manrope)",
       },
     },
   },
