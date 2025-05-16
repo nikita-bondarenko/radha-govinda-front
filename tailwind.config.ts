@@ -11,25 +11,35 @@ export default {
     screens: {
       lg: { max: "1500px" },
       md: { max: "1200px" },
+      tb: { max: "800px" },
       sm: { max: "740px" },
-        xs: { max: "572px" },
+      xs: { max: "572px" },
     },
     extend: {
       colors: {
         bg: {
-          black: "#121212",
-          "light-grey": "#F8F8F8",
-          white: "#FFFFFF",
+          "light-grey": "var(--bg-light-grey)",
+          white: "var(--white)",
         },
-        black: "var(--black)",
+        white: {
+          DEFAULT: "var(--white)",
+          "2": "var(--white-2)",
+          "3": "var(--white-3)"
+        },
+        black: {
+          DEFAULT: "var(--black)",
+          "2": "var(--black-2)"
+        },
         grey: {
-          DEFAULT: "#CACACA",
-          dark: "#818181",
-          light: "#EDEDED",
+          DEFAULT: "var(--grey-1)",
+          dark: "var(--grey-2)",
+          light: "var(--grey-3)",
         },
         purple: {
-          DEFAULT: "#7A66D5",
-          light: "#B6A9F1",
+          DEFAULT: "var(--main-purple)",
+          main: "var(--main-purple)",
+          light: "var(--purple-2)",
+          "2":  "var(--purple-2)"
         },
         transparent: {
           DEFAULT: "transparent",

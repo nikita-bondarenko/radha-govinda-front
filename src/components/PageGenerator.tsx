@@ -8,6 +8,7 @@ import Player from "./player/Player";
 import BlogPreview from "./sections/blog-preview/BlogPreview";
 import VideoPreview from "./sections/video-preview/VideoPreview";
 import Leanage from "./sections/leanage/Leanage";
+import Biography from "./sections/biography/Biography";
 
 export default function PageGenerator({
   page,
@@ -71,9 +72,11 @@ export default function PageGenerator({
           case "ComponentHomePageParampara": {
             return <Leanage section={section}  key={index}></Leanage>
           }
+          case "ComponentHomePageBiografiya": {
+            return <Biography section={section} key={index}></Biography>
+          }
         }
       })}
-      {/* <Player></Player> */}
     </>
   );
 }

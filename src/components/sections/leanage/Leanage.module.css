@@ -19,11 +19,11 @@
 }
 
 .member:nth-child(2) .member__picture img {
-    @apply translate-y-[-10%]
+    @apply sm:translate-y-[-10%]
 }
 
 .member:nth-child(3) .member__picture img {
-    @apply translate-y-[-4%]
+    @apply sm:translate-y-[-4%]
 }
 
 .member__picture {
