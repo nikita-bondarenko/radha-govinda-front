@@ -214,12 +214,13 @@ export type ComponentCommonSectionRaspisanieScheduleItemArgs = {
 
 export type ComponentDocsLinkSsylkaNaDokument = {
   __typename?: 'ComponentDocsLinkSsylkaNaDokument';
-  Document?: Maybe<UploadFile>;
+  Page?: Maybe<Page>;
   Text?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
 };
 
 export type ComponentDocsLinkSsylkaNaDokumentFiltersInput = {
+  Page?: InputMaybe<PageFiltersInput>;
   Text?: InputMaybe<StringFilterInput>;
   and?: InputMaybe<Array<InputMaybe<ComponentDocsLinkSsylkaNaDokumentFiltersInput>>>;
   not?: InputMaybe<ComponentDocsLinkSsylkaNaDokumentFiltersInput>;
@@ -227,7 +228,7 @@ export type ComponentDocsLinkSsylkaNaDokumentFiltersInput = {
 };
 
 export type ComponentDocsLinkSsylkaNaDokumentInput = {
-  Document?: InputMaybe<Scalars['ID']['input']>;
+  Page?: InputMaybe<Scalars['ID']['input']>;
   Text?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -509,14 +510,14 @@ export type ComponentSupportPozhertvovaniyaInput = {
 
 export type ComponentTextWithDocumentTekstSPrikreplennymDokumentom = {
   __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom';
-  Document?: Maybe<UploadFile>;
+  LinkPage?: Maybe<Page>;
   LinkText?: Maybe<Scalars['String']['output']>;
   Text?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
 };
 
 export type ComponentTextWithDocumentTekstSPrikreplennymDokumentomInput = {
-  Document?: InputMaybe<Scalars['ID']['input']>;
+  LinkPage?: InputMaybe<Scalars['ID']['input']>;
   LinkText?: InputMaybe<Scalars['String']['input']>;
   Text?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -2305,7 +2306,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', Slug: string, PageName: string, locale?: string | null, PageConstructor?: Array<{ __typename?: 'ComponentAudioKatalogAudiozopisej', id: string } | { __typename?: 'ComponentCommonSectionIzobrazhenie', image?: { __typename?: 'UploadFile', alternativeText?: string | null, url: string, formats?: any | null } | null } | { __typename?: 'ComponentCommonSectionRaspisanie', TextBelow?: string | null, SectionTitle?: string | null, ScheduleItem?: Array<{ __typename?: 'ComponentHomePageSobytie', Place?: string | null, Period?: string | null, Name?: string | null, MoreButtonHref?: string | null, EventDescription?: string | null, id: string } | null> | null } | { __typename?: 'ComponentHeaderWithImagePervyjBlokSIzobrazheniem', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHeaderWithTextPervyjBlokSTekstom', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null } | { __typename?: 'ComponentHomePageBiografiya', SectionTitle?: string | null, BioigrafyPeriods?: Array<{ __typename?: 'ComponentHomePageBiografy', PeriodName?: string | null, PeriodDescription?: string | null, id: string } | null> | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHomePageParampara', SectionTitle?: string | null, LineageMember?: Array<{ __typename?: 'ComponentHomePageChlenParampary', Description?: string | null, Name?: string | null, Role?: string | null, id: string, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | null> | null } | { __typename?: 'ComponentHomePagePrevyuRazdelaSajta', Title?: string | null, DivisionName?: Enum_Componenthomepageprevyurazdelasajta_Divisionname | null } | { __typename?: 'ComponentPostKatalogStatej', id: string } | { __typename?: 'ComponentVideoKatalogVideo', id: string } | { __typename?: 'Error' } | null> | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string } | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null>, posts: Array<{ __typename?: 'Post', documentId: string, Slug: string, PostTitle: string, PostPreviewContent?: string | null, locale?: string | null, Date?: any | null } | null>, movies: Array<{ __typename?: 'Movie', createdAt?: any | null, YoutubeLink: string, documentId: string } | null>, audioCategories: Array<{ __typename?: 'AudioCategory', Name: string, documentId: string } | null>, postCategories: Array<{ __typename?: 'PostCategory', Name: string, documentId: string } | null>, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } } | null, footer?: { __typename?: 'Footer', SIteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Document?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, Document?: { __typename?: 'UploadFile', url: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
+export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', Slug: string, PageName: string, locale?: string | null, PageConstructor?: Array<{ __typename?: 'ComponentAudioKatalogAudiozopisej', id: string } | { __typename?: 'ComponentCommonSectionIzobrazhenie', image?: { __typename?: 'UploadFile', alternativeText?: string | null, url: string, formats?: any | null } | null } | { __typename?: 'ComponentCommonSectionRaspisanie', TextBelow?: string | null, SectionTitle?: string | null, ScheduleItem?: Array<{ __typename?: 'ComponentHomePageSobytie', Place?: string | null, Period?: string | null, Name?: string | null, MoreButtonHref?: string | null, EventDescription?: string | null, id: string } | null> | null } | { __typename?: 'ComponentHeaderWithImagePervyjBlokSIzobrazheniem', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHeaderWithTextPervyjBlokSTekstom', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null } | { __typename?: 'ComponentHomePageBiografiya', SectionTitle?: string | null, BioigrafyPeriods?: Array<{ __typename?: 'ComponentHomePageBiografy', PeriodName?: string | null, PeriodDescription?: string | null, id: string } | null> | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHomePageParampara', SectionTitle?: string | null, LineageMember?: Array<{ __typename?: 'ComponentHomePageChlenParampary', Description?: string | null, Name?: string | null, Role?: string | null, id: string, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | null> | null } | { __typename?: 'ComponentHomePagePrevyuRazdelaSajta', Title?: string | null, DivisionName?: Enum_Componenthomepageprevyurazdelasajta_Divisionname | null } | { __typename?: 'ComponentPostKatalogStatej', id: string } | { __typename?: 'ComponentVideoKatalogVideo', id: string } | { __typename?: 'Error' } | null> | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string } | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null>, posts: Array<{ __typename?: 'Post', documentId: string, Slug: string, PostTitle: string, PostPreviewContent?: string | null, locale?: string | null, Date?: any | null } | null>, movies: Array<{ __typename?: 'Movie', createdAt?: any | null, YoutubeLink: string, documentId: string } | null>, audioCategories: Array<{ __typename?: 'AudioCategory', Name: string, documentId: string } | null>, postCategories: Array<{ __typename?: 'PostCategory', Name: string, documentId: string } | null>, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } } | null, footer?: { __typename?: 'Footer', SIteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Page', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Page', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
 
 export type PageSeoQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2328,7 +2329,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', Date?: any | null, PostPreviewContent?: string | null, PostTitle: string, PostContent?: string | null, PostCategory?: { __typename?: 'PostCategory', Name: string } | null, SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SIteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Document?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Name?: string | null, id: string, Href?: string | null, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, id: string, Document?: { __typename?: 'UploadFile', url: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', id: string, Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
+export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', Date?: any | null, PostPreviewContent?: string | null, PostTitle: string, PostContent?: string | null, PostCategory?: { __typename?: 'PostCategory', Name: string } | null, SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SIteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Page', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Page', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
 
 export type PostSeoQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2622,8 +2623,8 @@ export const PageDocument = gql`
     Documents {
       Text
       id
-      Document {
-        url
+      Page {
+        Slug
       }
     }
     SocialMedia {
@@ -2640,8 +2641,8 @@ export const PageDocument = gql`
       TextWithDocument {
         Text
         LinkText
-        Document {
-          url
+        LinkPage {
+          Slug
         }
       }
       Inputs {
@@ -2832,32 +2833,32 @@ export const PostDocument = gql`
     Documents {
       Text
       id
-      Document {
-        url
+      Page {
+        Slug
       }
     }
     SocialMedia {
-      Name
+      Href
       Icon {
         url
       }
+      Name
       id
-      Href
     }
     SupportForm {
+      id
       Title
       TextWithDocument {
         Text
         LinkText
-        id
-        Document {
-          url
+        LinkPage {
+          Slug
         }
       }
       Inputs {
-        id
         Placeholder
         InputType
+        id
       }
     }
   }

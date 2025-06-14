@@ -9,26 +9,11 @@ import styles from "./Header.module.css";
 import clsx from "clsx";
 import Burger from "../svg/Burger";
 import CloseIcon from "../svg/CloseIcon";
-
-export type MenuItem = {
-  __typename?: "ComponentMenuElementMenyu";
-  Text?: string | null;
-  id: string;
-  PageLink?: {
-    __typename?: "Page";
-    Slug: string;
-    locale?: string | null;
-  } | null;
-} | null;
+import CloseButton from "../ui/closeButton/CloseButton";
+import Nav, { Menu } from "../ui/nav/Nav";
 
 export type HeaderProps = {
-  menu:
-    | {
-        __typename?: "Menu";
-        Menu?: Array<MenuItem> | null;
-      }
-    | null
-    | undefined;
+  menu: Menu;
   light?: boolean;
   dark?: boolean;
   IsLanguageButtonVisible?: boolean | null;
@@ -59,29 +44,22 @@ export default memo(function Header({
     setIsModalOpen(false);
   };
 
-  const nav = (
-    <nav className={styles["header__nav"]}>
-      <ul className={styles["header__nav-list"]}>
-        {menu?.Menu?.map((menuItem) => (
-          <HeaderNavItem
-            onClick={closeMobileMenuButtonHandler}
-            className={clsx(styles["header__nav-item"], styles.white)}
-            data={menuItem}
-            key={menuItem?.id}
-          ></HeaderNavItem>
-        ))}
-      </ul>
-    </nav>
-  );
   return (
     <header className={styles["header"]}>
       <div className={styles["header__left"]}>
         {logo}
-        <div className="desktop-only">{nav}</div>
+        <div className="desktop-only">
+          <Nav
+            menu={menu}
+          ></Nav>
+        </div>
       </div>
       <div className={clsx(styles["header__right"])}>
         {IsBigButtonVisible && (
-          <HeaderLectureBar className="non-mobile" button={BigButton}></HeaderLectureBar>
+          <HeaderLectureBar
+            className="non-mobile"
+            button={BigButton}
+          ></HeaderLectureBar>
         )}
         {IsLanguageButtonVisible && (
           <HeaderLangButton
@@ -91,21 +69,22 @@ export default memo(function Header({
           ></HeaderLangButton>
         )}
         <button onClick={burgerHandler} className={styles["header__burger"]}>
-        <Burger></Burger>
-      </button>
+          <Burger></Burger>
+        </button>
       </div>
-      
 
       <Modal isOpen={isModalOpen}>
         <div className={styles["mobile-menu"]}>
           <div className={styles["mobile-menu__body"]}>
-            <button
+            <CloseButton
+              className="mr-[-8px]"
               onClick={closeMobileMenuButtonHandler}
-              className={styles["mobule-menu__close-button"]}
-            >
-              <CloseIcon></CloseIcon>
-            </button>
-            {nav}
+            ></CloseButton>
+
+            <Nav
+              menu={menu}
+              handleButtonClick={closeMobileMenuButtonHandler}
+            ></Nav>
           </div>
         </div>
       </Modal>

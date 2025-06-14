@@ -9,6 +9,9 @@ import BlogPreview from "./sections/blog-preview/BlogPreview";
 import VideoPreview from "./sections/video-preview/VideoPreview";
 import Leanage from "./sections/leanage/Leanage";
 import Biography from "./sections/biography/Biography";
+import Schedule from "./sections/schedule/Schedule";
+import { Locale } from "@/utils/getLocalizedData";
+import Footer from "./sections/footer/Footer";
 
 export default function PageGenerator({
   page,
@@ -17,10 +20,13 @@ export default function PageGenerator({
   audiorecords,
   posts,
   movies,
+  footer
 }: PageQuery) {
   return (
     <>
       {page?.PageConstructor?.map((section, index) => {
+               console.log(section?.__typename)
+
         switch (section?.__typename) {
           case "ComponentHeaderWithImagePervyjBlokSIzobrazheniem": {
             return (
@@ -75,8 +81,14 @@ export default function PageGenerator({
           case "ComponentHomePageBiografiya": {
             return <Biography section={section} key={index}></Biography>
           }
+          case "ComponentCommonSectionRaspisanie": {
+            return <Schedule section={section} locale={page.locale as Locale} key={index}></Schedule>
+
+          }
         }
       })}
+
+      <Footer menu={menu} footer={footer} ></Footer>
     </>
   );
 }

@@ -18,6 +18,7 @@ export type LeanageProps = {
 };
 
 export default function Leanage({ section }: LeanageProps) {
+  
   return (
     <section className="container">
       <h2 className={clsx("section-heading", styles.title)}>

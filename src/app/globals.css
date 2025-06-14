@@ -19,6 +19,13 @@
   src: url("/fonts/Mulish-VariableFont.woff2") format("woff2");
 }
 
+@layer base {
+  html {
+    @apply text-[4px];
+  }
+}
+
+
 :root {
   --font-bounded: "Bounded";
   --font-mulish: "Mulish";
@@ -31,6 +38,8 @@
   --grey-1: #cacaca;
   --grey-2: #818181;
   --grey-3: #ededed;
+  --grey-4: #808080;
+  --brown-1: #3D322B;
   --main-purple: #7a66d5;
   --purple-2: #b6a9f1;
 }
@@ -91,6 +100,12 @@ section {
 .markdown p {
   @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%] mb-[16px] last:mb-0  md:mb-[14px] md:last:mb-0;
 }
+
+
+.close-button {
+  @apply w-[20px] h-[20px]
+}
+
 
 
 input[type="range"].progress-bar {

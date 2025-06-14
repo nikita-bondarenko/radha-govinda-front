@@ -12,21 +12,8 @@
     sm:mt-[5px] sm:py-[13.5px] sm:text-center sm:w-full;
 }
 
-.header__nav {
-}
-.header__nav-list {
-  @apply flex items-center gap-[40px] md:flex-col md:gap-[14px] md:items-end;
-}
-.header__nav-item {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 100%;
-  letter-spacing: 0.18px;
-  text-transform: uppercase;
-  @apply md:text-[16px] md:tracking-[0.32px] sm:text-[14px]
-}
 
-.header__nav-item.white,  .header__lang-button.white {
+ .header__lang-button.white {
     color: var(--white);
 }
 
@@ -48,10 +35,6 @@
 .mobile-menu__body {
   @apply bg-[var(--black-2)] h-full flex flex-col items-end gap-[32px] py-[28px] px-[20px]
 }
-.mobule-menu__close-button {
-  @apply w-[20px] h-[20px] mr-[-8px]
-}
-
 .header__lang-button {
   font-size: 18px;
   font-weight: 600;

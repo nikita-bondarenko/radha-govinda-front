@@ -39,14 +39,14 @@
 }
 
 .name {
-    @apply text-[#3D322B] font-manrope font-semibold text-[20px] leading-[120%] md:text-[16px] sm:text-[14px]
+    @apply text-brown font-manrope font-semibold text-[20px] leading-[120%] md:text-[16px] sm:text-[14px]
 }
 .role {
-    @apply text-[18px] tracking-[0.36px] leading-[120%] text-[#3D322B] md:text-[14px]
+    @apply text-[18px] tracking-[0.36px] leading-[120%] text-brown md:text-[14px]
 }
 
 .description {
-    @apply text-[16px] leading-[110%] tracking-[0.32px] text-[#3D322B] opacity-75 md:text-[14px]
+    @apply text-[16px] leading-[110%] tracking-[0.32px] text-brown opacity-75 md:text-[14px]
 }
 
 .first.member .description {

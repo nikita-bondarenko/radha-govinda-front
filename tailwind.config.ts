@@ -34,6 +34,10 @@ export default {
           DEFAULT: "var(--grey-1)",
           dark: "var(--grey-2)",
           light: "var(--grey-3)",
+          middle: "var(--grey-4)"
+        },
+        brown: {
+          DEFAULT: "var(--brown-1)"
         },
         purple: {
           DEFAULT: "var(--main-purple)",

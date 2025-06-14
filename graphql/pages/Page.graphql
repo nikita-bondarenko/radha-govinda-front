@@ -157,8 +157,8 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     Documents {
       Text
       id
-      Document {
-        url
+      Page {
+        Slug
       }
     }
     SocialMedia {
@@ -175,8 +175,8 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
       TextWithDocument {
         Text
         LinkText
-        Document {
-          url
+        LinkPage {
+          Slug
         }
       }
       Inputs {

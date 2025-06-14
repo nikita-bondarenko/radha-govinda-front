@@ -1,5 +1,5 @@
 .item {
-    @apply relative shrink-0 overflow-hidden rounded-[10px] sm:rounded-[5px] border-[1px] border-[#3D322B]
+    @apply relative shrink-0 overflow-hidden rounded-[10px] sm:rounded-[5px] border-[1px] border-brown
 }
 
 .smoke {

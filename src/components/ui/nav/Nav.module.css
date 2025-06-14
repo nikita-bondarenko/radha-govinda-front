@@ -1,0 +1,21 @@
+.nav {
+}
+.nav-list {
+  @apply flex items-center gap-[40px] md:flex-col md:gap-[14px] md:items-end;
+}
+
+.footer .nav-list {
+    @apply flex-col gap-[20px] md:items-start md:gap-[10px]
+}
+.nav-item {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: 0.18px;
+  text-transform: uppercase;
+  @apply md:text-[16px] md:tracking-[0.32px] sm:text-[14px]
+}
+
+.nav-item.white{
+    color: var(--white);
+}

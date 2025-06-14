@@ -11,8 +11,11 @@ import {
   PageQueryVariables,
 } from "@/gql/generated/graphql";
 import getDynamicMetadata from "@/utils/getDynamicMetadata";
-import Head from "next/head";
-import { notFound } from "next/navigation";
+import { setLocale } from "@/lib/localeStore/localeSlice";
+import { createStore } from "@/lib/store/store";
+import StoreProvider from "@/components/providers/StoreProvider";
+import { createLocaleStore } from "@/lib/localeStore/localeStore";
+import LocaleStoreProvider from "@/components/providers/LocaleStoreProvider";
 
 const documentId = "fr8l71tyb0idur0y2cl32xho";
 
@@ -67,5 +70,14 @@ export default async function Page({ params }: MetadataPropsType) {
       },
     },
   });
-  return <PageGenerator {...pageData}></PageGenerator>;
+
+  // Создаем Redux store на сервере и задаем locale
+  const store = createLocaleStore();
+  store.dispatch(setLocale("ru"));
+
+  return (
+    <LocaleStoreProvider initialState={store.getState()}>
+      <PageGenerator {...pageData} />
+    </LocaleStoreProvider>
+  );
 }

@@ -24,7 +24,7 @@ export default memo(function Modal({ isOpen, children, className }: ModalProps) 
     }
       }, [isOpen])
   const modal = (
-    <div className={clsx(styles["modal"],  isOpen && styles["open"], className)}>
+    <div className={clsx(styles["modal"],  isOpen ? styles["open"] : styles["closed"] , className)}>
       <div className={styles["modal__wrapper"]}>
         <div className={styles["modal__window"]}>{children}</div>
       </div>

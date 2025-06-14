@@ -3,8 +3,9 @@
 import { useRef } from "react";
 import { Provider } from "react-redux";
 import { createStore, AppStore } from "@/lib/store/store";
+import { createLocaleStore, LocaleStore } from "@/lib/localeStore/localeStore";
 
-type StoreProviderProps = {
+type LocaleStoreProviderProps = {
   children: React.ReactNode;
   /**
    * Предзагруженное состояние, полученное на сервере
@@ -12,15 +13,15 @@ type StoreProviderProps = {
   initialState?: Parameters<typeof createStore>[0];
 };
 
-export default function StoreProvider({
+export default function LocaleStoreProvider({
   children,
   initialState,
-}: StoreProviderProps) {
-  const storeRef = useRef<AppStore>();
+}: LocaleStoreProviderProps) {
+  const storeRef = useRef<LocaleStore>();
 
   if (!storeRef.current) {
     // Создаем store только один раз
-    storeRef.current = createStore(initialState);
+    storeRef.current = createLocaleStore(initialState);
   }
 
   return <Provider store={storeRef.current}>{children}</Provider>;

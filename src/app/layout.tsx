@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import StyledComponentsRegistry from "@/lib/styled-components/StyledComponentsRegistry";
-import { ThemeProvider } from "styled-components";
-import { theme } from "@/lib/styled-components/theme";
 import StoreProvider from "@/components/providers/StoreProvider";
 import Player from "@/components/player/Player";
 

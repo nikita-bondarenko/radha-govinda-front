@@ -32,32 +32,32 @@ query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCo
     Documents {
       Text
       id
-      Document {
-        url
+      Page {
+        Slug
       }
     }
     SocialMedia {
-      Name
+      Href
       Icon {
         url
       }
+      Name
       id
-      Href
     }
     SupportForm {
+      id
       Title
       TextWithDocument {
         Text
         LinkText
-        id
-        Document {
-          url
+        LinkPage {
+          Slug
         }
       }
       Inputs {
-        id
         Placeholder
         InputType
+        id
       }
     }
   }
