@@ -5,7 +5,7 @@
 }
 
 .footer .nav-list {
-    @apply flex-col gap-[20px] md:items-start md:gap-[10px]
+    @apply flex-col gap-[20px] items-start md:gap-[10px]
 }
 .nav-item {
   font-size: 18px;

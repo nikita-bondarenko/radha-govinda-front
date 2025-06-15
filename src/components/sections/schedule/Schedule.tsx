@@ -42,7 +42,7 @@ export type ScheduleItem = {
 export const ScheduleItem = memo(
   ({ data, detailsButtonText, onDetailsButtonClick }: ScheduleItem) => {
     return (
-      <div className="py-[20px] border-b-[1px] border-grey-middle first:border-t-[1px] min-h-[96px]  items-center grid grid-cols-[1fr_1fr_1fr_300px] justify-between  tracking-[0.36px] md:min-h-[58px] sm:grid-cols-[1fr_140px]">
+      <div className="py-[20px] border-b-[1px] border-grey-middle first:border-t-[1px] min-h-[96px]  items-center grid grid-cols-[1fr_1fr_1fr_25%]  justify-between  tracking-[0.36px] md:min-h-[58px] sm:grid-cols-[1fr_140px]">
         <div className="text-grey-middle sm:col-start-2">{data?.Period}</div>{" "}
         <div>{data?.Place}</div>{" "}
         <div className="font-bold sm:col-start-2 font-manrope">

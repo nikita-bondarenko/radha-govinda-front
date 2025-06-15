@@ -4,7 +4,7 @@ import { useLocaleSelector } from "@/lib/localeStore/hooks";
 import Link from "next/link";
 import React from "react";
 
-export type SocialMediaLink = {
+export type SocialMediaLinkData = {
   __typename?: "ComponentSocialMediaSsylkaNaSoczset";
   Href?: string | null;
   Name?: string | null;
@@ -15,10 +15,10 @@ export type SocialMediaLink = {
   } | null;
 } | null;
 
-export type SocialMediaList = Array<SocialMediaLink> | null | undefined;
+export type SocialMediaList = Array<SocialMediaLinkData> | null | undefined;
 
 type Props = {
-  data: SocialMediaLink;
+  data: SocialMediaLinkData;
   className: string;
 };
 

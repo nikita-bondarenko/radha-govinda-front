@@ -46,6 +46,7 @@
 
 * {
   font-family: var(--font-mulish);
+  outline: none;
 }
 
 .container {
@@ -72,7 +73,7 @@
   @apply sm:hidden;
 }
 
-body {
+.main {
   @apply flex flex-col gap-[120px] md:gap-[90px];
 }
 
@@ -81,7 +82,7 @@ section {
 }
 
 .section-heading {
-  @apply text-[30px] tracking-[0.6px] uppercase font-bold leading-[120%] text-black
+  @apply text-[30px] tracking-[0.6px] uppercase font-bold leading-[120%] 
   md:text-[20px] md:tracking-[0.4px];
 }
 

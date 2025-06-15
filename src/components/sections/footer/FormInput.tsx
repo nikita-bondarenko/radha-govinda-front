@@ -2,8 +2,8 @@ import React from 'react'
 
 type Props = {}
 
-export default function FormIInput({}: Props) {
+export default function FormInput({}: Props) {
   return (
-    <div>FormIInput</div>
+    <div>FormInput</div>
   )
 }

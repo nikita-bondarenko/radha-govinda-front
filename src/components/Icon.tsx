@@ -7,7 +7,7 @@ export type IconProps = {
 
 export default function Icon({src, className}:IconProps) {
   return (
-    <span style={{ backgroundImage: `url(${src})`} as CSSProperties} className={clsx('block bg-no-repeat bg-contain ', className, {
+    <span style={{ backgroundImage: `url(${src})`} as CSSProperties} className={clsx('block bg-no-repeat bg-contain bg-center', className, {
 
     })}></span>
   )

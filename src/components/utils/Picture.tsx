@@ -35,12 +35,15 @@ export default memo(function Picture({
   alternativeText,
   className,
 }: MyPicture) {
+  console.log(formats?.small?.url)
+
   return (
+
     <div className={className}>
      
       <picture>
-        <source srcSet={formats?.small.url} media="(max-width: 764px)" />
-        <source srcSet={formats?.small.url} media="(max-width: 1200px)" />
+        <source srcSet={formats?.small?.url || ""} media="(max-width: 764px)" />
+        <source srcSet={formats?.small?.url || ''} media="(max-width: 1200px)" />
         <img className="image" src={url} alt={alternativeText || ""} />
       </picture>
     </div>

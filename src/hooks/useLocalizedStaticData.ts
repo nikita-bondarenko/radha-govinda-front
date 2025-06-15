@@ -3,7 +3,8 @@ import { getLocalizedData } from "@/utils/getLocalizedData";
 import { useMemo } from "react";
 
 export const useLocalizedStaticData = () => {
-    const pageLocale = useLocaleSelector((state) => state.locale);
+
+    const pageLocale = useLocaleSelector((state) => state.locale.locale);
     return getLocalizedData(pageLocale)
 
 }

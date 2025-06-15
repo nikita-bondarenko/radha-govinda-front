@@ -24,9 +24,9 @@ export default function PageGenerator({
 }: PageQuery) {
   return (
     <>
+    <main className="main">
       {page?.PageConstructor?.map((section, index) => {
-               console.log(section?.__typename)
-
+              //  console.log(section?.__typename)
         switch (section?.__typename) {
           case "ComponentHeaderWithImagePervyjBlokSIzobrazheniem": {
             return (
@@ -89,6 +89,7 @@ export default function PageGenerator({
       })}
 
       <Footer menu={menu} footer={footer} ></Footer>
+      </main>
     </>
   );
 }

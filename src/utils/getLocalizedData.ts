@@ -8,6 +8,12 @@ type StaticElementsData = {
   footer: {
       formButton: string
   };
+  form: {
+    errors: {
+        email: string
+        amount: string
+    }
+  }
 };
 
 const staticElementsDataRu: StaticElementsData = {
@@ -19,7 +25,13 @@ const staticElementsDataRu: StaticElementsData = {
     },
     footer: {
         formButton: "Отправить"
-    }
+    },
+    form: {
+        errors: {
+            email: "Введите корректный email",
+            amount: "Поле обязательно"
+        }
+      }
 };
 
 const staticElementsDataEn: StaticElementsData = {
@@ -31,7 +43,13 @@ const staticElementsDataEn: StaticElementsData = {
     },
     footer: {
         formButton: "Submit"
-    }
+    },
+    form: {
+        errors: {
+            email: "Input correct email",
+            amount: "The field requared"
+        }
+      }
 };
 
 const staticTextsData = {

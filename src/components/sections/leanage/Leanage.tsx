@@ -18,7 +18,6 @@ export type LeanageProps = {
 };
 
 export default function Leanage({ section }: LeanageProps) {
-  
   return (
     <section className="container">
       <h2 className={clsx("section-heading", styles.title)}>
@@ -34,9 +33,21 @@ export default function Leanage({ section }: LeanageProps) {
               <div className={styles.member__picture}>
                 <img
                   src={member?.Image?.url}
-                  srcSet={`${member?.Image?.url} 500w,
-                    ${member?.Image?.formats?.small} 100w,
-                    ${member?.Image?.formats?.thumbnail} 50w`}
+                  srcSet={`${
+                    typeof member?.Image?.url === "string"
+                      ? member?.Image?.url + " 500w, "
+                      : ""
+                  } 
+                    ${
+                      typeof member?.Image?.formats?.small.url === "string"
+                        ? member?.Image?.formats?.small.url + " 100w, "
+                        : ""
+                    }
+                    ${
+                      typeof member?.Image?.formats?.thumbnail.url === "string"
+                        ? member?.Image?.formats?.thumbnail.url + " 50w "
+                        : ""
+                    }`}
                   sizes="(max-width: 766px) 100vw, 33vw"
                   alt={member?.Image?.alternativeText || ""}
                 />
