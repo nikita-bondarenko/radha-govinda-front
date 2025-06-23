@@ -135,6 +135,10 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     Name
     documentId
   }
+  videoCategories(locale: $postCategoriesLocale2) {
+    Name
+    documentId
+  }
   menu(locale: $menuLocale2) {
     Menu {
       PageLink {

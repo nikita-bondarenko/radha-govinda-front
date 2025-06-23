@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   email: z.string().email("Введите корректный email"),
+  amount: z.number().min(1, "Поле обязательно")
   // name: z
   //   .string()
   //   .min(1, "Поле обязательно")

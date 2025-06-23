@@ -12,6 +12,8 @@ import Biography from "./sections/biography/Biography";
 import Schedule from "./sections/schedule/Schedule";
 import { Locale } from "@/utils/getLocalizedData";
 import Footer from "./sections/footer/Footer";
+import HeroWithText from "./sections/hero-with-text/HeroWithText";
+import VideoCatalog from "./sections/video-catalog/VideoCatalog";
 
 export default function PageGenerator({
   page,
@@ -20,7 +22,8 @@ export default function PageGenerator({
   audiorecords,
   posts,
   movies,
-  footer
+  footer,
+  videoCategories
 }: PageQuery) {
   return (
     <>
@@ -38,6 +41,19 @@ export default function PageGenerator({
                 pageSlug={page.Slug}
                 locale={page.locale}
               ></HeroWithImage>
+            );
+          }
+          case "ComponentHeaderWithTextPervyjBlokSTekstom": {
+            return (
+              <HeroWithText
+              key={index}
+              section={section}
+              menu={menu}
+              logo={logo}
+              pageSlug={page.Slug}
+              locale={page.locale}
+     
+              ></HeroWithText>
             );
           }
           case "ComponentHomePagePrevyuRazdelaSajta": {
@@ -84,6 +100,9 @@ export default function PageGenerator({
           case "ComponentCommonSectionRaspisanie": {
             return <Schedule section={section} locale={page.locale as Locale} key={index}></Schedule>
 
+          }
+          case "ComponentVideoKatalogVideo": {
+            return <VideoCatalog movies={movies} videoCategories={videoCategories} key={index}></VideoCatalog>
           }
         }
       })}

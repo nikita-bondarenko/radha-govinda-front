@@ -13,8 +13,8 @@
 }
 
 
- .header__lang-button.white {
-    color: var(--white);
+ .header__lang-button.black {
+    color: var(--black-1);
 }
 
 .header {
@@ -36,6 +36,7 @@
   @apply bg-[var(--black-2)] h-full flex flex-col items-end gap-[32px] py-[28px] px-[20px]
 }
 .header__lang-button {
+  color: var(--white);
   font-size: 18px;
   font-weight: 600;
   line-height: 100%;

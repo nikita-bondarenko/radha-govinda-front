@@ -58,10 +58,7 @@ export default memo(function HeroWithImage({
         mdImageUrl={section.Image?.url}
         smImageUrl={section.Image?.url}
       ></Background>
-      {/* <Picture
-        className={styles["hero-with-image__picture"]}
-        {...section.Image}
-      ></Picture> */}
+
       <div className={clsx("container", styles.container)}>
         <Header
           {...section}

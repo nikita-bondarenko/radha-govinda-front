@@ -50,6 +50,7 @@ export default memo(function Header({
         {logo}
         <div className="desktop-only">
           <Nav
+            black={dark}
             menu={menu}
           ></Nav>
         </div>
@@ -63,13 +64,13 @@ export default memo(function Header({
         )}
         {IsLanguageButtonVisible && (
           <HeaderLangButton
-            className={clsx(styles.white, "desktop-only")}
+            className={clsx(dark && styles.black, "desktop-only")}
             pageSlug={pageSlug}
             locale={locale}
           ></HeaderLangButton>
         )}
         <button onClick={burgerHandler} className={styles["header__burger"]}>
-          <Burger></Burger>
+          <Burger fill={dark ? "black" : "white"}></Burger>
         </button>
       </div>
 
@@ -82,6 +83,7 @@ export default memo(function Header({
             ></CloseButton>
 
             <Nav
+            
               menu={menu}
               handleButtonClick={closeMobileMenuButtonHandler}
             ></Nav>
