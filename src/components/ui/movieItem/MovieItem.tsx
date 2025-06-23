@@ -3,7 +3,10 @@ import styles from "./MovieItem.module.css";
 import { Movie } from "@/components/sections/video-preview/VideoPreview";
 import { useInView } from "react-intersection-observer";
 import useVisibilityPersentage from "@/hooks/useVisibilityPersentage";
-export default memo(function MovieItem({ movie }: { movie: Movie }) {
+import clsx from "clsx";
+
+
+export default memo(function MovieItem({ movie, className }: { movie: Movie, className?:string }) {
   const { ref, percentInView } = useVisibilityPersentage();
   const youtubeEmbedLink = useMemo(() => {
     const urlObj = new URL(movie?.YoutubeLink || "");
@@ -24,7 +27,7 @@ export default memo(function MovieItem({ movie }: { movie: Movie }) {
     return `https://www.youtube.com/embed/${videoId}${params}`;
   }, [movie]);
   return (
-    <li ref={ref} className={styles.item}>
+    <li ref={ref} className={clsx(styles.item, className)}>
       <div
         style={{ opacity: 1 - percentInView / 100 }}
         className={styles.smoke}

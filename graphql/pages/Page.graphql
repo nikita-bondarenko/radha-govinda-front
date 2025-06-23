@@ -126,6 +126,11 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     createdAt
     YoutubeLink
     documentId
+    MovieName
+    VideoCategory {
+      documentId
+      Name
+    }
   }
   audioCategories(locale: $audioCategoriesLocale2) {
     Name

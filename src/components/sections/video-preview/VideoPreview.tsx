@@ -5,11 +5,14 @@ import { PreviewSectionProps } from "../audio-preview/AudioPreview";
 import styles from "./VideoPreview.module.css";
 import MovieItem from "@/components/ui/movieItem/MovieItem";
 import clsx from "clsx";
+import { Category } from "../video-catalog/VideoCatalog";
 export type Movie = {
   __typename?: "Movie";
   createdAt?: any | null;
   YoutubeLink: string;
   documentId: string;
+  MovieName: string;
+  VideoCategory?: Category | null | undefined
 } | null;
 
 export type VideoPreviewProps = {

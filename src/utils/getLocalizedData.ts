@@ -4,6 +4,17 @@ type StaticElementsData = {
     schedule: {
         detailsButton: string
     };
+    filter: {
+          input: {
+            placeholder: string
+          },
+          allCategoriesOption: {
+            default: string
+            movies: string
+            audios: string
+            posts: string
+          }
+    }
   };
   footer: {
       formButton: string
@@ -21,7 +32,18 @@ const staticElementsDataRu: StaticElementsData = {
     section: {
         schedule: {
             detailsButton: "подробнее"
+        },
+      filter: {
+        input : {
+            placeholder: "Поиск"
+        },
+        allCategoriesOption: {
+            default: "Все категории",
+            movies: "Все видео",
+            audios: "Все аудио",
+            posts: "Все статьи"
         }
+      }
     },
     footer: {
         formButton: "Отправить"
@@ -39,6 +61,17 @@ const staticElementsDataEn: StaticElementsData = {
     section: {
         schedule: {
             detailsButton: "details"
+        },
+        filter: {
+            input: {
+                placeholder: "Search"
+            },
+            allCategoriesOption: {
+                default: "All categories",
+                movies: "All videos",
+                audios: "All audios",
+                posts: "All articles"
+            }
         }
     },
     footer: {

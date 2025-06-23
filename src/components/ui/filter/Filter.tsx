@@ -1,11 +1,81 @@
-import React from 'react'
+import { Category } from "@/components/sections/video-catalog/VideoCatalog";
+import Search from "@/components/svg/Search";
+import { Movie } from "@/gql/generated/graphql";
+import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
+import { getLocalizedData } from "@/utils/getLocalizedData";
+import clsx from "clsx";
+import React, { memo, useEffect, useState } from "react";
+import SelectOption from "./SelectOption";
 
-type Props = {}
+type Props<T> = {
+  categories: Category[];
+  items: T[];
+  filterConditionBySearchInput: (item: T, searchInput: string) => boolean;
+  filterConditionByCategoryId: (item: T, selectedCategoryId: string) => boolean;
+  handleFilteredItemsSelection: (items: T[]) => void;
+  allCategoriesOptionText: string | undefined
 
-const Filter = (props: Props) => {
+};
+
+const Filter = <T,>({
+  categories,
+  items,
+  filterConditionByCategoryId,
+  filterConditionBySearchInput,
+  handleFilteredItemsSelection,
+  allCategoriesOptionText
+}: Props<T>) => {
+  const [searchInputValue, setSearchInputValue] = useState<string>();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
+
+  useEffect(() => {
+    let filteredItems: T[] = items;
+
+    if (selectedCategoryId) {
+      filteredItems = filteredItems.filter((item: T) =>
+        filterConditionByCategoryId(item, selectedCategoryId)
+      );
+    }
+
+    if (!!searchInputValue && searchInputValue.trim().length > 0) {
+      filteredItems = filteredItems.filter((item) =>
+        filterConditionBySearchInput(item, searchInputValue)
+      );
+    }
+
+    handleFilteredItemsSelection(filteredItems);
+  }, [searchInputValue, selectedCategoryId, items]);
+
+  const localizedData = useLocalizedStaticData()
+
   return (
-    <div>Filter</div>
-  )
-}
+    <div className="flex items-start justify-between md:flex-col md:gap-[20px] container mb-[42px] md:mb-[40px] sm:mb-[23px]">
+      <div className="flex max-w-[716px] gap-x-[14px] gap-y-[8px] flex-wrap md:gap-x-[20px] sm:max-w-full sm:flex-nowrap sm:overflow-x-auto sm:scrollbar-hide sm:overscroll-x-contain sm:touch-pan-x sm:select-none">
+        <SelectOption
+          children={allCategoriesOptionText}
+          isSelected={!selectedCategoryId}
+          onClick={() => setSelectedCategoryId(undefined)}
+        />  
+        {categories.map((category) => (
+          <SelectOption
+            key={category?.documentId}
+            children={category?.Name}
+            isSelected={selectedCategoryId === category?.documentId}
+            onClick={() => setSelectedCategoryId(category?.documentId)}
+          />
+        ))}
+      </div>
+      <div className="relative">
+        <input
+        className="rounded-full border-[#818181] border p-[12px] pl-[46px] text-[14px] leading-[110%] w-[280px] md:w-[320px] sm:w-full"
+        placeholder={localizedData?.section.filter.input.placeholder || ''}
+          type="text"
+          onChange={(e) => setSearchInputValue(e.target.value)}
+        />
+        <Search className="w-[24px] h-[24px] absolute top-1/2 -translate-y-1/2 left-[19px]" />
+      </div>
+    </div>
+  );
+};
 
-export default Filter
+export default Filter;

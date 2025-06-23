@@ -59,5 +59,36 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }: { addUtilities: any }) {
+      addUtilities({
+        '.scrollbar-hide': {
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          /* Hide scrollbar for IE, Edge and Firefox */
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+        '.scrollbar-thin': {
+          /* Thin scrollbar for Chrome, Safari and Opera */
+          '&::-webkit-scrollbar': {
+            width: '4px',
+            height: '4px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'rgba(0, 0, 0, 0.2)',
+            borderRadius: '2px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: 'rgba(0, 0, 0, 0.4)',
+          },
+        },
+      })
+    }
+  ],
 } satisfies Config;
