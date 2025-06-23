@@ -27,7 +27,7 @@ export default memo(function MovieItem({ movie, className }: { movie: Movie, cla
     return `https://www.youtube.com/embed/${videoId}${params}`;
   }, [movie]);
   return (
-    <li ref={ref} className={clsx(styles.item, className)}>
+    <div ref={ref} className={clsx(styles.item, className)}>
       <div
         style={{ opacity: 1 - percentInView / 100 }}
         className={styles.smoke}
@@ -39,6 +39,6 @@ export default memo(function MovieItem({ movie, className }: { movie: Movie, cla
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       ></iframe>
-    </li>
+    </div>
   );
 });

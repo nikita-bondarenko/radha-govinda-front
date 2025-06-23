@@ -3,7 +3,7 @@ import Filter from "@/components/ui/filter/Filter";
 import { Movie } from "@/components/sections/video-preview/VideoPreview";
 import React, { useState } from "react";
 import MovieItem from "@/components/ui/movieItem/MovieItem";
-import VirtualizedGrid from "@/components/ui/virtualizedGrid/VirtualizedGrid";
+import InfiniteVirtualGrid from "@/components/ui/infiniteVirtualGrid/InfiniteVirtualGrid";
 import { searchFilteringCondition } from "@/utils/searchFilteringCondition";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 
@@ -25,7 +25,9 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
   return (
     <div>
       <Filter
-        allCategoriesOptionText={localizedData?.section.filter.allCategoriesOption.movies}
+        allCategoriesOptionText={
+          localizedData?.section.filter.allCategoriesOption.movies
+        }
         items={movies}
         categories={videoCategories}
         filterConditionBySearchInput={(item, searchInput) =>
@@ -36,15 +38,39 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
         }
         handleFilteredItemsSelection={setFilteredItems}
       />
-      
-   <ul className="container grid grid-cols-2 gap-[20px] md:gap-[10px] sm:grid-cols-1 sm:gap-[20px]">
-    {filteredItems.map((movie) => (
-      <MovieItem 
-        className="aspect-[16/9] [&_iframe]:w-full [&_iframe]:h-full w-full h-full" 
-        movie={movie}
+
+      <InfiniteVirtualGrid
+        items={filteredItems}
+        renderItem={(movie) => (
+          <MovieItem
+            className="aspect-[16/9] [&_iframe]:w-full [&_iframe]:h-full w-full h-full"
+            movie={movie}
+          />
+        )}
+        getItemKey={(movie) => movie?.documentId || ""}
+        itemsPerPage={12}
+        aspectRatio={{
+          sm: 16 / 9,
+          md: 16 / 9,
+          lg: 16 / 9,
+        }}
+        gap={{
+          sm: 20,
+          md: 10,
+          lg: 20,
+        }}
+        className="container"
+        emptyMessage="Фильмы не найдены"
+        loadMoreText="Показать ещё фильмы"
+        containerPadding={40}
+        loadThreshold={800}
+        viewportBuffer={2}
+        columns={{
+          sm: 1,
+          md: 2,
+          lg: 3,
+        }}
       />
-    ))}
-   </ul>
     </div>
   );
 };
