@@ -1,5 +1,5 @@
 .body {
- @apply px-[20px] py-[40px] h-full rounded-[10px] overflow-hidden flex flex-col justify-between min-h-[320px] gap-[20px] md:min-h-[276px] sm:min-h-[410px] sm:w-[320px] sm:gap-[10px] sm:p-0;
+ @apply px-[20px] py-[40px] h-full rounded-[10px] overflow-hidden flex flex-col justify-between min-h-[320px] gap-[20px] md:min-h-[276px] sm:min-h-[410px]  sm:gap-[10px] sm:p-0;
  background: linear-gradient(0deg, #E5E5E5 0%, #D6D2E8 100%);
 }
 

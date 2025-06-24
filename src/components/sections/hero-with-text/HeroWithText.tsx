@@ -1,3 +1,5 @@
+"use client"
+
 import { Menu, MenuItem } from "@/components/ui/nav/Nav";
 import React from "react";
 import Picture, { Image } from "@/components/utils/Picture";
@@ -7,7 +9,7 @@ import HeaderLogo from "@/components/header/HeaderLogo";
 import clsx from "clsx";
 import ReactMarkdown from "react-markdown";
 import styles from "./HeroWithText.module.css";
-
+import { usePathname, useRouter } from "next/navigation";
 type Props = {
   menu?: Menu;
   section: {
@@ -31,6 +33,8 @@ type Props = {
 };
 
 const HeroWithText = ({ menu, section, logo, locale, pageSlug }: Props) => {
+  const pathname = usePathname();
+
   return (
     <section className={styles["hero-with-text"]}>
       <div className={styles["hero-with-text__gradient"]}></div>
@@ -47,7 +51,14 @@ const HeroWithText = ({ menu, section, logo, locale, pageSlug }: Props) => {
 
         <div className={styles["hero-with-text__body"]}>
           <div className={styles["hero-with-text__content"]}>
-          <h1 className={styles["hero-with-text__title"]}>{section.Title}</h1>
+            <h1
+              className={clsx(styles["hero-with-text__title"], {
+                "text-[374px] lg:text-[24.5vw] sm:text-[23vw]": pathname.includes("videos"),
+                "text-[342px] lg:text-[22.3vw] sm:text-[21vw] ": pathname.includes("articles") || !pathname.includes("videos"),
+              })}
+            >
+              {section.Title}
+            </h1>
 
             <div className={styles["hero-with-text__subtitle"]}>
               <ReactMarkdown>{section.Subtitle}</ReactMarkdown>

@@ -287,13 +287,7 @@ function InfiniteVirtualGrid<T>({
   const localizedData = useLocalizedStaticData();
 
   if (items.length === 0) {
-    return (
-      <div
-        className={`text-center py-10 section-heading text-grey-middle ${className}`}
-      >
-        <p>{localizedData?.section.catalog.emptyMessage}</p>
-      </div>
-    );
+    return null;
   }
 
   // Показываем загрузку до правильной инициализации на клиенте

@@ -8,12 +8,12 @@ import clsx from "clsx";
 import ReactMarkdown from "react-markdown";
 export type PostPreviewProps = {
   post: Post;
+  className?: string;
 };
 
-export default function PostPreview({ post }: PostPreviewProps) {
+export default function PostPreview({ post, className }: PostPreviewProps) {
   return (
-    <li>
-      <div className={styles.body}>
+      <div className={clsx(styles.body, className)}>
         <div className={styles.content}>
           <div className={styles.content__top}>
             <h3 className={styles.title}>{post?.PostTitle}</h3>
@@ -31,6 +31,5 @@ export default function PostPreview({ post }: PostPreviewProps) {
           {post?.locale === "ru" ? "читать дальше" : "read more"}
         </ButtonMain>
       </div>
-    </li>
   );
 }

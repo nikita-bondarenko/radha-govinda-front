@@ -14,6 +14,8 @@ import { Locale } from "@/utils/getLocalizedData";
 import Footer from "./sections/footer/Footer";
 import HeroWithText from "./sections/hero-with-text/HeroWithText";
 import VideoCatalog from "./sections/video-catalog/VideoCatalog";
+import BlogCatalog from "./sections/blog-catalog/BlogCatalog";
+import SectionImage from "./sections/section-image/SectionImage";
 
 export default function PageGenerator({
   page,
@@ -23,13 +25,15 @@ export default function PageGenerator({
   posts,
   movies,
   footer,
-  videoCategories
+  videoCategories,
+  postCategories
 }: PageQuery) {
   return (
     <>
     <main className="main">
       {page?.PageConstructor?.map((section, index) => {
               //  console.log(section?.__typename)
+              console.log(section?.__typename)
         switch (section?.__typename) {
           case "ComponentHeaderWithImagePervyjBlokSIzobrazheniem": {
             return (
@@ -103,6 +107,14 @@ export default function PageGenerator({
           }
           case "ComponentVideoKatalogVideo": {
             return <VideoCatalog movies={movies} videoCategories={videoCategories} key={index}></VideoCatalog>
+          }
+
+          case "ComponentPostKatalogStatej": {
+            return <BlogCatalog posts={posts} postsCategories={postCategories} key={index}></BlogCatalog>
+          }
+
+          case "ComponentCommonSectionIzobrazhenie": {
+            return <SectionImage section={section} key={index}></SectionImage>
           }
         }
       })}

@@ -3,6 +3,7 @@ import styles from "./BlogPreview.module.css";
 import PreviewSection from "@/components/ui/previewSection/PreviewSection";
 import { PreviewSectionProps } from "../audio-preview/AudioPreview";
 import PostPreview from "@/components/ui/postPreview/PostPreview";
+import { Category } from "../video-catalog/VideoCatalog";
 
 export type Post = {
   __typename?: "Post";
@@ -12,6 +13,7 @@ export type Post = {
   PostPreviewContent?: string | null;
   locale?: string | null;
   Date?: any | null;
+  PostCategory?: Category;
 } | null;
 
 export type BlogPreviewProps = {
@@ -32,7 +34,7 @@ export default memo(function BlogPreview({
       <div className={styles.wrapper}>
         <ul className={styles.list}>
           {posts.map((post) => (
-            <PostPreview key={post?.documentId} post={post}></PostPreview>
+            <PostPreview className="sm:w-[320px]" key={post?.documentId} post={post}></PostPreview>
           ))}
         </ul>
       </div>
