@@ -53,7 +53,7 @@ const FormDisclaimerText = ({
     <p className="text-[12px] leading-[100%] max-w-[330px] mb-[20px]  sm:text-[10px] sm:max-w-[275px] sm:mb-[34px]">
       {fullText?.replace(linkedText || "", "")}
       <Link
-        className="underline underline-offset-2"
+        className="underline underline-offset-2 whitespace-nowrap"
         href={href}
       >
         {linkedText}

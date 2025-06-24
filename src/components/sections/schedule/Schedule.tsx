@@ -113,6 +113,7 @@ export default memo(function Schedule({ section }: ScheduleProps) {
             className="absolute top-[46px] right-[46px] md:top-[36px] md:right-[26px] sm:top-[26px] sm:right-[30px] "
             onClick={handleCloseButtonClick}
           ></CloseButton>
+          <div className="container">
           <h3 className="section-heading mb-[15px] sm:mb-[18px]">
             {selectedScheduleItemData?.Name}
           </h3>
@@ -127,6 +128,8 @@ export default memo(function Schedule({ section }: ScheduleProps) {
               {selectedScheduleItemData?.EventDescription}
             </ReactMarkdown>
           </div>
+          </div>
+        
         </div>
       </Modal>
     </>

@@ -1,4 +1,5 @@
 import ArrowLeft from "@/components/svg/ArrowLeft";
+import clsx from "clsx";
 import React from "react";
 
 type Props = {
@@ -10,7 +11,9 @@ type Props = {
 const PaginationButton = (props: Props) => {
   return (
     <button
-      className={"w-[30px] h-[30px] flex items-center justify-center"}
+      className={clsx("w-[30px] h-[30px] flex items-center justify-center cursor-pointer", {
+        "opacity-60":props.disabled
+      })}
       onClick={props.onClick}
       disabled={props.disabled}
     >

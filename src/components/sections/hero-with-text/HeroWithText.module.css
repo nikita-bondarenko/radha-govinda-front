@@ -68,7 +68,6 @@
     
     color: #CACACA;
     font-weight: 400;
-    margin-left: -20px;
     letter-spacing: 1px;
     -webkit-text-stroke-width: 1px;
     line-height: 100%;
@@ -91,7 +90,6 @@
   
   @media (max-width: 1500px) {
     .hero-with-text__title {
-      margin-left: -1vw;
       letter-spacing: 1.4px;
     }
 

@@ -22,6 +22,7 @@ export type HeaderProps = {
   BigButton?: HeaderButton;
   pageSlug: string;
   locale?: string | null;
+  lectureBarClassName?: string
 };
 
 export default memo(function Header({
@@ -34,6 +35,7 @@ export default memo(function Header({
   BigButton,
   pageSlug,
   locale,
+  lectureBarClassName
 }: HeaderProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const burgerHandler = () => {
@@ -58,7 +60,7 @@ export default memo(function Header({
       <div className={clsx(styles["header__right"])}>
         {IsBigButtonVisible && (
           <HeaderLectureBar
-            className="non-mobile"
+            className={clsx("non-mobile", lectureBarClassName)}
             button={BigButton}
           ></HeaderLectureBar>
         )}

@@ -90,7 +90,7 @@ const Pagination = <T,>(props: Props<T>) => {
       <div  className={props.className}>
         {itemsToShow.map((item) => props.renderItem(item))}
       </div>
-      <div className="flex items-center gap-[57px] mt-[20px] sm:justify-center">
+    {totalPages > 1 &&  <div className="flex items-center gap-[57px] mt-[20px] sm:justify-center">
         <PaginationButton
           disabled={currentPage === 1}
           onClick={handlelPrevButtonClick}
@@ -103,7 +103,7 @@ const Pagination = <T,>(props: Props<T>) => {
         >
           <ArrowRight />
         </PaginationButton>
-      </div>
+      </div>}
     </div>
   );
 };

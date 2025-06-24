@@ -18,7 +18,7 @@ export const parseParams = async (params: Promise<{ slug: string[] }>) => {
     : "ru";
   const isEnglish = locale === "en";
   const isPost = postType === "post";
-  const slug = !slugArray
+  const slug = (!slugArray || slugArray.length === 1 && isEnglish)
     ? "home"
     : isPost && isEnglish
     ? slugArray[2]
