@@ -6,6 +6,10 @@
    /* @apply  overflow-x-auto */
 }
 
+.list {
+  @apply w-max
+}
+
 .list, .scrollbar {
 @apply px-[calc((100vw-1512px)/2+40px)] 
 }
