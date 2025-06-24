@@ -60,15 +60,13 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
           lg: 20,
         }}
         className="container"
-        emptyMessage="Фильмы не найдены"
-        loadMoreText="Показать ещё фильмы"
         containerPadding={40}
         loadThreshold={800}
-        viewportBuffer={2}
+        viewportBuffer={12}
         columns={{
           sm: 1,
           md: 2,
-          lg: 3,
+          lg: 2,
         }}
       />
     </div>

@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+} from "react";
 
 interface GridColumns {
   sm?: number; // <= 740px
@@ -33,9 +40,7 @@ interface InfiniteVirtualGridProps<T> {
   aspectRatio?: number | ResponsiveAspectRatio; // Если указано, то itemHeight игнорируется
   gap?: number | ResponsiveGap;
   className?: string;
-  emptyMessage?: string;
   columns?: GridColumns;
-  loadMoreText?: string;
   containerPadding?: number;
   loadThreshold?: number;
   viewportBuffer?: number;
@@ -50,21 +55,22 @@ function InfiniteVirtualGrid<T>({
   aspectRatio,
   gap = 20,
   className = "",
-  emptyMessage = "Элементы не найдены",
   columns = { sm: 1, md: 2, lg: 2 },
-  loadMoreText = "Показать ещё",
   containerPadding = 40,
   loadThreshold = 1000,
-  viewportBuffer = 3
+  viewportBuffer = 3,
 }: InfiniteVirtualGridProps<T>) {
   const [visibleCount, setVisibleCount] = useState(itemsPerPage);
   const [isClientMounted, setIsClientMounted] = useState(false);
   const [windowWidth, setWindowWidth] = useState<number>(
-    typeof window !== 'undefined' ? window.innerWidth : 740
+    typeof window !== "undefined" ? window.innerWidth : 740
   );
-  const [visibleRange, setVisibleRange] = useState<{ start: number; end: number }>({
+  const [visibleRange, setVisibleRange] = useState<{
+    start: number;
+    end: number;
+  }>({
     start: 0,
-    end: itemsPerPage
+    end: itemsPerPage,
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -83,8 +89,8 @@ function InfiniteVirtualGrid<T>({
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isClientMounted]);
 
   // Определяем количество колонок
@@ -100,10 +106,10 @@ function InfiniteVirtualGrid<T>({
 
   // Определяем gap для текущего размера экрана
   const currentGap = useMemo(() => {
-    if (typeof gap === 'number') {
+    if (typeof gap === "number") {
       return gap;
     }
-    
+
     if (windowWidth <= 740) {
       return gap.sm || 20;
     } else if (windowWidth <= 1200) {
@@ -113,39 +119,73 @@ function InfiniteVirtualGrid<T>({
     }
   }, [windowWidth, gap]);
 
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+
+  // Отслеживаем размеры контейнера
+  useEffect(() => {
+    if (!isClientMounted) return;
+
+    const updateContainerWidth = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.clientWidth;
+        if (width > 0) {
+          setContainerWidth(width);
+        }
+      }
+    };
+
+    // Устанавливаем начальную ширину с небольшой задержкой для гарантии рендера
+    const timeoutId = setTimeout(updateContainerWidth, 0);
+
+    // Также обновляем при изменении размера окна
+    window.addEventListener("resize", updateContainerWidth);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", updateContainerWidth);
+    };
+  }, [isClientMounted]);
+
   // Вычисляем ширину одного элемента
   const itemWidth = useMemo(() => {
-    const availableWidth = windowWidth - containerPadding * 2;
+    // Если containerWidth еще не установлен, используем fallback расчет
+    const availableWidth =
+      containerWidth || Math.max(windowWidth - containerPadding * 2, 300);
     const totalGapWidth = currentGap * (columnCount - 1);
-    return Math.floor((availableWidth - totalGapWidth) / columnCount);
-  }, [windowWidth, containerPadding, currentGap, columnCount]);
+    const calculatedWidth = Math.floor(
+      (availableWidth - totalGapWidth) / columnCount
+    );
+
+    // Возвращаем положительное значение, минимум 100px
+    return Math.max(calculatedWidth, 100);
+  }, [containerWidth, windowWidth, containerPadding, currentGap, columnCount]);
 
   // Определяем высоту элемента для текущего размера экрана
   const currentItemHeight = useMemo(() => {
     // Если указан aspect ratio, используем его
     if (aspectRatio) {
       let currentAspectRatio: number;
-      
-      if (typeof aspectRatio === 'number') {
+
+      if (typeof aspectRatio === "number") {
         currentAspectRatio = aspectRatio;
       } else {
         if (windowWidth <= 740) {
-          currentAspectRatio = aspectRatio.sm || 16/9;
+          currentAspectRatio = aspectRatio.sm || 16 / 9;
         } else if (windowWidth <= 1200) {
-          currentAspectRatio = aspectRatio.md || 16/9;
+          currentAspectRatio = aspectRatio.md || 16 / 9;
         } else {
-          currentAspectRatio = aspectRatio.lg || 16/9;
+          currentAspectRatio = aspectRatio.lg || 16 / 9;
         }
       }
-      
+
       return Math.floor(itemWidth / currentAspectRatio);
     }
-    
+
     // Иначе используем itemHeight
-    if (typeof itemHeight === 'number') {
+    if (typeof itemHeight === "number") {
       return itemHeight;
     }
-    
+
     if (windowWidth <= 740) {
       return itemHeight.sm || 280;
     } else if (windowWidth <= 1200) {
@@ -177,11 +217,15 @@ function InfiniteVirtualGrid<T>({
 
     // Вычисляем видимую область с буфером
     const visibleTop = scrollTop - viewportBuffer * currentItemHeight;
-    const visibleBottom = scrollTop + windowHeight + viewportBuffer * currentItemHeight;
+    const visibleBottom =
+      scrollTop + windowHeight + viewportBuffer * currentItemHeight;
 
     // Находим первый и последний видимый элемент
     const rowHeight = currentItemHeight + currentGap;
-    const startRow = Math.max(0, Math.floor((visibleTop - containerTop) / rowHeight));
+    const startRow = Math.max(
+      0,
+      Math.floor((visibleTop - containerTop) / rowHeight)
+    );
     const endRow = Math.min(
       Math.ceil(loadedItems.length / columnCount),
       Math.ceil((visibleBottom - containerTop) / rowHeight)
@@ -191,11 +235,17 @@ function InfiniteVirtualGrid<T>({
     const end = Math.min(loadedItems.length, (endRow + 1) * columnCount);
 
     setVisibleRange({ start, end });
-  }, [loadedItems.length, columnCount, currentItemHeight, currentGap, viewportBuffer]);
+  }, [
+    loadedItems.length,
+    columnCount,
+    currentItemHeight,
+    currentGap,
+    viewportBuffer,
+  ]);
 
   // Функция загрузки дополнительных элементов
   const loadMore = useCallback(() => {
-    setVisibleCount(prev => Math.min(prev + itemsPerPage, items.length));
+    setVisibleCount((prev) => Math.min(prev + itemsPerPage, items.length));
   }, [itemsPerPage, items.length]);
 
   // Обработчик скролла страницы
@@ -219,8 +269,8 @@ function InfiniteVirtualGrid<T>({
     // Инициализируем видимый диапазон
     updateVisibleRange();
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [hasMore, loadThreshold, updateVisibleRange, loadMore]);
 
   // Обновляем видимый диапазон при изменении размеров
@@ -234,10 +284,14 @@ function InfiniteVirtualGrid<T>({
     setVisibleRange({ start: 0, end: itemsPerPage });
   }, [items, itemsPerPage]);
 
+  const localizedData = useLocalizedStaticData();
+
   if (items.length === 0) {
     return (
-      <div className={`text-center py-10 ${className}`}>
-        <p>{emptyMessage}</p>
+      <div
+        className={`text-center py-10 section-heading text-grey-middle ${className}`}
+      >
+        <p>{localizedData?.section.catalog.emptyMessage}</p>
       </div>
     );
   }
@@ -246,61 +300,51 @@ function InfiniteVirtualGrid<T>({
   if (!isClientMounted) {
     return (
       <div className={`text-center py-10 ${className}`}>
-        <p>Загрузка...</p>
+        <p>{localizedData?.section.catalog.loadingMessage}</p>
       </div>
     );
   }
 
   // CSS для сетки
   const gridStyle = {
-    position: 'relative' as const,
+    position: "relative" as const,
     height: `${containerHeight}px`,
-    display: 'grid',
+    display: "grid",
     gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-    gap: `${currentGap}px`,
   };
 
   return (
     <div className={className}>
       <div ref={containerRef} style={gridStyle}>
         {/* Рендерим только видимые элементы */}
-        {loadedItems.slice(visibleRange.start, visibleRange.end).map((item, relativeIndex) => {
-          const actualIndex = visibleRange.start + relativeIndex;
-          const rowIndex = Math.floor(actualIndex / columnCount);
-          const columnIndex = actualIndex % columnCount;
-          
-          return (
-            <div
-              key={getItemKey(item, actualIndex)}
-              style={{
-                position: 'absolute',
-                top: `${rowIndex * (currentItemHeight + currentGap)}px`,
-                left: `${(100 / columnCount) * columnIndex}%`,
-                width: `calc(${100 / columnCount}% - ${currentGap * (columnCount - 1) / columnCount}px)`,
-                height: `${currentItemHeight}px`,
-              }}
-            >
-              {renderItem(item, actualIndex)}
-            </div>
-          );
-        })}
+        {loadedItems
+          .slice(visibleRange.start, visibleRange.end)
+          .map((item, relativeIndex) => {
+            const actualIndex = visibleRange.start + relativeIndex;
+            const rowIndex = Math.floor(actualIndex / columnCount);
+            const columnIndex = actualIndex % columnCount;
+            
+            // Вычисляем позицию с учетом gap
+            const leftPosition = columnIndex * (itemWidth + currentGap);
+
+            return (
+              <div
+                key={getItemKey(item, actualIndex)}
+                style={{
+                  position: "absolute",
+                  top: `${rowIndex * (currentItemHeight + currentGap)}px`,
+                  left: `${leftPosition}px`,
+                  width: `${itemWidth}px`,
+                  height: `${currentItemHeight}px`,
+                }}
+              >
+                {renderItem(item, actualIndex)}
+              </div>
+            );
+          })}
       </div>
-      
-      {hasMore && (
-        <div className="text-center mt-8">
-          <button
-            onClick={loadMore}
-            className="px-6 py-3 bg-purple-main text-white rounded-lg hover:bg-purple-light transition-colors"
-          >
-            {loadMoreText}
-          </button>
-          <p className="text-sm text-grey-dark mt-2">
-            Показано {visibleCount} из {items.length}
-          </p>
-        </div>
-      )}
     </div>
   );
 }
 
-export default InfiniteVirtualGrid; 
+export default InfiniteVirtualGrid;
