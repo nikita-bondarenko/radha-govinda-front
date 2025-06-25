@@ -60,4 +60,20 @@ export const getPageMetadata = async ({params}: MetadataPropsType) => {
       });
     }
   }
+
+  if (postType === 'doc') {
+    const documentId = await getIdBySlug(slug, postType, apolloClient);
+
+    if (documentId) {
+      const { doc: data } = await getSeoDataById(documentId, postType, locale, apolloClient);
+
+      return getDynamicMetadata({
+        title: data?.doc?.SEO?.Title,
+        description: data?.doc?.SEO?.Description,
+        bigImageUrl: data?.doc?.SEO?.Preview1200x630?.url,
+        smallImageUrl: data?.doc?.SEO?.Preview510x230?.url,
+        favicon: data?.logo?.logo?.url,
+      });
+    }
+  }
 };

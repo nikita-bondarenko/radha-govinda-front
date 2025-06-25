@@ -1,15 +1,16 @@
 import { useLocaleSelector } from "@/lib/localeStore/hooks";
+import { PostType } from "@/utils/parseParams";
 import React, { useMemo } from "react";
 
 type Props = {
   pageSlug: string | null | undefined;
-  category?: string;
+  postType?: PostType;
 };
 
-export default function useLocalizedHref({ pageSlug, category }: Props) {
+export default function useLocalizedHref({ pageSlug, postType = "page" }: Props) {
   const pageLocale = useLocaleSelector((state) => state.locale.locale);
   const href = `${pageLocale === "ru" ? `` : "/" + pageLocale}${
-    category ? "/" + category : ""
-  }/${pageSlug}`
+    postType === 'post' ? "/articles" : postType === 'doc' ? "/documents" : ""
+  }/${pageSlug === "home" ? "" : pageSlug}`
   return href;
 }

@@ -1,9 +1,6 @@
 import { PageQuery } from "@/gql/generated/graphql";
 import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
-import Header from "./header/Header";
-import HeaderLogo from "./header/HeaderLogo";
-import Player from "./player/Player";
 import { Locale } from "@/utils/getLocalizedData";
 import Footer from "./sections/footer/Footer";
 
@@ -53,9 +50,7 @@ export default function PageGenerator({
 }: PageQuery) {
   const renderSection = (section: any, index: number) => {
     console.log(section?.__typename);
-    
-    if (!page) return null;
-    
+        
     switch (section?.__typename) {
       case COMPONENT_TYPES.HERO_WITH_IMAGE: {
         return (
@@ -64,8 +59,8 @@ export default function PageGenerator({
             section={section}
             menu={menu}
             logo={logo}
-            pageSlug={page.Slug}
-            locale={page.locale}
+            pageSlug={page?.Slug || ''}
+            locale={page?.locale}
           />
         );
       }
@@ -77,8 +72,8 @@ export default function PageGenerator({
             section={section}
             menu={menu}
             logo={logo}
-            pageSlug={page.Slug}
-            locale={page.locale}
+            pageSlug={page?.Slug || ''}
+            locale={page?.locale}
           />
         );
       }
@@ -89,7 +84,7 @@ export default function PageGenerator({
             return (
               <AudioPreview
                 key={index}
-                locale={page.locale}
+                locale={page?.locale}
                 title={section.Title}
                 audiorecords={audiorecords}
               />
@@ -99,7 +94,7 @@ export default function PageGenerator({
             return (
               <VideoPreview
                 key={index}
-                locale={page.locale}
+                locale={page?.locale}
                 title={section.Title}
                 movies={movies}
               />
@@ -109,7 +104,7 @@ export default function PageGenerator({
             return (
               <BlogPreview
                 key={index}
-                locale={page.locale}
+                locale={page?.locale}
                 title={section.Title}
                 posts={posts}
               />
@@ -128,7 +123,7 @@ export default function PageGenerator({
       }
       
       case COMPONENT_TYPES.SCHEDULE: {
-        return <Schedule key={index} section={section} locale={page.locale as Locale} />;
+        return <Schedule key={index} section={section} locale={page?.locale as Locale} />;
       }
 
       case COMPONENT_TYPES.VIDEO_CATALOG: {
@@ -145,12 +140,11 @@ export default function PageGenerator({
     }
   };
 
-  if (!page) return null;
 
   return (
     <>
       <main className="main">
-        {page.PageConstructor?.map(renderSection)}
+        {page?.PageConstructor?.map(renderSection)}
         <Footer menu={menu} footer={footer} />
       </main>
     </>

@@ -10,6 +10,8 @@ export default {
   theme: {
     screens: {
       lg: { max: "1500px" },
+      lgm: {max: "1400px"},
+      lgs: {max: "1300px"},
       md: { max: "1200px" },
       tb: { max: "800px" },
       sm: { max: "740px" },
@@ -87,6 +89,51 @@ export default {
           '&::-webkit-scrollbar-thumb:hover': {
             background: 'rgba(0, 0, 0, 0.4)',
           },
+        },
+        // Text stroke utilities
+        '.text-stroke-0': {
+          '-webkit-text-stroke-width': '0px',
+        },
+        '.text-stroke': {
+          '-webkit-text-stroke-width': '1px',
+        },
+        '.text-stroke-1': {
+          '-webkit-text-stroke-width': '1px',
+        },
+        '.text-stroke-2': {
+          '-webkit-text-stroke-width': '2px',
+        },
+        '.text-stroke-3': {
+          '-webkit-text-stroke-width': '3px',
+        },
+        '.text-stroke-4': {
+          '-webkit-text-stroke-width': '4px',
+        },
+        // Text stroke colors
+        '.text-stroke-black': {
+          '-webkit-text-stroke-color': 'var(--black)',
+        },
+        '.text-stroke-white': {
+          '-webkit-text-stroke-color': 'var(--white)',
+        },
+        '.text-stroke-purple': {
+          '-webkit-text-stroke-color': 'var(--main-purple)',
+        },
+        '.text-stroke-grey': {
+          '-webkit-text-stroke-color': 'var(--grey-1)',
+        },
+        '.text-stroke-transparent': {
+          '-webkit-text-stroke-color': 'transparent',
+        },
+        // Combined utilities for common use cases
+        '.text-stroke-black-1': {
+          '-webkit-text-stroke': '1px var(--black)',
+        },
+        '.text-stroke-white-1': {
+          '-webkit-text-stroke': '1px var(--white)',
+        },
+        '.text-stroke-purple-1': {
+          '-webkit-text-stroke': '1px var(--main-purple)',
         },
       })
     }

@@ -1,28 +1,34 @@
 import { Pagination } from "@/components/RenderPage";
 import { Locale } from "./getLocalizedData";
 
-export type PostType = "page" | "post";
+export type PostType = "page" | "post" | "doc";
 
 export const parseParams = async (params: Promise<{ slug: string[] }>) => {
   const slugArray = (await params).slug;
+  const locale: Locale = !slugArray
+  ? "ru"
+  : slugArray[0] === "en"
+  ? "en"
+  : "ru";
+  const isEnglish = locale === "en";
+
   const postType: PostType = !slugArray
     ? "page"
-    : (slugArray.length === 2 && slugArray[0] === "articles") ||
-      (slugArray.length === 3 && slugArray[1] === "articles")
-    ? "post"
+    : (!isEnglish && slugArray[0] === "articles" && slugArray.length === 2) ||
+      (isEnglish && slugArray[1] === "articles" && slugArray.length === 3)
+    ? "post" : (!isEnglish && slugArray[0] === "documents") ||
+    (isEnglish && slugArray[1] === "documents")
+  ? "doc"
     : "page";
-  const locale: Locale = !slugArray
-    ? "ru"
-    : slugArray[0] === "en"
-    ? "en"
-    : "ru";
-  const isEnglish = locale === "en";
+
   const isPost = postType === "post";
+  const isDoc = postType === "doc";
+
   const slug = (!slugArray || slugArray.length === 1 && isEnglish)
     ? "home"
-    : isPost && isEnglish
+    : isPost && isEnglish || isDoc && isEnglish
     ? slugArray[2]
-    : isPost || isEnglish
+    : isPost || isEnglish || isDoc
     ? slugArray[1]
     : slugArray[0];
 

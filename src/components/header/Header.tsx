@@ -11,6 +11,7 @@ import Burger from "../svg/Burger";
 import CloseIcon from "../svg/CloseIcon";
 import CloseButton from "../ui/closeButton/CloseButton";
 import Nav, { Menu } from "../ui/nav/Nav";
+import SiteName from "./SiteName";
 
 export type HeaderProps = {
   menu: Menu;
@@ -22,7 +23,8 @@ export type HeaderProps = {
   BigButton?: HeaderButton;
   pageSlug: string;
   locale?: string | null;
-  lectureBarClassName?: string
+  lectureBarClassName?: string;
+  isSiteName?: boolean;
 };
 
 export default memo(function Header({
@@ -35,7 +37,8 @@ export default memo(function Header({
   BigButton,
   pageSlug,
   locale,
-  lectureBarClassName
+  lectureBarClassName,
+  isSiteName,
 }: HeaderProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const burgerHandler = () => {
@@ -51,13 +54,14 @@ export default memo(function Header({
       <div className={styles["header__left"]}>
         {logo}
         <div className="desktop-only">
-          <Nav
-            black={dark}
-            menu={menu}
-          ></Nav>
+          <Nav black={dark} menu={menu}></Nav>
         </div>
       </div>
+      <div className="pr-[70px] justify-self-end flex-grow flex justify-end lgs:pr-[20px] translate-y-[-1px] md:justify-center md:pr-0 sm:hidden">
+      {isSiteName && <SiteName></SiteName>}
+      </div>
       <div className={clsx(styles["header__right"])}>
+    
         {IsBigButtonVisible && (
           <HeaderLectureBar
             className={clsx("non-mobile", lectureBarClassName)}
@@ -85,7 +89,6 @@ export default memo(function Header({
             ></CloseButton>
 
             <Nav
-            
               menu={menu}
               handleButtonClick={closeMobileMenuButtonHandler}
             ></Nav>

@@ -1,8 +1,11 @@
 query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
   post(documentId: $documentId, locale: $locale) {
+    Slug
     Date
+    locale
     PostCategory {
       Name
+      documentId
     }
     PostPreviewContent
     PostTitle
@@ -17,6 +20,16 @@ query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCo
         url
       }
     }
+    RecomendedPosts {
+      SectionTitle
+      Posts {
+        Date
+        PostPreviewContent
+        PostTitle
+        Slug
+        documentId
+      }
+    }
   }
   menu(locale: $menuLocale2) {
     Menu {
@@ -28,7 +41,7 @@ query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCo
     }
   }
   footer(locale: $footerLocale2) {
-    SIteName
+    SiteName
     Documents {
       Text
       id

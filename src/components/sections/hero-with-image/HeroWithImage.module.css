@@ -1,6 +1,5 @@
 .hero-with-image {
   position: relative;
-
   overflow: hidden;
   max-width: 2000px;
   margin-inline: auto;
@@ -64,7 +63,9 @@
 .hero-with-image__title {
   color: var(--white);
   font-weight: 400;
-  font-size: 87px;
+  font-size: 86px;
+  margin-right: -20px;
+
   letter-spacing: 1px;
   -webkit-text-stroke-width: 1px;
   line-height: normal;
@@ -87,7 +88,7 @@
 
 @media (max-width: 1500px) {
   .hero-with-image__title {
-    font-size: 5.6vw;
+    font-size: 5.4vw;
     letter-spacing: 1.4px;
   }
   .hero-with-image__subtitle * {

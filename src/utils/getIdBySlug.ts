@@ -5,6 +5,9 @@ import {
   PostsConnectionsDocument,
   PostsConnectionsQueryVariables,
   PostsConnectionsQuery,
+  DocumentsConnectionsQuery,
+  DocumentsConnectionsQueryVariables,
+  DocumentsConnectionsDocument,
 } from "@/gql/generated/graphql";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { PostType } from "./parseParams";
@@ -38,6 +41,17 @@ export const getIdBySlug = async (
         (post) => post.Slug === slug
       );
       return post?.documentId;
+    case "doc":
+      const { data: docData } = await apolloClient.query<
+        DocumentsConnectionsQuery,
+        DocumentsConnectionsQueryVariables
+      >({
+        query: DocumentsConnectionsDocument,
+      });
+      const doc = docData?.docs_connection?.nodes.find(
+        (doc) => doc.Slug === slug
+      );
+      return doc?.documentId;
     default:
       return null;
   }

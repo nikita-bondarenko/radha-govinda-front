@@ -28,7 +28,7 @@ export type SupportForm =
         Text?: string | null;
         LinkText?: string | null;
         LinkPage?: {
-          __typename?: "Page";
+          __typename?: string;
           Slug: string;
         } | null;
       } | null;
@@ -47,7 +47,7 @@ const FormDisclaimerText = ({
   pageSlug: string | null | undefined;
 }) => {
 
-  const href = useLocalizedHref({ pageSlug })
+  const href = useLocalizedHref({ pageSlug, postType: 'doc' })
 
   return (
     <p className="text-[12px] leading-[100%] max-w-[330px] mb-[20px]  sm:text-[10px] sm:max-w-[275px] sm:mb-[34px]">

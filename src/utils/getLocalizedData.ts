@@ -1,5 +1,10 @@
 type StaticElementsData = {
-  header: {};
+  postPreview: {
+    detailsButton: string;
+  };
+  header: {
+    siteName: string;
+  };
   section: {
     schedule: {
       detailsButton: string;
@@ -32,7 +37,12 @@ type StaticElementsData = {
 };
 
 const staticElementsDataRu: StaticElementsData = {
-  header: {},
+  postPreview: {
+    detailsButton: "читать дальше",
+  },
+  header: {
+    siteName: "Е.М.Радха Говинда Прабху",
+  },
   section: {
     schedule: {
       detailsButton: "подробнее",
@@ -65,7 +75,12 @@ const staticElementsDataRu: StaticElementsData = {
 };
 
 const staticElementsDataEn: StaticElementsData = {
-  header: {},
+  postPreview: {
+    detailsButton: "read more",
+  },
+  header: {
+    siteName: "H.G.Radha Govinda Prabhu",
+  },
   section: {
     schedule: {
       detailsButton: "details",

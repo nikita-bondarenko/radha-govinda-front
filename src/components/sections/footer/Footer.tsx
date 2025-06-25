@@ -12,7 +12,7 @@ export type FooterDocument = {
   Text?: string | null;
   id: string;
   Page?: {
-    __typename?: "Page";
+    __typename?: string;
     Slug: string;
   } | null;
 } | null;
@@ -22,7 +22,7 @@ type FooterProps = {
   footer:
     | {
         __typename?: "Footer";
-        SIteName?: string | null;
+        SiteName?: string | null;
         Documents?: Array<FooterDocument> | null;
         SocialMedia?: SocialMediaList;
         SupportForm?: SupportForm;
@@ -51,7 +51,7 @@ export default function Footer({ menu, footer }: FooterProps) {
           </div>
         </div>
         <div className="flex justify-between mt-[134px] md:mt-[10px] md:items-end sm:mt-[71px] sm:flex-col sm:gap-[20px] sm:items-start">
-          <span className="text-[20px] text-white font-semibold opacity-50 leading-[100%] md:text-[12px] md:font-normal">{footer?.SIteName}</span>
+          <span className="text-[20px] text-white font-semibold opacity-50 leading-[100%] md:text-[12px] md:font-normal">{footer?.SiteName}</span>
 
           <div className="flex gap-[47px] text-[16px] leading-[110%] tracking-[0.32px] text-white opacity-50 font-normal md:flex-col md:gap-[2px] md:items-end md:text-[14px] sm:items-start">
             {footer?.Documents?.map((document) => (

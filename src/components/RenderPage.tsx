@@ -5,11 +5,13 @@ import {
   PostQuery,
   PostQueryVariables,
   PostDocument,
+  DocumentQueryVariables,
+  DocumentDocument,
+  DocumentQuery,
 } from "@/gql/generated/graphql";
 import { initializeApollo } from "@/lib/apollo/client";
 import { setLocale } from "@/lib/localeStore/localeSlice";
 import { createLocaleStore } from "@/lib/localeStore/localeStore";
-import { Locale } from "@/utils/getLocalizedData";
 import React from "react";
 import PageGenerator from "./PageGenerator";
 import LocaleStoreProvider from "./providers/LocaleStoreProvider";
@@ -17,6 +19,7 @@ import { getIdBySlug } from "@/utils/getIdBySlug";
 import PostGenerator from "./PostGenerator";
 import { MetadataPropsType } from "@/app/[[...slug]]/page";
 import { parseParams } from "@/utils/parseParams";
+import DocumentGenerator from "./DocumentGenerator";
 
 export type Pagination = {
   start: number;
@@ -86,7 +89,29 @@ async function RenderPage({
 
     return (
       <LocaleStoreProvider initialState={store.getState()}>
-        <PostGenerator />
+        <PostGenerator {...postData} />
+      </LocaleStoreProvider>
+    );
+  }  else if (postType === 'doc') {
+    const { data: docData } = await apolloClient.query<
+      DocumentQuery,
+      DocumentQueryVariables
+    >({
+      query: DocumentDocument,
+      variables: {
+        documentId,
+        locale: locale,
+        menuLocale2: locale,
+        footerLocale2: locale,
+      },
+    });
+
+    const store = createLocaleStore();
+    store.dispatch(setLocale(locale));
+
+    return (
+      <LocaleStoreProvider initialState={store.getState()}>
+        <DocumentGenerator {...docData} />
       </LocaleStoreProvider>
     );
   }

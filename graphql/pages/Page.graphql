@@ -166,7 +166,7 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     }
   }
   footer(locale: $footerLocale2) {
-    SIteName
+    SiteName  
     Documents {
       Text
       id

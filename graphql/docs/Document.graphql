@@ -1,0 +1,58 @@
+query Document($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
+  doc(documentId: $documentId, locale: $locale) {
+    DocumentName
+    DocumentContent
+    locale
+    Slug
+  }
+   menu(locale: $menuLocale2) {
+    Menu {
+      Text
+      PageLink {
+        Slug
+      }
+      id
+    }
+  }
+  footer(locale: $footerLocale2) {
+    SiteName
+    Documents {
+      Text
+      id
+      Page {
+        Slug
+      }
+    }
+    SocialMedia {
+      Href
+      Icon {
+        url
+      }
+      Name
+      id
+    }
+    SupportForm {
+      id
+      Title
+      TextWithDocument {
+        Text
+        LinkText
+        LinkPage {
+          Slug
+        }
+      }
+      Inputs {
+        Placeholder
+        InputType
+        id
+      }
+    }
+  }
+  logo {
+    logo {
+      url
+      formats
+      alternativeText
+    }
+  }
+}

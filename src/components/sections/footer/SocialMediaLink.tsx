@@ -1,5 +1,4 @@
 import Icon from "@/components/Icon";
-import useLocalizedHref from "@/hooks/useLocalizedHref";
 import { useLocaleSelector } from "@/lib/localeStore/hooks";
 import Link from "next/link";
 import React from "react";

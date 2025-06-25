@@ -1,0 +1,19 @@
+query DocumentSeo($documentId: ID!, $locale: I18NLocaleCode) {
+  logo {
+    logo {
+      url
+    }
+  }
+  doc(documentId: $documentId, locale: $locale) {
+    SEO {
+      Title
+      Description
+      Preview1200x630 {
+        url
+      }
+      Preview510x230 {
+        url
+      }
+    }
+  }
+}

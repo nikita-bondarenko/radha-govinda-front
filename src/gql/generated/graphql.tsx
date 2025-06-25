@@ -214,13 +214,13 @@ export type ComponentCommonSectionRaspisanieScheduleItemArgs = {
 
 export type ComponentDocsLinkSsylkaNaDokument = {
   __typename?: 'ComponentDocsLinkSsylkaNaDokument';
-  Page?: Maybe<Page>;
+  Page?: Maybe<Doc>;
   Text?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
 };
 
 export type ComponentDocsLinkSsylkaNaDokumentFiltersInput = {
-  Page?: InputMaybe<PageFiltersInput>;
+  Page?: InputMaybe<DocFiltersInput>;
   Text?: InputMaybe<StringFilterInput>;
   and?: InputMaybe<Array<InputMaybe<ComponentDocsLinkSsylkaNaDokumentFiltersInput>>>;
   not?: InputMaybe<ComponentDocsLinkSsylkaNaDokumentFiltersInput>;
@@ -457,6 +457,42 @@ export type ComponentPostKatalogStatej = {
   id: Scalars['ID']['output'];
 };
 
+export type ComponentPostRecomendedPosts = {
+  __typename?: 'ComponentPostRecomendedPosts';
+  Posts: Array<Maybe<Post>>;
+  Posts_connection?: Maybe<PostRelationResponseCollection>;
+  SectionTitle?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+};
+
+
+export type ComponentPostRecomendedPostsPostsArgs = {
+  filters?: InputMaybe<PostFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type ComponentPostRecomendedPostsPosts_ConnectionArgs = {
+  filters?: InputMaybe<PostFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentPostRecomendedPostsFiltersInput = {
+  Posts?: InputMaybe<PostFiltersInput>;
+  SectionTitle?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<ComponentPostRecomendedPostsFiltersInput>>>;
+  not?: InputMaybe<ComponentPostRecomendedPostsFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentPostRecomendedPostsFiltersInput>>>;
+};
+
+export type ComponentPostRecomendedPostsInput = {
+  Posts?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  SectionTitle?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type ComponentPostTekst = {
   __typename?: 'ComponentPostTekst';
   Text?: Maybe<Scalars['JSON']['output']>;
@@ -510,7 +546,7 @@ export type ComponentSupportPozhertvovaniyaInput = {
 
 export type ComponentTextWithDocumentTekstSPrikreplennymDokumentom = {
   __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom';
-  LinkPage?: Maybe<Page>;
+  LinkPage?: Maybe<Doc>;
   LinkText?: Maybe<Scalars['String']['output']>;
   Text?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -583,6 +619,70 @@ export type DeleteMutationResponse = {
   documentId: Scalars['ID']['output'];
 };
 
+export type Doc = {
+  __typename?: 'Doc';
+  DocumentContent?: Maybe<Scalars['String']['output']>;
+  DocumentName?: Maybe<Scalars['String']['output']>;
+  SEO?: Maybe<ComponentMetaSeo>;
+  Slug: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  documentId: Scalars['ID']['output'];
+  locale?: Maybe<Scalars['String']['output']>;
+  localizations: Array<Maybe<Doc>>;
+  localizations_connection?: Maybe<DocRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type DocLocalizationsArgs = {
+  filters?: InputMaybe<DocFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type DocLocalizations_ConnectionArgs = {
+  filters?: InputMaybe<DocFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DocEntityResponseCollection = {
+  __typename?: 'DocEntityResponseCollection';
+  nodes: Array<Doc>;
+  pageInfo: Pagination;
+};
+
+export type DocFiltersInput = {
+  DocumentContent?: InputMaybe<StringFilterInput>;
+  DocumentName?: InputMaybe<StringFilterInput>;
+  SEO?: InputMaybe<ComponentMetaSeoFiltersInput>;
+  Slug?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<DocFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<DocFiltersInput>;
+  not?: InputMaybe<DocFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<DocFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type DocInput = {
+  DocumentContent?: InputMaybe<Scalars['String']['input']>;
+  DocumentName?: InputMaybe<Scalars['String']['input']>;
+  SEO?: InputMaybe<ComponentMetaSeoInput>;
+  Slug?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type DocRelationResponseCollection = {
+  __typename?: 'DocRelationResponseCollection';
+  nodes: Array<Doc>;
+};
+
 export enum Enum_Componentcategoriesspisokkategorij_Categories {
   Kirtany = 'Kirtany',
   OtvetyNaVoprosy = 'Otvety_na_voprosy',
@@ -641,7 +741,7 @@ export type FloatFilterInput = {
 export type Footer = {
   __typename?: 'Footer';
   Documents?: Maybe<Array<Maybe<ComponentDocsLinkSsylkaNaDokument>>>;
-  SIteName?: Maybe<Scalars['String']['output']>;
+  SiteName?: Maybe<Scalars['String']['output']>;
   SocialMedia?: Maybe<Array<Maybe<ComponentSocialMediaSsylkaNaSoczset>>>;
   SupportForm?: Maybe<ComponentSupportPozhertvovaniya>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -669,7 +769,7 @@ export type FooterSocialMediaArgs = {
 
 export type FooterInput = {
   Documents?: InputMaybe<Array<InputMaybe<ComponentDocsLinkSsylkaNaDokumentInput>>>;
-  SIteName?: InputMaybe<Scalars['String']['input']>;
+  SiteName?: InputMaybe<Scalars['String']['input']>;
   SocialMedia?: InputMaybe<Array<InputMaybe<ComponentSocialMediaSsylkaNaSoczsetInput>>>;
   SupportForm?: InputMaybe<ComponentSupportPozhertvovaniyaInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -680,7 +780,7 @@ export type FooterRelationResponseCollection = {
   nodes: Array<Footer>;
 };
 
-export type GenericMorph = AudioCategory | Audiorecord | ComponentAudioKatalogAudiozopisej | ComponentBigButtonBolshayaKnopka | ComponentCategoriesSpisokKategorij | ComponentCommonSectionIzobrazhenie | ComponentCommonSectionRaspisanie | ComponentDocsLinkSsylkaNaDokument | ComponentHeaderWithImagePervyjBlokSIzobrazheniem | ComponentHeaderWithTextPervyjBlokSTekstom | ComponentHomePageBiografiya | ComponentHomePageBiografy | ComponentHomePageChlenParampary | ComponentHomePageParampara | ComponentHomePagePrevyuRazdelaSajta | ComponentHomePageSobytie | ComponentInputPoleVvoda | ComponentMenuElementMenyu | ComponentMetaSeo | ComponentPostAkczentirovannyjTekst | ComponentPostCzitata | ComponentPostIllyustracziya | ComponentPostInteresnoe | ComponentPostKatalogStatej | ComponentPostTekst | ComponentSocialMediaSsylkaNaSoczset | ComponentSupportPozhertvovaniya | ComponentTextWithDocumentTekstSPrikreplennymDokumentom | ComponentVideoKatalogVideo | Footer | I18NLocale | Logo | Menu | Movie | Page | Post | PostCategory | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | VideoCategory;
+export type GenericMorph = AudioCategory | Audiorecord | ComponentAudioKatalogAudiozopisej | ComponentBigButtonBolshayaKnopka | ComponentCategoriesSpisokKategorij | ComponentCommonSectionIzobrazhenie | ComponentCommonSectionRaspisanie | ComponentDocsLinkSsylkaNaDokument | ComponentHeaderWithImagePervyjBlokSIzobrazheniem | ComponentHeaderWithTextPervyjBlokSTekstom | ComponentHomePageBiografiya | ComponentHomePageBiografy | ComponentHomePageChlenParampary | ComponentHomePageParampara | ComponentHomePagePrevyuRazdelaSajta | ComponentHomePageSobytie | ComponentInputPoleVvoda | ComponentMenuElementMenyu | ComponentMetaSeo | ComponentPostAkczentirovannyjTekst | ComponentPostCzitata | ComponentPostIllyustracziya | ComponentPostInteresnoe | ComponentPostKatalogStatej | ComponentPostRecomendedPosts | ComponentPostTekst | ComponentSocialMediaSsylkaNaSoczset | ComponentSupportPozhertvovaniya | ComponentTextWithDocumentTekstSPrikreplennymDokumentom | ComponentVideoKatalogVideo | Doc | Footer | I18NLocale | Logo | Menu | Movie | Page | Post | PostCategory | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | VideoCategory;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -895,6 +995,7 @@ export type Mutation = {
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createAudioCategory?: Maybe<AudioCategory>;
   createAudiorecord?: Maybe<Audiorecord>;
+  createDoc?: Maybe<Doc>;
   createMovie?: Maybe<Movie>;
   createPage?: Maybe<Page>;
   createPost?: Maybe<Post>;
@@ -908,6 +1009,7 @@ export type Mutation = {
   createVideoCategory?: Maybe<VideoCategory>;
   deleteAudioCategory?: Maybe<DeleteMutationResponse>;
   deleteAudiorecord?: Maybe<DeleteMutationResponse>;
+  deleteDoc?: Maybe<DeleteMutationResponse>;
   deleteFooter?: Maybe<DeleteMutationResponse>;
   deleteLogo?: Maybe<DeleteMutationResponse>;
   deleteMenu?: Maybe<DeleteMutationResponse>;
@@ -934,6 +1036,7 @@ export type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateAudioCategory?: Maybe<AudioCategory>;
   updateAudiorecord?: Maybe<Audiorecord>;
+  updateDoc?: Maybe<Doc>;
   updateFooter?: Maybe<Footer>;
   updateLogo?: Maybe<Logo>;
   updateMenu?: Maybe<Menu>;
@@ -968,6 +1071,13 @@ export type MutationCreateAudioCategoryArgs = {
 
 export type MutationCreateAudiorecordArgs = {
   data: AudiorecordInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationCreateDocArgs = {
+  data: DocInput;
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
@@ -1037,6 +1147,12 @@ export type MutationDeleteAudioCategoryArgs = {
 
 
 export type MutationDeleteAudiorecordArgs = {
+  documentId: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+};
+
+
+export type MutationDeleteDocArgs = {
   documentId: Scalars['ID']['input'];
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
@@ -1144,6 +1260,14 @@ export type MutationUpdateAudioCategoryArgs = {
 
 export type MutationUpdateAudiorecordArgs = {
   data: AudiorecordInput;
+  documentId: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdateDocArgs = {
+  data: DocInput;
   documentId: Scalars['ID']['input'];
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
@@ -1328,6 +1452,7 @@ export type Post = {
   PostContent?: Maybe<Scalars['String']['output']>;
   PostPreviewContent?: Maybe<Scalars['String']['output']>;
   PostTitle: Scalars['String']['output'];
+  RecomendedPosts?: Maybe<ComponentPostRecomendedPosts>;
   SEO?: Maybe<ComponentMetaSeo>;
   Slug: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1420,6 +1545,7 @@ export type PostFiltersInput = {
   PostContent?: InputMaybe<StringFilterInput>;
   PostPreviewContent?: InputMaybe<StringFilterInput>;
   PostTitle?: InputMaybe<StringFilterInput>;
+  RecomendedPosts?: InputMaybe<ComponentPostRecomendedPostsFiltersInput>;
   SEO?: InputMaybe<ComponentMetaSeoFiltersInput>;
   Slug?: InputMaybe<StringFilterInput>;
   and?: InputMaybe<Array<InputMaybe<PostFiltersInput>>>;
@@ -1439,6 +1565,7 @@ export type PostInput = {
   PostContent?: InputMaybe<Scalars['String']['input']>;
   PostPreviewContent?: InputMaybe<Scalars['String']['input']>;
   PostTitle?: InputMaybe<Scalars['String']['input']>;
+  RecomendedPosts?: InputMaybe<ComponentPostRecomendedPostsInput>;
   SEO?: InputMaybe<ComponentMetaSeoInput>;
   Slug?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1462,6 +1589,9 @@ export type Query = {
   audiorecord?: Maybe<Audiorecord>;
   audiorecords: Array<Maybe<Audiorecord>>;
   audiorecords_connection?: Maybe<AudiorecordEntityResponseCollection>;
+  doc?: Maybe<Doc>;
+  docs: Array<Maybe<Doc>>;
+  docs_connection?: Maybe<DocEntityResponseCollection>;
   footer?: Maybe<Footer>;
   i18NLocale?: Maybe<I18NLocale>;
   i18NLocales: Array<Maybe<I18NLocale>>;
@@ -1545,6 +1675,31 @@ export type QueryAudiorecordsArgs = {
 
 export type QueryAudiorecords_ConnectionArgs = {
   filters?: InputMaybe<AudiorecordFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryDocArgs = {
+  documentId: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryDocsArgs = {
+  filters?: InputMaybe<DocFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryDocs_ConnectionArgs = {
+  filters?: InputMaybe<DocFiltersInput>;
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -2277,6 +2432,29 @@ export type AudiorecordsPaginationQueryVariables = Exact<{
 
 export type AudiorecordsPaginationQuery = { __typename?: 'Query', audiorecords: Array<{ __typename?: 'Audiorecord', Date?: any | null, Duration: string, Name: string, Place?: string | null, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null }, Audio: { __typename?: 'UploadFile', url: string } } | null> };
 
+export type DocumentQueryVariables = Exact<{
+  documentId: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  menuLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  footerLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+}>;
+
+
+export type DocumentQuery = { __typename?: 'Query', doc?: { __typename?: 'Doc', DocumentName?: string | null, DocumentContent?: string | null, locale?: string | null, Slug: string } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
+
+export type DocumentSeoQueryVariables = Exact<{
+  documentId: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+}>;
+
+
+export type DocumentSeoQuery = { __typename?: 'Query', logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string } } | null, doc?: { __typename?: 'Doc', SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null } | null } | null };
+
+export type DocumentsConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DocumentsConnectionsQuery = { __typename?: 'Query', docs_connection?: { __typename?: 'DocEntityResponseCollection', nodes: Array<{ __typename?: 'Doc', Slug: string, documentId: string }> } | null };
+
 export type MoviesPaginationQueryVariables = Exact<{
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
   pagination?: InputMaybe<PaginationArg>;
@@ -2306,7 +2484,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', Slug: string, PageName: string, locale?: string | null, PageConstructor?: Array<{ __typename?: 'ComponentAudioKatalogAudiozopisej', id: string } | { __typename?: 'ComponentCommonSectionIzobrazhenie', image?: { __typename?: 'UploadFile', alternativeText?: string | null, url: string, formats?: any | null } | null } | { __typename?: 'ComponentCommonSectionRaspisanie', TextBelow?: string | null, SectionTitle?: string | null, ScheduleItem?: Array<{ __typename?: 'ComponentHomePageSobytie', Place?: string | null, Period?: string | null, Name?: string | null, MoreButtonHref?: string | null, EventDescription?: string | null, id: string } | null> | null } | { __typename?: 'ComponentHeaderWithImagePervyjBlokSIzobrazheniem', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHeaderWithTextPervyjBlokSTekstom', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null } | { __typename?: 'ComponentHomePageBiografiya', SectionTitle?: string | null, BioigrafyPeriods?: Array<{ __typename?: 'ComponentHomePageBiografy', PeriodName?: string | null, PeriodDescription?: string | null, id: string } | null> | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHomePageParampara', SectionTitle?: string | null, LineageMember?: Array<{ __typename?: 'ComponentHomePageChlenParampary', Description?: string | null, Name?: string | null, Role?: string | null, id: string, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | null> | null } | { __typename?: 'ComponentHomePagePrevyuRazdelaSajta', Title?: string | null, DivisionName?: Enum_Componenthomepageprevyurazdelasajta_Divisionname | null } | { __typename?: 'ComponentPostKatalogStatej', id: string } | { __typename?: 'ComponentVideoKatalogVideo', id: string } | { __typename?: 'Error' } | null> | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string } | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null>, posts: Array<{ __typename?: 'Post', documentId: string, Slug: string, PostTitle: string, PostPreviewContent?: string | null, locale?: string | null, Date?: any | null, PostCategory?: { __typename?: 'PostCategory', documentId: string, Name: string } | null } | null>, movies: Array<{ __typename?: 'Movie', createdAt?: any | null, YoutubeLink: string, documentId: string, MovieName: string, VideoCategory?: { __typename?: 'VideoCategory', documentId: string, Name: string } | null } | null>, audioCategories: Array<{ __typename?: 'AudioCategory', Name: string, documentId: string } | null>, postCategories: Array<{ __typename?: 'PostCategory', Name: string, documentId: string } | null>, videoCategories: Array<{ __typename?: 'VideoCategory', Name: string, documentId: string } | null>, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } } | null, footer?: { __typename?: 'Footer', SIteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Page', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Page', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
+export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', Slug: string, PageName: string, locale?: string | null, PageConstructor?: Array<{ __typename?: 'ComponentAudioKatalogAudiozopisej', id: string } | { __typename?: 'ComponentCommonSectionIzobrazhenie', image?: { __typename?: 'UploadFile', alternativeText?: string | null, url: string, formats?: any | null } | null } | { __typename?: 'ComponentCommonSectionRaspisanie', TextBelow?: string | null, SectionTitle?: string | null, ScheduleItem?: Array<{ __typename?: 'ComponentHomePageSobytie', Place?: string | null, Period?: string | null, Name?: string | null, MoreButtonHref?: string | null, EventDescription?: string | null, id: string } | null> | null } | { __typename?: 'ComponentHeaderWithImagePervyjBlokSIzobrazheniem', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHeaderWithTextPervyjBlokSTekstom', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null } | { __typename?: 'ComponentHomePageBiografiya', SectionTitle?: string | null, BioigrafyPeriods?: Array<{ __typename?: 'ComponentHomePageBiografy', PeriodName?: string | null, PeriodDescription?: string | null, id: string } | null> | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHomePageParampara', SectionTitle?: string | null, LineageMember?: Array<{ __typename?: 'ComponentHomePageChlenParampary', Description?: string | null, Name?: string | null, Role?: string | null, id: string, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | null> | null } | { __typename?: 'ComponentHomePagePrevyuRazdelaSajta', Title?: string | null, DivisionName?: Enum_Componenthomepageprevyurazdelasajta_Divisionname | null } | { __typename?: 'ComponentPostKatalogStatej', id: string } | { __typename?: 'ComponentVideoKatalogVideo', id: string } | { __typename?: 'Error' } | null> | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string } | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null>, posts: Array<{ __typename?: 'Post', documentId: string, Slug: string, PostTitle: string, PostPreviewContent?: string | null, locale?: string | null, Date?: any | null, PostCategory?: { __typename?: 'PostCategory', documentId: string, Name: string } | null } | null>, movies: Array<{ __typename?: 'Movie', createdAt?: any | null, YoutubeLink: string, documentId: string, MovieName: string, VideoCategory?: { __typename?: 'VideoCategory', documentId: string, Name: string } | null } | null>, audioCategories: Array<{ __typename?: 'AudioCategory', Name: string, documentId: string } | null>, postCategories: Array<{ __typename?: 'PostCategory', Name: string, documentId: string } | null>, videoCategories: Array<{ __typename?: 'VideoCategory', Name: string, documentId: string } | null>, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
 
 export type PageSeoQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2329,7 +2507,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', Date?: any | null, PostPreviewContent?: string | null, PostTitle: string, PostContent?: string | null, PostCategory?: { __typename?: 'PostCategory', Name: string } | null, SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SIteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Page', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Page', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
+export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', Slug: string, Date?: any | null, locale?: string | null, PostPreviewContent?: string | null, PostTitle: string, PostContent?: string | null, PostCategory?: { __typename?: 'PostCategory', Name: string, documentId: string } | null, SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null, RecomendedPosts?: { __typename?: 'ComponentPostRecomendedPosts', SectionTitle?: string | null, Posts: Array<{ __typename?: 'Post', Date?: any | null, PostPreviewContent?: string | null, PostTitle: string, Slug: string, documentId: string } | null> } | null } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
 
 export type PostSeoQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2414,6 +2592,199 @@ export type AudiorecordsPaginationQueryHookResult = ReturnType<typeof useAudiore
 export type AudiorecordsPaginationLazyQueryHookResult = ReturnType<typeof useAudiorecordsPaginationLazyQuery>;
 export type AudiorecordsPaginationSuspenseQueryHookResult = ReturnType<typeof useAudiorecordsPaginationSuspenseQuery>;
 export type AudiorecordsPaginationQueryResult = Apollo.QueryResult<AudiorecordsPaginationQuery, AudiorecordsPaginationQueryVariables>;
+export const DocumentDocument = gql`
+    query Document($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
+  doc(documentId: $documentId, locale: $locale) {
+    DocumentName
+    DocumentContent
+    locale
+    Slug
+  }
+  menu(locale: $menuLocale2) {
+    Menu {
+      Text
+      PageLink {
+        Slug
+      }
+      id
+    }
+  }
+  footer(locale: $footerLocale2) {
+    SiteName
+    Documents {
+      Text
+      id
+      Page {
+        Slug
+      }
+    }
+    SocialMedia {
+      Href
+      Icon {
+        url
+      }
+      Name
+      id
+    }
+    SupportForm {
+      id
+      Title
+      TextWithDocument {
+        Text
+        LinkText
+        LinkPage {
+          Slug
+        }
+      }
+      Inputs {
+        Placeholder
+        InputType
+        id
+      }
+    }
+  }
+  logo {
+    logo {
+      url
+      formats
+      alternativeText
+    }
+  }
+}
+    `;
+
+/**
+ * __useDocumentQuery__
+ *
+ * To run a query within a React component, call `useDocumentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDocumentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDocumentQuery({
+ *   variables: {
+ *      documentId: // value for 'documentId'
+ *      locale: // value for 'locale'
+ *      menuLocale2: // value for 'menuLocale2'
+ *      footerLocale2: // value for 'footerLocale2'
+ *   },
+ * });
+ */
+export function useDocumentQuery(baseOptions: Apollo.QueryHookOptions<DocumentQuery, DocumentQueryVariables> & ({ variables: DocumentQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DocumentQuery, DocumentQueryVariables>(DocumentDocument, options);
+      }
+export function useDocumentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DocumentQuery, DocumentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DocumentQuery, DocumentQueryVariables>(DocumentDocument, options);
+        }
+export function useDocumentSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DocumentQuery, DocumentQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DocumentQuery, DocumentQueryVariables>(DocumentDocument, options);
+        }
+export type DocumentQueryHookResult = ReturnType<typeof useDocumentQuery>;
+export type DocumentLazyQueryHookResult = ReturnType<typeof useDocumentLazyQuery>;
+export type DocumentSuspenseQueryHookResult = ReturnType<typeof useDocumentSuspenseQuery>;
+export type DocumentQueryResult = Apollo.QueryResult<DocumentQuery, DocumentQueryVariables>;
+export const DocumentSeoDocument = gql`
+    query DocumentSeo($documentId: ID!, $locale: I18NLocaleCode) {
+  logo {
+    logo {
+      url
+    }
+  }
+  doc(documentId: $documentId, locale: $locale) {
+    SEO {
+      Title
+      Description
+      Preview1200x630 {
+        url
+      }
+      Preview510x230 {
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useDocumentSeoQuery__
+ *
+ * To run a query within a React component, call `useDocumentSeoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDocumentSeoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDocumentSeoQuery({
+ *   variables: {
+ *      documentId: // value for 'documentId'
+ *      locale: // value for 'locale'
+ *   },
+ * });
+ */
+export function useDocumentSeoQuery(baseOptions: Apollo.QueryHookOptions<DocumentSeoQuery, DocumentSeoQueryVariables> & ({ variables: DocumentSeoQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DocumentSeoQuery, DocumentSeoQueryVariables>(DocumentSeoDocument, options);
+      }
+export function useDocumentSeoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DocumentSeoQuery, DocumentSeoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DocumentSeoQuery, DocumentSeoQueryVariables>(DocumentSeoDocument, options);
+        }
+export function useDocumentSeoSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DocumentSeoQuery, DocumentSeoQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DocumentSeoQuery, DocumentSeoQueryVariables>(DocumentSeoDocument, options);
+        }
+export type DocumentSeoQueryHookResult = ReturnType<typeof useDocumentSeoQuery>;
+export type DocumentSeoLazyQueryHookResult = ReturnType<typeof useDocumentSeoLazyQuery>;
+export type DocumentSeoSuspenseQueryHookResult = ReturnType<typeof useDocumentSeoSuspenseQuery>;
+export type DocumentSeoQueryResult = Apollo.QueryResult<DocumentSeoQuery, DocumentSeoQueryVariables>;
+export const DocumentsConnectionsDocument = gql`
+    query DocumentsConnections {
+  docs_connection {
+    nodes {
+      Slug
+      documentId
+    }
+  }
+}
+    `;
+
+/**
+ * __useDocumentsConnectionsQuery__
+ *
+ * To run a query within a React component, call `useDocumentsConnectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDocumentsConnectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDocumentsConnectionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDocumentsConnectionsQuery(baseOptions?: Apollo.QueryHookOptions<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>(DocumentsConnectionsDocument, options);
+      }
+export function useDocumentsConnectionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>(DocumentsConnectionsDocument, options);
+        }
+export function useDocumentsConnectionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>(DocumentsConnectionsDocument, options);
+        }
+export type DocumentsConnectionsQueryHookResult = ReturnType<typeof useDocumentsConnectionsQuery>;
+export type DocumentsConnectionsLazyQueryHookResult = ReturnType<typeof useDocumentsConnectionsLazyQuery>;
+export type DocumentsConnectionsSuspenseQueryHookResult = ReturnType<typeof useDocumentsConnectionsSuspenseQuery>;
+export type DocumentsConnectionsQueryResult = Apollo.QueryResult<DocumentsConnectionsQuery, DocumentsConnectionsQueryVariables>;
 export const MoviesPaginationDocument = gql`
     query MoviesPagination($sort: [String], $pagination: PaginationArg, $filters: MovieFiltersInput, $locale: I18NLocaleCode) {
   movies(sort: $sort, pagination: $pagination, filters: $filters, locale: $locale) {
@@ -2632,7 +3003,7 @@ export const PageDocument = gql`
     }
   }
   footer(locale: $footerLocale2) {
-    SIteName
+    SiteName
     Documents {
       Text
       id
@@ -2814,9 +3185,12 @@ export type PagesConnectionsQueryResult = Apollo.QueryResult<PagesConnectionsQue
 export const PostDocument = gql`
     query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
   post(documentId: $documentId, locale: $locale) {
+    Slug
     Date
+    locale
     PostCategory {
       Name
+      documentId
     }
     PostPreviewContent
     PostTitle
@@ -2831,6 +3205,16 @@ export const PostDocument = gql`
         url
       }
     }
+    RecomendedPosts {
+      SectionTitle
+      Posts {
+        Date
+        PostPreviewContent
+        PostTitle
+        Slug
+        documentId
+      }
+    }
   }
   menu(locale: $menuLocale2) {
     Menu {
@@ -2842,7 +3226,7 @@ export const PostDocument = gql`
     }
   }
   footer(locale: $footerLocale2) {
-    SIteName
+    SiteName
     Documents {
       Text
       id

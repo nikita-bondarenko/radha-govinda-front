@@ -34,7 +34,8 @@ export default memo(function BlogPreview({
       <div className={styles.wrapper}>
         <ul className={styles.list}>
           {posts.map((post) => (
-            <PostPreview className="sm:w-[320px]" key={post?.documentId} post={post}></PostPreview>
+            <PostPreview className="sm:w-[320px] min-h-[320px]
+md:min-h-[276px] sm:min-h-[410px]" key={post?.documentId} post={post}></PostPreview>
           ))}
         </ul>
       </div>

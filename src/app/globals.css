@@ -42,6 +42,7 @@
   --brown-1: #3D322B;
   --main-purple: #7a66d5;
   --purple-2: #b6a9f1;
+  --purple-3: #a78bfa
 }
 
 * {
@@ -49,6 +50,26 @@
   outline: none;
 }
 
+::selection {
+  background: var(--purple-3);
+  color: var(--white);
+}
+::-moz-selection {
+  background: var(--purple-3);
+  color: var(--white);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--main-purple);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--purple-2);
+}
 .container {
   margin-inline: auto;
   max-width: 1512px;
@@ -73,8 +94,17 @@
   @apply sm:hidden;
 }
 
+html,
+body {
+  @apply min-h-screen h-full overflow-x-hidden
+}
+
 .main {
-  @apply flex flex-col gap-[120px] md:gap-[90px];
+  @apply flex flex-col gap-[120px] md:gap-[90px] justify-between h-full;
+}
+
+.main > * {
+  @apply shrink-0
 }
 
 section {
@@ -82,24 +112,60 @@ section {
 }
 
 .section-heading {
-  @apply text-[30px] tracking-[0.6px] uppercase font-bold leading-[120%] 
-  md:text-[20px] md:tracking-[0.4px];
+  @apply text-[30px] tracking-[0.6px] uppercase font-bold leading-[120%] md:text-[20px] md:tracking-[0.4px];
 }
 
 .small-text {
   @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%];
 }
+
 .small-text.grey {
   @apply text-[var(--black-2)];
 }
 
 .background {
-  @apply h-full w-full bg-cover  bg-no-repeat;
+  @apply h-full w-full bg-cover bg-no-repeat;
   background-image: var(--lg-image-url);
 }
 
 .markdown p {
-  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%] mb-[16px] last:mb-0  md:mb-[14px] md:last:mb-0;
+  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%] mb-[16px] last:mb-0 md:mb-[14px] md:last:mb-0;
+}
+
+
+
+.page-content-markdown > * {
+  @apply pl-[184px] pr-[231px] md:pr-0 md:pl-0
+}
+
+
+
+.page-content-markdown p, li, ol, ul {
+  @apply  text-[16px] leading-[110%] tracking-[0.32px]  sm:text-[14px] 
+}
+
+.page-content-markdown p:not(:last-child), .page-content-markdown li:not(:last-child), .page-content-markdown ol:not(:last-child) {
+@apply mb-[14px] md:mb-[12] sm:mb-[10px]
+}
+
+.page-content-markdown img {
+  @apply w-full 
+}
+
+.page-content-markdown img, .page-content-markdown blockquote {
+  @apply mb-[55px] md:mb-[32px]
+}
+
+.page-content-markdown blockquote:not(:first-child), .page-content-markdown img:not(:first-child) {
+  @apply mt-[55px] md:mt-[32px]
+}
+
+.page-content-markdown blockquote {
+  @apply pl-[17px] py-[5px]  border-l-[2px] border-[#7A66D5] 
+}
+
+.page-content-markdown blockquote, .page-content-markdown blockquote p {
+  @apply text-[20px] leading-[120%] font-semibold  md:text-[16px] sm:text-[14px]
 }
 
 
@@ -115,13 +181,11 @@ input[type="range"].progress-bar {
   appearance: none;
   background: transparent;
   cursor: pointer;
-  background: linear-gradient(
-    to right,
-    var(--main-purple) 0%,
-    var(--main-purple) var(--percent),
-    var(--white) var(--percent),
-    var(--white) 100%
-  );
+  background: linear-gradient(to right,
+      var(--main-purple) 0%,
+      var(--main-purple) var(--percent),
+      var(--white) var(--percent),
+      var(--white) 100%);
   border-radius: 9px;
   cursor: pointer;
 }
@@ -156,18 +220,21 @@ input[type="range"].progress-bar::-moz-range-track {
   border-radius: 4px;
   background: var(--white);
 }
+
 input[type="range"].progress-bar::-moz-range-progress {
   height: 4px;
   border-radius: 4px;
   background: var(--main-purple);
 
 }
+
 input[type="range"].progress-bar::-moz-range-thumb {
   width: 4px;
   height: 4px;
   background: var(--main-purple);
   border-radius: 50%;
 }
+
 input[type="range"].progress-bar.with-thumb::-moz-range-thumb {
   width: 10px;
   height: 10px;
@@ -183,20 +250,24 @@ input[type="range"].progress-bar::-ms-track {
   border-color: transparent;
   color: transparent;
 }
+
 input[type="range"].progress-bar::-ms-fill-lower {
   border-radius: 4px;
   background: var(--main-purple);
 }
+
 input[type="range"].progress-bar::-ms-fill-upper {
   background: var(--white);
   border-radius: 4px;
 }
+
 input[type="range"].progress-bar::-ms-thumb {
   width: 4px;
   height: 4px;
   background: var(--main-purple);
   border-radius: 50%;
 }
+
 input[type="range"].progress-bar.with-thumb::-ms-thumb {
   width: 10px;
   height: 10px;
@@ -209,115 +280,129 @@ input[type="range"].progress-bar.with-thumb::-ms-thumb {
   .container {
     padding-inline: 20px;
   }
-  .background { 
-       background-image: var(--md-image-url);
+
+  .background {
+    background-image: var(--md-image-url);
   }
+
   input[type="range"].progress-bar::-webkit-slider-runnable-track {
     height: 3px;
     border-radius: 10px;
   }
-  
+
   input[type="range"].progress-bar::-webkit-slider-thumb {
     width: 3px;
     height: 3px;
-    margin-top:   0px;
+    margin-top: 0px;
 
   }
-  
+
   input[type="range"].progress-bar.with-thumb::-webkit-slider-thumb {
     width: 6px;
     height: 6px;
     margin-top: -1.5px;
   }
-  
+
   /* — Firefox — */
   input[type="range"].progress-bar::-moz-range-track {
     height: 6px;
   }
+
   input[type="range"].progress-bar::-moz-range-progress {
     height: 3px;
-  
+
   }
+
   input[type="range"].progress-bar::-moz-range-thumb {
     width: 3px;
     height: 3px;
   }
+
   input[type="range"].progress-bar.with-thumb::-moz-range-thumb {
     width: 6px;
     height: 6px;
   }
-  
+
   /* — IE / Edge — */
   input[type="range"].progress-bar::-ms-track {
     height: 3px;
   }
-  input[type="range"].progress-bar::-ms-fill-lower {
-  }
-  input[type="range"].progress-bar::-ms-fill-upper {
-  }
+
+  input[type="range"].progress-bar::-ms-fill-lower {}
+
+  input[type="range"].progress-bar::-ms-fill-upper {}
+
   input[type="range"].progress-bar::-ms-thumb {
     width: 3px;
     height: 3px;
   }
+
   input[type="range"].progress-bar.with-thumb::-ms-thumb {
     width: 6px;
     height: 6px;
   }
-  
+
 }
 
 @media (max-width: 740px) {
-  .container {
+  .container {}
+
+  .background {
+    background-image: var(--sm-image-url);
   }
-  .background { 
-        background-image: var(--sm-image-url);
-  }
+
   input[type="range"].progress-bar::-webkit-slider-runnable-track {
     height: 2px;
   }
-  
+
   input[type="range"].progress-bar::-webkit-slider-thumb {
     width: 2px;
     height: 2px;
     margin-top: 0px;
   }
-  
+
   input[type="range"].progress-bar.with-thumb::-webkit-slider-thumb {
     width: 6px;
     height: 6px;
     margin-top: -1.5px;
   }
-  
+
   /* — Firefox — */
   input[type="range"].progress-bar::-moz-range-track {
     height: 8px;
   }
+
   input[type="range"].progress-bar::-moz-range-progress {
     height: 2px;
-  
+
   }
+
   input[type="range"].progress-bar::-moz-range-thumb {
     width: 2px;
     height: 2px;
   }
+
   input[type="range"].progress-bar.with-thumb::-moz-range-thumb {
     width: 6px;
     height: 6px;
   }
-  
+
   /* — IE / Edge — */
   input[type="range"].progress-bar::-ms-track {
     height: 2px;
   }
+
   input[type="range"].progress-bar::-ms-fill-lower {
     border-radius: 2px;
   }
-  input[type="range"].progress-bar::-ms-fill-upper {
-  }
+
+  input[type="range"].progress-bar::-ms-fill-upper {}
+
   input[type="range"].progress-bar::-ms-thumb {
     width: 2px;
     height: 2px;
   }
+
   input[type="range"].progress-bar.with-thumb::-ms-thumb {
     width: 6px;
     height: 6px;

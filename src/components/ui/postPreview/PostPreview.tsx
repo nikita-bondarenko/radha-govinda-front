@@ -1,3 +1,4 @@
+"use client"
 import { Post } from "@/components/sections/blog-preview/BlogPreview";
 import React from "react";
 import ButtonMain from "../button/button-main/ButtonMain";
@@ -6,14 +7,19 @@ import { localizeHref } from "@/utils/localizeHref";
 import { parseDate } from "@/utils/parseDate";
 import clsx from "clsx";
 import ReactMarkdown from "react-markdown";
+import useLocalizedHref from "@/hooks/useLocalizedHref";
+import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 export type PostPreviewProps = {
   post: Post;
   className?: string;
 };
 
 export default function PostPreview({ post, className }: PostPreviewProps) {
+
+  const href = useLocalizedHref({postType: "post", pageSlug: post?.Slug})
+  const localizedData = useLocalizedStaticData()
   return (
-      <div className={clsx(styles.body, className)}>
+     <div className={clsx(className, styles.body, "px-[20px] py-[40px] rounded-[10px] overflow-hidden flex flex-col justify-between gap-[20px] sm:gap-[10px] sm:p-0")}>
         <div className={styles.content}>
           <div className={styles.content__top}>
             <h3 className={styles.title}>{post?.PostTitle}</h3>
@@ -23,12 +29,9 @@ export default function PostPreview({ post, className }: PostPreviewProps) {
         </div>
         <ButtonMain
           className={styles.button}
-          href={localizeHref({
-            pageLocale: post?.locale,
-            pageSlug: `blog/${post?.Slug}`,
-          })}
+          href={href}
         >
-          {post?.locale === "ru" ? "читать дальше" : "read more"}
+          {localizedData?.postPreview.detailsButton}
         </ButtonMain>
       </div>
   );

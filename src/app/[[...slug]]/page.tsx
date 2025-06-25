@@ -19,8 +19,6 @@ import LocaleStoreProvider from "@/components/providers/LocaleStoreProvider";
 import { getPageMetadata } from "@/utils/pageMetadata";
 import RenderPage from "@/components/RenderPage";
 
-const documentId = "fr8l71tyb0idur0y2cl32xho";
-
 export type MetadataPropsType = {
   params: Promise<{ slug: string[] }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

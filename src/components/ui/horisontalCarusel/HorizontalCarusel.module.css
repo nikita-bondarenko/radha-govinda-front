@@ -1,5 +1,5 @@
 .body  {
-  @apply w-[100vw] -ml-[calc((100vw-1512px)/2+40px)];
+  @apply w-screen -ml-[calc((100vw-1512px)/2+40px)];
 }
 
 .container {
@@ -22,10 +22,6 @@
     @apply px-[40px] md:px-[20px]
   }
 }
-
-
-
-
 
 .wrapper {
     @apply relative overflow-x-scroll
@@ -52,7 +48,7 @@
 }
 
 .list {
-  @apply absolute top-0 left-0  flex gap-[20px] pb-[24px] md:gap-[10px] md:pb-[15px] sm:pb-[20px];
+  @apply absolute top-0 left-0  flex  pb-[24px]  md:pb-[15px] sm:pb-[20px];
 }
 
 

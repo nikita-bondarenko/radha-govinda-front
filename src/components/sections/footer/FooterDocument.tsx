@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function Document({ document }: Props) {
-  const href = useLocalizedHref({pageSlug: document?.Page?.Slug,})
+  const href = useLocalizedHref({pageSlug: document?.Page?.Slug, postType: 'doc'})
   return (
     <Link
       href={href}
