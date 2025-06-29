@@ -1,8 +1,12 @@
+"use client"
 import { PageQuery } from "@/gql/generated/graphql";
 import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Locale } from "@/utils/getLocalizedData";
 import Footer from "./sections/footer/Footer";
+import AudioCatalog from "./sections/audio-catalog/AudioCatalog";
+import { useDispatch } from "react-redux";
+import { setLocale } from "@/lib/store/localeSlice";
 
 // Динамические импорты компонентов с поддержкой SSR
 const HeroWithImage = dynamic(() => import("./sections/hero-with-image/HeroWithImage"), { ssr: true });
@@ -27,7 +31,9 @@ const COMPONENT_TYPES = {
   SCHEDULE: "ComponentCommonSectionRaspisanie",
   VIDEO_CATALOG: "ComponentVideoKatalogVideo",
   POST_CATALOG: "ComponentPostKatalogStatej",
+  AUDIO_CATALOG: "ComponentAudioKatalogAudiozopisej",
   SECTION_IMAGE: "ComponentCommonSectionIzobrazhenie"
+
 } as const;
 
 // Константы для разделов сайта
@@ -46,10 +52,14 @@ export default function PageGenerator({
   movies,
   footer,
   videoCategories,
-  postCategories
+  postCategories,
+  audioCategories,
+  
 }: PageQuery) {
+
+  const dispatch = useDispatch();
+  dispatch(setLocale(page?.locale as Locale));
   const renderSection = (section: any, index: number) => {
-    console.log(section?.__typename);
         
     switch (section?.__typename) {
       case COMPONENT_TYPES.HERO_WITH_IMAGE: {
@@ -134,9 +144,15 @@ export default function PageGenerator({
         return <BlogCatalog key={index} posts={posts} postsCategories={postCategories} />;
       }
 
+      case COMPONENT_TYPES.AUDIO_CATALOG: {
+        return <AudioCatalog key={index} audios={audiorecords} audioCategories={audioCategories} />;
+      }
+
       case COMPONENT_TYPES.SECTION_IMAGE: {
         return <SectionImage key={index} section={section} />;
       }
+
+
     }
   };
 

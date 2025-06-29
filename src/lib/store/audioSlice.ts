@@ -1,8 +1,9 @@
-import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "./types";
 import { Audio } from "@/components/sections/audio-preview/AudioPreview";
 
 export type AudioState = {
+  isHeaderButtonVisible: boolean
   audio: Audio | null;
   isPlaying: boolean;
   volume: number;
@@ -10,6 +11,7 @@ export type AudioState = {
 };
 
 const initialState: AudioState = {
+  isHeaderButtonVisible: false,
   audio: null,
   isOrderDirect: true,
   isPlaying: false,
@@ -20,7 +22,8 @@ const audioSlice = createSlice({
   name: "audio",
   initialState,
   reducers: {
-    setAudio: (state, action: PayloadAction<Audio>) => {
+    setAudio: (state, action: PayloadAction<Audio | null>) => {
+      console.log('state', action.payload)
       state.audio = action.payload;
     },
     setIsPlaying: (state, action: PayloadAction<boolean>) => {

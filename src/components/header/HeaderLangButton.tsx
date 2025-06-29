@@ -14,7 +14,6 @@ export type HeaderLangButtonProps = {
 
 export default function HeaderLangButton({pageSlug, locale, className}:HeaderLangButtonProps) {
 const pathname = usePathname()
-console.log(`${pathname.split('/').filter(word => word !== "en").join('/')}`)
   return (
     locale === "ru" ?
     <Link className={clsx(styles['header__lang-button'], className)} href={`/en${pathname}`}>EN</Link> :

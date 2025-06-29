@@ -16,6 +16,7 @@ export type PreviewSectionProps = {
 };
 
 export type Audio = {
+  documentId: string;
   __typename?: "Audiorecord";
   createdAt?: any | null;
   Place?: string | null;
@@ -46,9 +47,7 @@ export default memo(function AudioPreview({
   audiorecords,
 }: AudioPreviewProps) {
   const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   dispatch(setAudio(audiorecords[0]));
-  // }, []);
+
   return (
     <PreviewSection
       title={title}
@@ -59,7 +58,7 @@ export default memo(function AudioPreview({
       <div className={styles.body}>
         {audiorecords?.map((audio, index) => (
           <AudioPreviewItem
-            locale={locale}
+          isPreviewSection
             key={index}
             audio={audio}
           ></AudioPreviewItem>

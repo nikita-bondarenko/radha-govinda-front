@@ -6,12 +6,9 @@ import Player from "@/components/player/Player";
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
-  weight: [ "600"],
+  weight: ["600"],
   variable: "--font-manrope",
 });
-
-
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,11 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} antialiased`}>
-       <StoreProvider>
-       {children}
-       </StoreProvider>
-     
-       <div id="modal-root"></div>
+        <StoreProvider>
+          {children}
+          <Player></Player>
+        </StoreProvider>
+        <div id="modal-root"></div>
       </body>
     </html>
   );

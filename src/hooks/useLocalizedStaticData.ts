@@ -1,10 +1,7 @@
-import { useLocaleSelector } from "@/lib/localeStore/hooks";
+    import { useAppSelector } from "@/lib/store/hooks";
 import { getLocalizedData } from "@/utils/getLocalizedData";
-import { useMemo } from "react";
 
 export const useLocalizedStaticData = () => {
-
-    const pageLocale = useLocaleSelector((state) => state.locale.locale);
+    const pageLocale = useAppSelector((state) => state.locale.locale);
     return getLocalizedData(pageLocale)
-
 }

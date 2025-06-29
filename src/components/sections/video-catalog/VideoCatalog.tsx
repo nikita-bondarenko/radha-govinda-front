@@ -23,7 +23,7 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
   const localizedData = useLocalizedStaticData();
 
   return (
-    <div>
+    <section>
       <Filter
         allCategoriesOptionText={
           localizedData?.section.filter.allCategoriesOption.movies
@@ -60,7 +60,6 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
           lg: 20,
         }}
         className="container"
-        containerPadding={40}
         loadThreshold={800}
         viewportBuffer={12}
         columns={{
@@ -69,7 +68,7 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
           lg: 2,
         }}
       />
-    </div>
+    </section>
   );
 };
 

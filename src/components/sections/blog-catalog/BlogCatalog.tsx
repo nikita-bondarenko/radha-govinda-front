@@ -17,7 +17,7 @@ const BlogCatalog = ({ posts, postsCategories }: Props) => {
   const [filteredItems, setFilteredItems] = useState<Post[]>(posts);
   const localizedData = useLocalizedStaticData();
   return (
-    <div>
+    <section>
       <Filter
         items={posts}
         allCategoriesOptionText={
@@ -41,7 +41,7 @@ const BlogCatalog = ({ posts, postsCategories }: Props) => {
           <PostPreview key={item?.documentId} post={item} className="" />
         )}
       />
-    </div>
+    </section>
   );
 };
 

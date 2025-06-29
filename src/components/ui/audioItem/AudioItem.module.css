@@ -1,14 +1,56 @@
+.preview {
+
+}
+
+ .preview.audio {
+  @apply  gap-[7px] 
+  md:gap-[27px] 
+  sm:gap-[7px]
+  ;
+}
+
+ 
+
+
+
+
+
+
+
+.preview .info__duration {
+  @apply block
+}
+
+
+
+.preview .duration-box {
+  @apply sm:w-[35px] sm:flex sm:justify-center
+}
+
+
+.preview  .desktop__duration-options .info__duration {
+  @apply hidden
+}
+
+.desktop__duration-options {
+  @apply flex gap-[234px] md:gap-0
+}
+
+.desktop__duration-options .info__duration {
+  @apply block md:hidden
+}
+
 .audio {
-  @apply rounded-[10px] bg-[var(--grey-3)] p-[10px] pb-[7px] pr-[22px] flex gap-[7px] min-h-[100px]
-  md:pr-[7px] md:min-h-[80px] md:gap-[27px] md:pb-[9px]
+  @apply rounded-[10px] bg-[var(--grey-3)] p-[10px]  pr-[22px] flex gap-[72px] min-h-[100px]
+  md:pr-[7px] md:min-h-[80px] md:gap-[27px] 
   sm:rounded-[5px] sm:p-[3px] sm:pb-[5px] sm:pr-[5px] sm:min-h-[62px] sm:gap-[7px]
   ;
 }
 
 .controls {
-  @apply relative overflow-hidden w-[80px] h-full  rounded-[10px] shrink-0
-  md:w-[60px] 
-  sm:w-[56px]  sm:rounded-[10px];
+  @apply relative overflow-hidden aspect-square h-full  rounded-[10px] shrink-0
+  
+    sm:rounded-[10px];
 }
 
 .controls__background {
@@ -40,7 +82,11 @@
 }
 
 .info {
-    @apply flex flex-col gap-[10px] justify-between w-full
+    @apply pt-[6px] pb-[8px] md:py-0 flex flex-col gap-[10px] justify-between w-full
+}
+
+.preview .info {
+@apply py-0
 }
 
 .info__top, .info__bottom {
@@ -61,6 +107,7 @@
 }
 
 .info__duration {
+  @apply hidden md:block
 }
 
 
@@ -79,20 +126,33 @@
 }
 
 .options__share-button {
-  @apply absolute right-[-21px] bottom-[100%] flex items-center gap-[16px] px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] opacity-0 pointer-events-none
+  @apply absolute right-[-21px] bottom-[100%] h-[36px] flex items-center px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] opacity-0 pointer-events-none
 } 
+
 
 .options__share-button.open {
   @apply opacity-100 pointer-events-auto
+}
+
+.options__share-button.success {
+  @apply opacity-100 pointer-events-none
 }
 
 .options__share-icon {
   @apply w-[20px] h-[20px]
 }
 
-.options__text {
-
+.options__action-description, .options__success-message {
+@apply  items-center gap-[16px] hidden
 }
+
+.options__action-description.open, .options__success-message.open {
+  @apply  flex
+  }
+
+  .options__text {
+    @apply whitespace-nowrap
+  }
 
 
 .duration-box {

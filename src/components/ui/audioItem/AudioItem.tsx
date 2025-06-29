@@ -12,47 +12,79 @@ import DotsIcon from "@/components/svg/DotsIcon";
 import clsx from "clsx";
 import { parseDate } from "@/utils/parseDate";
 import ShareIcon from "@/components/svg/ShareIcon";
+import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
+import Sign from "@/components/svg/Sign";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { setAudio } from "@/lib/store/audioSlice";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
-  locale: Maybe<string>;
+  className?: string;
+  isPreviewSection?: boolean;
 };
 
 export default memo(function AudioPreviewItem({
   audio,
-  locale,
+  className,
+  isPreviewSection,
 }: AudioPreviewItemProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const dispatch = useAppDispatch()
   const controlsClickHandler = () => {
-    setIsPlaying((prev) => !prev);
+    // setIsPlaying((prev) => !prev);
+    console.log(audio)
+    dispatch(setAudio(audio || null))
   };
 
-  const [areOptionsOpen, setAreOptionsOpen] = useState(false)
+  const [areOptionsOpen, setAreOptionsOpen] = useState(false);
 
-  const optionsClickHandler: React.MouseEventHandler= (e) => {
-    e.stopPropagation()
-    setAreOptionsOpen(prev => !prev)
-  }
+  const optionsClickHandler: React.MouseEventHandler = (e) => {
+    e.stopPropagation();
+    setAreOptionsOpen((prev) => !prev);
+  };
+
+  const [successMessageVisible, setSeccessMessageVisible] = useState(false);
+
+  const locale = useAppSelector(state => state.locale.locale)
+
+  const shareButtonClickHandler: React.MouseEventHandler = (e) => {
+    e.stopPropagation();
+    setSeccessMessageVisible(true);
+    const link = location.protocol + '//' + location.host + '/' + (locale === 'ru' ? '' : 'en/') +'lectures-and-kirtans' + '?audioId=' + audio?.documentId
+    console.log(link)
+    setTimeout(() => {
+      setSeccessMessageVisible(false);
+      setAreOptionsOpen(false);
+    }, 1000);
+  };
 
   useEffect(() => {
-
     const documentClickHandler = (e: Event) => {
-      e.preventDefault()
-      setAreOptionsOpen(false)
-    }
+      e.preventDefault();
+      setAreOptionsOpen(false);
+    };
 
     if (areOptionsOpen) {
-      document.addEventListener('click', documentClickHandler)
+      document.addEventListener("click", documentClickHandler);
       return () => {
-        document.removeEventListener('click', documentClickHandler)
-      }
+        document.removeEventListener("click", documentClickHandler);
+      };
     }
-  }, [areOptionsOpen])
+  }, [areOptionsOpen]);
+
+  const localizedData = useLocalizedStaticData();
   return (
-    <div  className={clsx(styles.audio)}>
+    <div
+      className={clsx(
+        styles.audio,
+        className,
+        isPreviewSection && styles.preview
+      )}
+    >
       <button onClick={controlsClickHandler} className={styles.controls}>
         <Background
           className={styles.controls__background}
-                      imageUrl={audio?.Image.url}
+          imageUrl={audio?.Image.url}
         ></Background>
         <div className={styles.controls__button}>
           <PauseIcon
@@ -76,16 +108,54 @@ export default memo(function AudioPreviewItem({
           <h4 className={clsx("small-text", styles.info__name)}>
             {audio?.Name}
           </h4>
-          <div className={styles.options}>
-            <button onClick={optionsClickHandler}  className={clsx(styles["options__share-button"],areOptionsOpen && styles.open )}>
-              <ShareIcon fill={"var(--black)"} className={styles["options__share-icon"]}></ShareIcon>
-              <span className={clsx(styles.options__text, "small-text")}>
-                {locale === "ru" ? "поделиться" : "share"}
-              </span>
-            </button>
-            <button  onClick={optionsClickHandler} className={styles["options__open-button"]}>
-              <DotsIcon fill="var(--grey-2)"></DotsIcon>
-            </button>
+          <div className={clsx(styles["desktop__duration-options"])}>
+            <span className={clsx(styles["info__duration"], "small-text grey")}>
+              {audio?.Duration}
+            </span>
+            <div className={styles.options}>
+              <button
+                onClick={shareButtonClickHandler}
+                className={clsx(
+                  styles["options__share-button"],
+                  areOptionsOpen && styles.open,
+                  successMessageVisible && styles.success
+                )}
+              >
+                <div
+                  className={clsx(
+                    styles["options__action-description"],
+                    !successMessageVisible && styles.open
+                  )}
+                >
+                  <ShareIcon
+                    fill={"var(--black)"}
+                    className={styles["options__share-icon"]}
+                  ></ShareIcon>
+                  <span className={clsx(styles.options__text, "small-text")}>
+                    {localizedData?.audioPreview.shareButton}
+                  </span>
+                </div>
+                <div
+                  className={clsx(
+                    styles["options__success-message"],
+                    successMessageVisible && styles.open
+                  )}
+                >
+                  <Sign
+                    className={"w-[16px] h-[16px]"}
+                  ></Sign>
+                  <span className={clsx(styles.options__text, "small-text")}>
+                    {localizedData?.audioPreview.succesMessage}
+                  </span>
+                </div>
+              </button>
+              <button
+                onClick={optionsClickHandler}
+                className={styles["options__open-button"]}
+              >
+                <DotsIcon fill="var(--grey-2)"></DotsIcon>
+              </button>
+            </div>
           </div>
         </div>
         <div className={styles.info__bottom}>
@@ -94,12 +164,11 @@ export default memo(function AudioPreviewItem({
           >{`${parseDate(audio?.Date)} ${
             audio?.Place ? `, ${audio?.Place}` : ""
           }`}</span>
-          <div className={styles['duration-box']}>
-          <span className={clsx(styles["info__duration"], "small-text grey")}>
-            {audio?.Duration}
-          </span>
+          <div className={styles["duration-box"]}>
+            <span className={clsx(styles["info__duration"], "small-text grey")}>
+              {audio?.Duration}
+            </span>
           </div>
-          
         </div>
       </div>
     </div>

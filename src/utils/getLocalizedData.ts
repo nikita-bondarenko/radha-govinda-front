@@ -1,4 +1,8 @@
 type StaticElementsData = {
+  audioPreview: {
+    shareButton: string;
+    succesMessage: string
+  };
   postPreview: {
     detailsButton: string;
   };
@@ -37,6 +41,10 @@ type StaticElementsData = {
 };
 
 const staticElementsDataRu: StaticElementsData = {
+  audioPreview: {
+    shareButton: "поделиться",
+    succesMessage: "ccылка скопирована"
+  },
   postPreview: {
     detailsButton: "читать дальше",
   },
@@ -75,6 +83,11 @@ const staticElementsDataRu: StaticElementsData = {
 };
 
 const staticElementsDataEn: StaticElementsData = {
+  audioPreview: {
+    shareButton: "share",
+    succesMessage: "link copied"
+
+  },
   postPreview: {
     detailsButton: "read more",
   },

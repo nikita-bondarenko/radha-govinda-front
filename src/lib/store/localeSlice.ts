@@ -1,6 +1,4 @@
-import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store/store";
-import { Audio } from "@/components/sections/audio-preview/AudioPreview";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Locale } from "@/utils/getLocalizedData";
 
 export type LocaleState = {
@@ -12,7 +10,7 @@ const initialState: LocaleState = {
 };
 
 const localeSlice = createSlice({
-  name: "audio",
+  name: "locale",
   initialState,
   reducers: {
     setLocale(state, action: PayloadAction<Locale>) {

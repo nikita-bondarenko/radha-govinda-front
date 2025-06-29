@@ -2,26 +2,18 @@
 
 import { useRef } from "react";
 import { Provider } from "react-redux";
-import { createStore, AppStore } from "@/lib/store/store";
+import { store, AppStore } from "@/lib/store/store";
 
 type StoreProviderProps = {
   children: React.ReactNode;
   /**
    * Предзагруженное состояние, полученное на сервере
    */
-  initialState?: Parameters<typeof createStore>[0];
 };
 
 export default function StoreProvider({
   children,
-  initialState,
 }: StoreProviderProps) {
-  const storeRef = useRef<AppStore>();
 
-  if (!storeRef.current) {
-    // Создаем store только один раз
-    storeRef.current = createStore(initialState);
-  }
-
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return <Provider store={store}>{children}</Provider>;
 }

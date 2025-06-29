@@ -1,21 +1,44 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore, createStore } from '@reduxjs/toolkit'
 import audio from './audioSlice'
-import locale from '../localeStore/localeSlice'
-export const createStore = (preloadedState?: unknown) => {
-  return configureStore({
-    reducer: {
-      audio: audio,
-    },
-    preloadedState
-  })
-}
+import locale from './localeSlice'
+import { loadState, saveState } from './persistConfig'
+
+const rootReducer = combineReducers({
+  audio: audio,
+  locale: locale,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+const persistedState = loadState() as Partial<RootState> | undefined;
+console.log('persistedState', persistedState)
+export const store = configureStore({
+  reducer: rootReducer,
+  preloadedState: persistedState,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    })
+   
+});
+
+store.subscribe(() => {
+  const state = store.getState();
+  // Only persist specific parts of the state that we want to keep
+  saveState({
+    audio: state.audio,
+    locale: state.locale,
+  });
+});
+
+// Очищаем серверное состояние после hydration (только на клиенте)
+
 
 // Удобный алиас для использования без аргументов (на клиенте)
-export const store = () => createStore();
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof createStore>
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 

@@ -10,7 +10,7 @@
 }
 
 .body {
-  @apply flex gap-[50px] justify-between pointer-events-auto rounded-[10px] p-[10px] pr-[20px] md:p-[7px] md:pr-[11px] sm:flex-col sm:p-[10px] sm:gap-[20px];
+  @apply relative transition-transform duration-700 flex gap-[50px] justify-between pointer-events-auto rounded-[10px] p-[10px] pr-[20px] md:p-[7px] md:pr-[11px] sm:flex-col sm:p-[10px] sm:gap-[20px];
   background: linear-gradient(0deg, #ededed 0%, #d6d2e8 100%);
 }
 
