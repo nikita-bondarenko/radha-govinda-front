@@ -19,8 +19,6 @@ import PostGenerator from "./PostGenerator";
 import { MetadataPropsType } from "@/app/[[...slug]]/page";
 import { parseParams } from "@/utils/parseParams";
 import DocumentGenerator from "./DocumentGenerator";
-import { setServerState } from "@/lib/store/persistConfig";
-import Player from "./player/Player";
 
 export type Pagination = {
   start: number;

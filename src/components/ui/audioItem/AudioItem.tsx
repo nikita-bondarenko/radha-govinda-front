@@ -2,7 +2,7 @@
 
 import { Audiorecord } from "@/gql/generated/graphql";
 import { Maybe } from "graphql/jsutils/Maybe";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { Audio } from "../../sections/audio-preview/AudioPreview";
 import styles from "./AudioItem.module.css";
 import Background from "@/components/utils/Background";
@@ -15,25 +15,41 @@ import ShareIcon from "@/components/svg/ShareIcon";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import Sign from "@/components/svg/Sign";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { setAudio } from "@/lib/store/audioSlice";
+import {
+  selectAudioId,
+  selectAudioIsPlaying,
+  setAudio,
+  setIsPlaying,
+} from "@/lib/store/audioSlice";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
   className?: string;
   isPreviewSection?: boolean;
+  handleControlButtonClick: () => void;
 };
 
 export default memo(function AudioPreviewItem({
   audio,
   className,
   isPreviewSection,
+  handleControlButtonClick,
 }: AudioPreviewItemProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useAppDispatch();
+  const isPlaying = useAppSelector(selectAudioIsPlaying);
+  const selectedAudioId = useAppSelector(selectAudioId);
 
-  const dispatch = useAppDispatch()
+  const isThisAudioPlaying = useMemo(() => {
+    return isPlaying && selectedAudioId === audio?.documentId;
+  }, [isPlaying, selectedAudioId]);
   const controlsClickHandler = () => {
-    // setIsPlaying((prev) => !prev);
-    console.log(audio)
-    dispatch(setAudio(audio || null))
+    handleControlButtonClick();
+
+    if (selectedAudioId === audio?.documentId) {
+      dispatch(setIsPlaying(!isPlaying));
+    } else {
+      dispatch(setAudio(audio || null));
+      dispatch(setIsPlaying(true));
+    }
   };
 
   const [areOptionsOpen, setAreOptionsOpen] = useState(false);
@@ -45,13 +61,20 @@ export default memo(function AudioPreviewItem({
 
   const [successMessageVisible, setSeccessMessageVisible] = useState(false);
 
-  const locale = useAppSelector(state => state.locale.locale)
+  const locale = useAppSelector((state) => state.locale.locale);
 
   const shareButtonClickHandler: React.MouseEventHandler = (e) => {
     e.stopPropagation();
     setSeccessMessageVisible(true);
-    const link = location.protocol + '//' + location.host + '/' + (locale === 'ru' ? '' : 'en/') +'lectures-and-kirtans' + '?audioId=' + audio?.documentId
-    console.log(link)
+    const link =
+      location.protocol +
+      "//" +
+      location.host +
+      "/" +
+      (locale === "ru" ? "" : "en/") +
+      "lectures-and-kirtans" +
+      "?audioId=" +
+      audio?.documentId;
     setTimeout(() => {
       setSeccessMessageVisible(false);
       setAreOptionsOpen(false);
@@ -91,14 +114,14 @@ export default memo(function AudioPreviewItem({
             fill={"white"}
             className={clsx(
               styles["pause-icon"],
-              isPlaying && styles["icon-visible"]
+              isThisAudioPlaying && styles["icon-visible"]
             )}
           ></PauseIcon>
           <PlayIcon
             fill={"white"}
             className={clsx(
               styles["play-icon"],
-              !isPlaying && styles["icon-visible"]
+              !isThisAudioPlaying && styles["icon-visible"]
             )}
           ></PlayIcon>
         </div>
@@ -141,9 +164,7 @@ export default memo(function AudioPreviewItem({
                     successMessageVisible && styles.open
                   )}
                 >
-                  <Sign
-                    className={"w-[16px] h-[16px]"}
-                  ></Sign>
+                  <Sign className={"w-[16px] h-[16px]"}></Sign>
                   <span className={clsx(styles.options__text, "small-text")}>
                     {localizedData?.audioPreview.succesMessage}
                   </span>

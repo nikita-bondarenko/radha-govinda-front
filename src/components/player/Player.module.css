@@ -93,6 +93,14 @@
     @apply fill-[var(--grey-2)] stroke-[var(--grey-2)]
 }
 
+.player-icon-button.selected path, .player-icon-button.selected rect  {
+  @apply fill-[var(--main-purple)] stroke-[var(--main-purple)]
+}
+
+.player-icon-button.selected {
+  @apply pointer-events-none
+}
+
 .player-icon-button {
     @apply shrink-0
 } 

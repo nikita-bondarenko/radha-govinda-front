@@ -8,7 +8,7 @@ import { localizeHref } from "@/utils/localizeHref";
 import styles from "./AudioPreview.module.css";
 import PreviewSection from "@/components/ui/previewSection/PreviewSection";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setAudio } from "@/lib/store/audioSlice";
+import { setAudio, setPlaylist } from "@/lib/store/audioSlice";
 
 export type PreviewSectionProps = {
   title: Maybe<string>;
@@ -48,6 +48,10 @@ export default memo(function AudioPreview({
 }: AudioPreviewProps) {
   const dispatch = useAppDispatch();
 
+  const handleControlButtonClick = () => {
+    dispatch(setPlaylist(audiorecords))
+  }
+
   return (
     <PreviewSection
       title={title}
@@ -58,6 +62,7 @@ export default memo(function AudioPreview({
       <div className={styles.body}>
         {audiorecords?.map((audio, index) => (
           <AudioPreviewItem
+          handleControlButtonClick={handleControlButtonClick}
           isPreviewSection
             key={index}
             audio={audio}

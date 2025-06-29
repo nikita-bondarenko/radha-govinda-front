@@ -2,6 +2,7 @@ import { combineReducers, configureStore, createStore } from '@reduxjs/toolkit'
 import audio from './audioSlice'
 import locale from './localeSlice'
 import { loadState, saveState } from './persistConfig'
+import { audioMiddleware } from './audioMiddleware'
 
 const rootReducer = combineReducers({
   audio: audio,
@@ -19,8 +20,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    })
-   
+    }).concat(audioMiddleware)
 });
 
 store.subscribe(() => {
@@ -31,8 +31,6 @@ store.subscribe(() => {
     locale: state.locale,
   });
 });
-
-// Очищаем серверное состояние после hydration (только на клиенте)
 
 
 // Удобный алиас для использования без аргументов (на клиенте)

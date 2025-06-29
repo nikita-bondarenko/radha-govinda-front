@@ -8,6 +8,8 @@ import MovieItem from "@/components/ui/movieItem/MovieItem";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import { searchFilteringCondition } from "@/utils/searchFilteringCondition";
 import AudioItem from "@/components/ui/audioItem/AudioItem";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { setPlaylist } from "@/lib/store/audioSlice";
 
 type Props = {
   audios: Audio[];
@@ -15,9 +17,14 @@ type Props = {
 };
 
 const AudioCatalog = ({ audioCategories, audios }: Props) => {
-    // console.log(audios, audioCategories);
   const [filteredItems, setFilteredItems] = useState<Audio[]>(audios);
   const localizedData = useLocalizedStaticData();
+  const dispatch = useAppDispatch();
+
+  const handleControlButtonClick = () => {
+    dispatch(setPlaylist(filteredItems))
+  }
+
   return (
     <section>
       <Filter
@@ -38,7 +45,7 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
       <InfiniteVirtualGrid
         items={filteredItems}
         renderItem={(audio) => (
-          <AudioItem className="w-full h-full" audio={audio} />
+          <AudioItem handleControlButtonClick={handleControlButtonClick} className="w-full h-full" audio={audio} />
         )}
         getItemKey={(audio) => audio?.documentId || ""}
         itemsPerPage={12}
