@@ -5,7 +5,7 @@ import { loadState, saveState } from './persistConfig'
 import { audioMiddleware } from './audioMiddleware'
 
 const rootReducer = combineReducers({
-  audio: audio,
+      audio: audio,
   locale: locale,
 });
 

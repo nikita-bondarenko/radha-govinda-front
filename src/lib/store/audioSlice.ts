@@ -10,6 +10,7 @@ export type AudioState = {
   volume: number;
   playlist: Audio[];
   previosAudioBuffer: string[];
+  currentBufferPosition: number; // текущая позиция в буфере для навигации
   flow: "direct" | "random";
   progress: number;
   leftTime: number;
@@ -21,6 +22,7 @@ const initialState: AudioState = {
   audio: null,
   playlist: [],
   previosAudioBuffer: [],
+  currentBufferPosition: -1,
   flow: "direct",
   isPlaying: false,
   volume: 50,
@@ -64,34 +66,88 @@ const audioSlice = createSlice({
       state.passedTime = action.payload;
     },
     playNextAudio: (state) => {
-      const nextIndex = findNextAudioIndex(
+      const result = findNextAudioIndex(
         state.audio,
         state.playlist,
+        state.previosAudioBuffer,
         state.flow,
-        "next"
+        "next",
+        state.currentBufferPosition
       );
-      state.audio = state.playlist[nextIndex];
+      state.audio = state.playlist[result.index];
       state.isPlaying = true;
       state.progress = 0;
       state.leftTime = 0;
       state.passedTime = 0;
+      
+      // При переходе к следующему треку в random режиме
+      if (state.flow === "random") {
+        // Если мы двигались вперед по буферу, увеличиваем позицию
+        if (state.currentBufferPosition >= 0 && 
+            state.currentBufferPosition < state.previosAudioBuffer.length - 1) {
+          state.currentBufferPosition = state.currentBufferPosition + 1;
+        } else {
+          // Если выбрали новый случайный трек, позиция остается на конце буфера
+          state.currentBufferPosition = state.previosAudioBuffer.length - 1;
+        }
+      }
     },
 
     playPrevAudio: (state) => {
-      const nextIndex = findNextAudioIndex(
+      console.log('playPrevAudio called, current state:', {
+        currentBufferPosition: state.currentBufferPosition,
+        bufferLength: state.previosAudioBuffer.length,
+        flow: state.flow,
+        currentAudio: state.audio?.Name
+      });
+      
+      const result = findNextAudioIndex(
         state.audio,
         state.playlist,
+        state.previosAudioBuffer,
         state.flow,
-        "prev"
+        "prev",
+        state.currentBufferPosition
       );
-      state.audio = state.playlist[nextIndex];
+      
+      state.audio = state.playlist[result.index];
       state.isPlaying = true;
       state.progress = 0;
       state.leftTime = 0;
       state.passedTime = 0;
+      
+      // При переходе к предыдущему треку в random режиме, сдвигаем позицию назад
+      // ТОЛЬКО если мы НЕ в fallback режиме
+      if (state.flow === "random" && 
+          state.currentBufferPosition > 0 && 
+          !result.usedFallback) { // Используем флаг fallback вместо проверки индекса
+        const oldPosition = state.currentBufferPosition;
+        state.currentBufferPosition = state.currentBufferPosition - 1;
+        console.log('Updated buffer position:', {
+          from: oldPosition,
+          to: state.currentBufferPosition
+        });
+      } else if (state.flow === "random" && (state.currentBufferPosition === 0 || result.usedFallback)) {
+        console.log('At buffer start or used fallback, not updating position');
+      }
     },
     addItemInPreviosAudioBuffer: (state, action: PayloadAction<string>) => {
-      state.previosAudioBuffer = [...state.previosAudioBuffer, action.payload];
+      // Добавляем новый элемент
+      const newBuffer = [...state.previosAudioBuffer, action.payload];
+      
+      // Ограничиваем буфер до 15 элементов
+      if (newBuffer.length > 15) {
+        state.previosAudioBuffer = newBuffer.slice(-15);
+      } else {
+        state.previosAudioBuffer = newBuffer;
+      }
+      
+      // Устанавливаем позицию на последний элемент
+      state.currentBufferPosition = state.previosAudioBuffer.length - 1;
+    },
+    
+    setBufferPosition: (state, action: PayloadAction<number>) => {
+      state.currentBufferPosition = action.payload;
     },
   },
 });
@@ -108,7 +164,8 @@ export const {
   setPlaylist,
   playNextAudio,
   playPrevAudio,
-  addItemInPreviosAudioBuffer
+  addItemInPreviosAudioBuffer,
+  setBufferPosition
 } = audioSlice.actions;
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
@@ -117,5 +174,7 @@ export const selectAudioVolume = (state: RootState) => state.audio.volume;
 export const selectAudioProgress = (state: RootState) => state.audio.progress;
 export const selectAudioId = (state: RootState) =>
   state.audio.audio?.documentId;
+export const selectCurrentBufferPosition = (state: RootState) => state.audio.currentBufferPosition;
+export const selectPreviosAudioBuffer = (state: RootState) => state.audio.previosAudioBuffer;
 
 export default audioSlice.reducer;

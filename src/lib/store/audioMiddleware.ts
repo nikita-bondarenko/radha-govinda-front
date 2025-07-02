@@ -6,7 +6,7 @@ import type { RootState } from './store';
 let audioElement: HTMLAudioElement | null = null;
 
 // Инициализация аудио элемента
-const initAudioElement = () => {
+const initAudioElement = (storeInstance?: any) => {
   if (typeof window === 'undefined') return null;
   
   if (!audioElement) {
@@ -24,7 +24,12 @@ const initAudioElement = () => {
     
     audioElement.addEventListener('ended', () => {
       console.log('Audio ended');
-      // Здесь можно диспатчить action для остановки
+      // Автоматически переключаемся на следующий трек
+      setTimeout(() => {
+        if (storeInstance) {
+          storeInstance.dispatch(playNextAudio());
+        }
+      }, 100);
     });
     
     audioElement.addEventListener('error', (e) => {
@@ -44,7 +49,7 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
   const isPlaying = selectAudioIsPlaying(state);
   
   // Инициализируем аудио элемент на клиенте
-  const audioEl = initAudioElement();
+  const audioEl = initAudioElement(store);
   if (!audioEl) return result;
   
   // Обрабатываем смену трека
@@ -54,8 +59,11 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
     audioEl.src = audio.Audio.url;
     audioEl.load();
     audioEl.play().catch(console.error);
-    dispatch(addItemInPreviosAudioBuffer(audio.documentId))
-
+    
+    // Добавляем в буфер только при setAudio и playNextAudio, НЕ при playPrevAudio
+    if (action.type !== playPrevAudio.type) {
+      dispatch(addItemInPreviosAudioBuffer(audio.documentId))
+    }
   }
 
   // Обрабатываем play/pause
