@@ -1,5 +1,5 @@
 import { Middleware, createListenerMiddleware } from '@reduxjs/toolkit';
-import { addItemInPreviosAudioBuffer, playNextAudio, playPrevAudio, selectAudio, selectAudioIsPlaying, setAudio, setIsPlaying } from './audioSlice';
+import { addItemInPreviosAudioBuffer, playNextAudio, playPrevAudio, selectAudio, selectAudioIsPlaying, setAudio, setIsPlaying, setPassedTime, setLeftTime, setProgress } from './audioSlice';
 import type { RootState } from './store';
 
 // Глобальный HTML audio элемент
@@ -20,6 +20,34 @@ const initAudioElement = (storeInstance?: any) => {
     
     audioElement.addEventListener('canplay', () => {
       console.log('Audio can play');
+    });
+
+    audioElement.addEventListener('loadedmetadata', () => {
+      console.log('Audio metadata loaded');
+      // Инициализируем время при загрузке метаданных
+      if (storeInstance && audioElement) {
+        const duration = audioElement.duration;
+        console.log('Duration from loadedmetadata:', duration);
+        if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
+          storeInstance.dispatch(setLeftTime(duration));
+          storeInstance.dispatch(setPassedTime(0));
+          storeInstance.dispatch(setProgress(0));
+          console.log('Duration set:', duration);
+        }
+      }
+    });
+
+    audioElement.addEventListener('durationchange', () => {
+      console.log('Duration changed');
+      // Дополнительная проверка на изменение длительности
+      if (storeInstance && audioElement) {
+        const duration = audioElement.duration;
+        console.log('Duration from durationchange:', duration);
+        if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
+          storeInstance.dispatch(setLeftTime(duration));
+          console.log('Duration updated:', duration);
+        }
+      }
     });
     
     audioElement.addEventListener('ended', () => {
@@ -87,12 +115,16 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
 
 // Функция для получения текущего времени аудио
 export const getCurrentTime = (): number => {
-  return audioElement?.currentTime || 0;
+  const currentTime = audioElement?.currentTime || 0;
+  console.log('getCurrentTime:', currentTime);
+  return currentTime;
 };
 
 // Функция для получения длительности аудио
 export const getDuration = (): number => {
-  return audioElement?.duration || 0;
+  const duration = audioElement?.duration || 0;
+  console.log('getDuration:', duration);
+  return duration;
 };
 
 // Функция для установки времени

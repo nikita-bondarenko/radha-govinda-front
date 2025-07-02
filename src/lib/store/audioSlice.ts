@@ -172,6 +172,8 @@ export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
 export const selectAudioFlow = (state: RootState) => state.audio.flow;
 export const selectAudioVolume = (state: RootState) => state.audio.volume;
 export const selectAudioProgress = (state: RootState) => state.audio.progress;
+export const selectAudioPassedTime = (state: RootState) => state.audio.passedTime;
+export const selectAudioLeftTime = (state: RootState) => state.audio.leftTime;
 export const selectAudioId = (state: RootState) =>
   state.audio.audio?.documentId;
 export const selectCurrentBufferPosition = (state: RootState) => state.audio.currentBufferPosition;
