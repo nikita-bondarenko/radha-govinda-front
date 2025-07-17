@@ -12,6 +12,7 @@ export type AudioState = {
   previosAudioBuffer: string[];
   currentBufferPosition: number; // текущая позиция в буфере для навигации
   flow: "direct" | "random";
+  isLooping: boolean; // новое состояние для зацикливания
   progress: number;
   leftTime: number;
   passedTime: number;
@@ -24,6 +25,7 @@ const initialState: AudioState = {
   previosAudioBuffer: [],
   currentBufferPosition: -1,
   flow: "direct",
+  isLooping: false, // по умолчанию зацикливание выключено
   isPlaying: false,
   volume: 50,
   progress: 0,
@@ -46,6 +48,12 @@ const audioSlice = createSlice({
     },
     setFlow: (state, action: PayloadAction<"direct" | "random">) => {
       state.flow = action.payload;
+    },
+    setIsLooping: (state, action: PayloadAction<boolean>) => {
+      state.isLooping = action.payload;
+    },
+    toggleIsLooping: (state) => {
+      state.isLooping = !state.isLooping;
     },
     setVolume: (state, action: PayloadAction<number>) => {
       if (action.payload < 0 || action.payload > 100) {
@@ -165,11 +173,14 @@ export const {
   playNextAudio,
   playPrevAudio,
   addItemInPreviosAudioBuffer,
-  setBufferPosition
+  setBufferPosition,
+  setIsLooping,
+  toggleIsLooping
 } = audioSlice.actions;
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
 export const selectAudioFlow = (state: RootState) => state.audio.flow;
+export const selectAudioIsLooping = (state: RootState) => state.audio.isLooping;
 export const selectAudioVolume = (state: RootState) => state.audio.volume;
 export const selectAudioProgress = (state: RootState) => state.audio.progress;
 export const selectAudioPassedTime = (state: RootState) => state.audio.passedTime;

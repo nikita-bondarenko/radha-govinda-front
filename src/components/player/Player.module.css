@@ -97,8 +97,14 @@
   @apply fill-[var(--main-purple)] stroke-[var(--main-purple)]
 }
 
+
+/* Дополнительные стили для отладки */
 .player-icon-button.selected {
-  @apply pointer-events-none
+  opacity: 1 !important;
+}
+
+.player-icon-button:not(.selected) {
+  opacity: 0.7;
 }
 
 .player-icon-button {

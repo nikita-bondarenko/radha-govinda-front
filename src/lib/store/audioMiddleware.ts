@@ -66,12 +66,23 @@ const initAudioElement = (storeInstance?: any) => {
     
     audioElement.addEventListener('ended', () => {
       console.log('Audio ended');
-      // Автоматически переключаемся на следующий трек
-      setTimeout(() => {
-        if (storeInstance) {
-          storeInstance.dispatch(playNextAudio());
-        }
-      }, 100);
+      // Проверяем состояние зацикливания
+      const currentState = storeInstance?.getState();
+      const isLooping = currentState?.audio?.isLooping;
+      
+      if (isLooping && audioElement) {
+        // Если зацикливание включено, перезапускаем текущий трек
+        console.log('Looping enabled, restarting current track');
+        audioElement.currentTime = 0;
+        audioElement.play().catch(console.error);
+      } else {
+        // Если зацикливание выключено, переходим к следующему треку
+        setTimeout(() => {
+          if (storeInstance) {
+            storeInstance.dispatch(playNextAudio());
+          }
+        }, 100);
+      }
     });
     
     audioElement.addEventListener('error', (e) => {
@@ -94,9 +105,10 @@ const restoreAudioState = (store: any) => {
   const state = store.getState();
   const audio = selectAudio(state);
   const isPlaying = selectAudioIsPlaying(state);
+  const isLooping = state.audio?.isLooping;
   
   if (audio && audio.Audio?.url) {
-    console.log('Restoring audio state:', audio.Name);
+    console.log('Restoring audio state:', audio.Name, 'isLooping:', isLooping);
     const audioEl = initAudioElement(store);
     if (audioEl) {
       audioEl.src = audio.Audio.url;
