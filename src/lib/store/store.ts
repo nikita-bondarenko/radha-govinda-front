@@ -13,6 +13,10 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 const persistedState = loadState() as Partial<RootState> | undefined;
 console.log('persistedState', persistedState)
+
+// Debounce для сохранения состояния
+let saveTimeout: NodeJS.Timeout | null = null;
+
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState: persistedState,
@@ -25,11 +29,19 @@ export const store = configureStore({
 
 store.subscribe(() => {
   const state = store.getState();
-  // Only persist specific parts of the state that we want to keep
-  saveState({
-    audio: state.audio,
-    locale: state.locale,
-  });
+  
+  // Очищаем предыдущий таймаут
+  if (saveTimeout) {
+    clearTimeout(saveTimeout);
+  }
+  
+  // Сохраняем состояние с небольшой задержкой для оптимизации
+  saveTimeout = setTimeout(() => {
+    saveState({
+      audio: state.audio,
+      locale: state.locale,
+    });
+  }, 100); // 100ms debounce
 });
 
 

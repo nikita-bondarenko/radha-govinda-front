@@ -4,6 +4,7 @@ import type { RootState } from './store';
 
 // Глобальный HTML audio элемент
 let audioElement: HTMLAudioElement | null = null;
+let isInitialized = false;
 
 // Инициализация аудио элемента
 const initAudioElement = (storeInstance?: any) => {
@@ -49,6 +50,19 @@ const initAudioElement = (storeInstance?: any) => {
         }
       }
     });
+
+    audioElement.addEventListener('timeupdate', () => {
+      if (storeInstance && audioElement) {
+        const currentTime = audioElement.currentTime;
+        const duration = audioElement.duration;
+        
+        if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
+          const progress = (currentTime / duration) * 100;
+          storeInstance.dispatch(setPassedTime(currentTime));
+          storeInstance.dispatch(setProgress(progress));
+        }
+      }
+    });
     
     audioElement.addEventListener('ended', () => {
       console.log('Audio ended');
@@ -62,10 +76,66 @@ const initAudioElement = (storeInstance?: any) => {
     
     audioElement.addEventListener('error', (e) => {
       console.error('Audio error:', e);
+      // Если произошла ошибка загрузки, сбрасываем состояние воспроизведения
+      if (storeInstance) {
+        storeInstance.dispatch(setIsPlaying(false));
+        console.log('Audio loading failed, setting isPlaying to false');
+      }
     });
   }
   
   return audioElement;
+};
+
+// Функция для восстановления состояния аудио при загрузке страницы
+const restoreAudioState = (store: any) => {
+  if (isInitialized) return;
+  
+  const state = store.getState();
+  const audio = selectAudio(state);
+  const isPlaying = selectAudioIsPlaying(state);
+  
+  if (audio && audio.Audio?.url) {
+    console.log('Restoring audio state:', audio.Name);
+    const audioEl = initAudioElement(store);
+    if (audioEl) {
+      audioEl.src = audio.Audio.url;
+      audioEl.load();
+      
+      // Восстанавливаем громкость
+      const volume = state.audio.volume;
+      audioEl.volume = volume / 100;
+      
+      // Восстанавливаем позицию воспроизведения
+      const passedTime = state.audio.passedTime;
+      if (passedTime > 0) {
+        audioEl.addEventListener('loadedmetadata', () => {
+          audioEl.currentTime = passedTime;
+        }, { once: true });
+      }
+      
+      // Если аудио было воспроизводиться, запускаем его
+      if (isPlaying) {
+        audioEl.addEventListener('canplay', () => {
+          audioEl.play().catch((error) => {
+            console.error('Failed to play audio on restore:', error);
+            // Если не удалось воспроизвести, сбрасываем состояние
+            store.dispatch(setIsPlaying(false));
+          });
+        }, { once: true });
+      }
+      
+      // Добавляем обработчик ошибок для восстановления
+      const errorHandler = () => {
+        console.error('Audio failed to load during restore');
+        store.dispatch(setIsPlaying(false));
+        audioEl.removeEventListener('error', errorHandler);
+      };
+      audioEl.addEventListener('error', errorHandler);
+    }
+  }
+  
+  isInitialized = true;
 };
 
 // Middleware для обработки аудио
@@ -79,6 +149,11 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
   // Инициализируем аудио элемент на клиенте
   const audioEl = initAudioElement(store);
   if (!audioEl) return result;
+  
+  // Восстанавливаем состояние при первом вызове middleware
+  if (!isInitialized && typeof window !== 'undefined') {
+    restoreAudioState(store);
+  }
   
   // Обрабатываем смену трека
   if ((action.type === setAudio.type || action.type === playNextAudio.type || action.type === playPrevAudio.type) && audio) {
