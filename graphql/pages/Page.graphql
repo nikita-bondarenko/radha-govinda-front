@@ -101,6 +101,7 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     Duration
     Date
     documentId
+    locale
     AudioCategory {
       Name
       documentId

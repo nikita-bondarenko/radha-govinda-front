@@ -1,5 +1,5 @@
 import { Middleware, createListenerMiddleware } from '@reduxjs/toolkit';
-import { addItemInPreviosAudioBuffer, playNextAudio, playPrevAudio, selectAudio, selectAudioIsPlaying, setAudio, setIsPlaying, setPassedTime, setLeftTime, setProgress } from './audioSlice';
+import { addItemInPreviosAudioBuffer, playNextAudio, playPrevAudio, selectAudio, selectAudioIsPlaying, setAudio, setIsPlaying, setPassedTime, setLeftTime, setProgress, setSelectedCategoryId } from './audioSlice';
 import type { RootState } from './store';
 
 // Глобальный HTML audio элемент
@@ -170,10 +170,18 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
   // Обрабатываем смену трека
   if ((action.type === setAudio.type || action.type === playNextAudio.type || action.type === playPrevAudio.type) && audio) {
     console.log('Setting new audio:', audio.Name);
+    console.log('Audio locale:', audio.locale);
+    console.log('Audio full data:', audio);
 
     audioEl.src = audio.Audio.url;
     audioEl.load();
     audioEl.play().catch(console.error);
+    
+    // Устанавливаем категорию текущего аудио
+    if (audio.AudioCategory?.documentId) {
+      dispatch(setSelectedCategoryId(audio.AudioCategory.documentId));
+      console.log('Set selected category:', audio.AudioCategory.documentId);
+    }
     
     // Добавляем в буфер только при setAudio и playNextAudio, НЕ при playPrevAudio
     if (action.type !== playPrevAudio.type) {

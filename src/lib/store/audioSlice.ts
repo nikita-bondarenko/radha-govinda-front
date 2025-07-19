@@ -13,6 +13,7 @@ export type AudioState = {
   currentBufferPosition: number; // текущая позиция в буфере для навигации
   flow: "direct" | "random";
   isLooping: boolean; // новое состояние для зацикливания
+  selectedCategoryId: string | null; // ID выбранной категории для плейлиста
   progress: number;
   leftTime: number;
   passedTime: number;
@@ -26,6 +27,7 @@ const initialState: AudioState = {
   currentBufferPosition: -1,
   flow: "direct",
   isLooping: false, // по умолчанию зацикливание выключено
+  selectedCategoryId: null, // по умолчанию категория не выбрана
   isPlaying: false,
   volume: 50,
   progress: 0,
@@ -54,6 +56,9 @@ const audioSlice = createSlice({
     },
     toggleIsLooping: (state) => {
       state.isLooping = !state.isLooping;
+    },
+    setSelectedCategoryId: (state, action: PayloadAction<string | null>) => {
+      state.selectedCategoryId = action.payload;
     },
     setVolume: (state, action: PayloadAction<number>) => {
       if (action.payload < 0 || action.payload > 100) {
@@ -175,12 +180,14 @@ export const {
   addItemInPreviosAudioBuffer,
   setBufferPosition,
   setIsLooping,
-  toggleIsLooping
+  toggleIsLooping,
+  setSelectedCategoryId
 } = audioSlice.actions;
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
 export const selectAudioFlow = (state: RootState) => state.audio.flow;
 export const selectAudioIsLooping = (state: RootState) => state.audio.isLooping;
+export const selectAudioSelectedCategoryId = (state: RootState) => state.audio.selectedCategoryId;
 export const selectAudioVolume = (state: RootState) => state.audio.volume;
 export const selectAudioProgress = (state: RootState) => state.audio.progress;
 export const selectAudioPassedTime = (state: RootState) => state.audio.passedTime;

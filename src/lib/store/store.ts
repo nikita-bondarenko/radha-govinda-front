@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 export type RootState = ReturnType<typeof rootReducer>;
 
 const persistedState = loadState() as Partial<RootState> | undefined;
-console.log('persistedState', persistedState)
+console.log('store: persistedState from localStorage:', persistedState);
 
 // Debounce для сохранения состояния
 let saveTimeout: NodeJS.Timeout | null = null;
@@ -27,6 +27,8 @@ export const store = configureStore({
     }).concat(audioMiddleware)
 });
 
+console.log('store: initial state after configureStore:', store.getState());
+
 store.subscribe(() => {
   const state = store.getState();
   
@@ -36,10 +38,11 @@ store.subscribe(() => {
   }
   
   // Сохраняем состояние с небольшой задержкой для оптимизации
+  // НЕ сохраняем локаль в localStorage, она должна устанавливаться из URL
   saveTimeout = setTimeout(() => {
     saveState({
       audio: state.audio,
-      locale: state.locale,
+      // locale: state.locale, // Не сохраняем локаль в localStorage
     });
   }, 100); // 100ms debounce
 });

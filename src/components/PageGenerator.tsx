@@ -1,12 +1,13 @@
 "use client"
 import { PageQuery } from "@/gql/generated/graphql";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Locale } from "@/utils/getLocalizedData";
 import Footer from "./sections/footer/Footer";
 import AudioCatalog from "./sections/audio-catalog/AudioCatalog";
 import { useDispatch } from "react-redux";
 import { setLocale } from "@/lib/store/localeSlice";
+import { useAppSelector } from "@/lib/store/hooks";
 
 // Динамические импорты компонентов с поддержкой SSR
 const HeroWithImage = dynamic(() => import("./sections/hero-with-image/HeroWithImage"), { ssr: true });
@@ -58,7 +59,23 @@ export default function PageGenerator({
 }: PageQuery) {
 
   const dispatch = useDispatch();
-  dispatch(setLocale(page?.locale as Locale));
+  const currentStoreLocale = useAppSelector((state) => state.locale.locale);
+  
+  // Отладочная информация
+  console.log('PageGenerator: audiorecords =', audiorecords);
+  console.log('PageGenerator: first audio locale =', audiorecords?.[0]?.locale);
+  
+  // Устанавливаем локаль только один раз при монтировании компонента
+  useEffect(() => {
+    if (page?.locale) {
+      console.log('PageGenerator: Setting locale to:', page.locale);
+      console.log('PageGenerator: Current store locale before set:', currentStoreLocale);
+      dispatch(setLocale(page.locale as Locale));
+    } else {
+      console.log('PageGenerator: No locale in page data');
+    }
+  }, [dispatch, page?.locale, currentStoreLocale]);
+
   const renderSection = (section: any, index: number) => {
         
     switch (section?.__typename) {

@@ -9,6 +9,7 @@ import {
   selectAudioIsPlaying,
   selectAudioVolume,
   selectAudioIsLooping,
+  selectAudioSelectedCategoryId,
   setFlow,
   setVolume,
   toggleIsPlaying,
@@ -22,6 +23,9 @@ import PlayerNextButton from "./PlayerNextButton";
 import PlayerShuffleButton from "./PlayerShuffleButton";
 import PlayerPlaylistButton from "./PlayerPlaylistButton";
 import PlayerVolumeControl from "./PlayerVolumeControl";
+import useLocalizedHref from "@/hooks/useLocalizedHref";
+import { useRouter } from "next/navigation";
+
 type Props = {};
 
 const PlayerControls = (props: Props) => {
@@ -29,10 +33,27 @@ const PlayerControls = (props: Props) => {
   const volume = useAppSelector(selectAudioVolume);
   const flow = useAppSelector(selectAudioFlow);
   const isLooping = useAppSelector(selectAudioIsLooping);
+  const selectedCategoryId = useAppSelector(selectAudioSelectedCategoryId);
+  const currentAudio = useAppSelector((state) => state.audio.audio);
+  const currentLocale = useAppSelector((state) => state.locale.locale);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  
+  // Используем локаль текущей аудиозаписи, если она есть, иначе используем локаль страницы
+  const audioLocale = currentAudio?.locale || currentLocale;
+  
+  // Генерируем ссылку на основе локали аудиозаписи
+  const audioCatalogHref = audioLocale === "ru" 
+    ? `/lectures-and-kirtans${selectedCategoryId ? `?category=${selectedCategoryId}` : ''}`
+    : `/en/lectures-and-kirtans${selectedCategoryId ? `?category=${selectedCategoryId}` : ''}`;
   
   // Отладочная информация
-  console.log('PlayerControls state:', { flow, isLooping, isPlaying });
+  console.log('PlayerControls state:', { flow, isLooping, isPlaying, selectedCategoryId });
+  console.log('PlayerControls: currentAudio =', currentAudio);
+  console.log('PlayerControls: currentAudio locale:', currentAudio?.locale);
+  console.log('PlayerControls: page locale:', currentLocale);
+  console.log('PlayerControls: using audioLocale:', audioLocale);
+  console.log('PlayerControls: generated href:', audioCatalogHref);
   
   const handlePrevButtonClick = () => {
     dispatch(playPrevAudio());
@@ -55,6 +76,16 @@ const PlayerControls = (props: Props) => {
   
   const playingButtonClickHandler: React.MouseEventHandler = () => {
     dispatch(toggleIsPlaying());
+  };
+
+  const handlePlaylistButtonClick = () => {
+    console.log('Playlist button clicked, selected category:', selectedCategoryId);
+    console.log('Generated href:', audioCatalogHref);
+    console.log('Current audio locale:', currentAudio?.locale);
+    console.log('Current page locale:', currentLocale);
+    console.log('Using audioLocale for navigation:', audioLocale);
+    // Навигация на страницу аудиозаписей с выбранной категорией
+    router.push(audioCatalogHref);
   };
 
   const [forceRender, setForceRender] = useState(0)
@@ -88,7 +119,7 @@ useEffect(() => {
         />
       </div>
       <div className={clsx(style.controls__right)}>
-        <PlayerPlaylistButton onClick={() => {}} />
+        <PlayerPlaylistButton onClick={handlePlaylistButtonClick} />
         <PlayerVolumeControl 
           volume={volume}
           onChange={volumeInputHandler}

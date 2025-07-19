@@ -23,6 +23,7 @@ export type Audio = {
   Name: string;
   Duration: string;
   Date?: any | null;
+  locale?: string | null; // Добавляем поле locale
   AudioCategory?: {
     __typename?: "AudioCategory";
     Name: string;
@@ -47,6 +48,10 @@ export default memo(function AudioPreview({
   audiorecords,
 }: AudioPreviewProps) {
   const dispatch = useAppDispatch();
+
+  // Отладочная информация
+  console.log('AudioPreview: audiorecords =', audiorecords);
+  console.log('AudioPreview: first audio locale =', audiorecords?.[0]?.locale);
 
   const handleControlButtonClick = () => {
     dispatch(setPlaylist(audiorecords))

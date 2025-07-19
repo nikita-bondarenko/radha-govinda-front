@@ -14,6 +14,7 @@ const localeSlice = createSlice({
   initialState,
   reducers: {
     setLocale(state, action: PayloadAction<Locale>) {
+      console.log('localeSlice: setting locale from', state.locale, 'to', action.payload);
       state.locale = action.payload;
     },
   },

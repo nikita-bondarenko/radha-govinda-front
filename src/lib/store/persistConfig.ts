@@ -20,7 +20,14 @@ export const loadState = (): Partial<RootState> | undefined => {
     if (serializedState === null) {
       return undefined;
     }
-    return JSON.parse(serializedState);
+    const parsedState = JSON.parse(serializedState);
+    console.log('loadState: loaded from localStorage:', parsedState);
+    
+    // Возвращаем только аудио состояние, локаль не загружаем из localStorage
+    return {
+      audio: parsedState.audio,
+      // locale: parsedState.locale, // Не загружаем локаль из localStorage
+    };
   } catch (err) {
     console.error('Error loading state from localStorage:', err);
     return undefined;
@@ -33,6 +40,7 @@ export const saveState = (state: Partial<RootState>) => {
   }
 
   try {
+    console.log('saveState: saving to localStorage:', state);
     const serializedState = JSON.stringify(state);
     localStorage.setItem(PERSIST_KEY, serializedState);
   } catch (err) {

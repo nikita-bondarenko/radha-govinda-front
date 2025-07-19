@@ -47,6 +47,8 @@ export default memo(function AudioPreviewItem({
     if (selectedAudioId === audio?.documentId) {
       dispatch(setIsPlaying(!isPlaying));
     } else {
+      console.log('AudioItem: Setting audio:', audio);
+      console.log('AudioItem: Audio locale:', audio?.locale);
       dispatch(setAudio(audio || null));
       dispatch(setIsPlaying(true));
     }

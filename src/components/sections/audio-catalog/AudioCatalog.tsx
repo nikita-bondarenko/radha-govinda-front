@@ -1,15 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Audio } from "../audio-preview/AudioPreview";
 import { Category } from "../video-catalog/VideoCatalog";
 import Filter from "@/components/ui/filter/Filter";
 import InfiniteVirtualGrid from "@/components/ui/infiniteVirtualGrid/InfiniteVirtualGrid";
-import MovieItem from "@/components/ui/movieItem/MovieItem";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import { searchFilteringCondition } from "@/utils/searchFilteringCondition";
 import AudioItem from "@/components/ui/audioItem/AudioItem";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { setPlaylist } from "@/lib/store/audioSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { setPlaylist, setSelectedCategoryId, selectAudioSelectedCategoryId } from "@/lib/store/audioSlice";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   audios: Audio[];
@@ -18,8 +18,24 @@ type Props = {
 
 const AudioCatalog = ({ audioCategories, audios }: Props) => {
   const [filteredItems, setFilteredItems] = useState<Audio[]>(audios);
+  const [initialCategoryId, setInitialCategoryId] = useState<string | null>(null);
   const localizedData = useLocalizedStaticData();
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+  const selectedCategoryId = useAppSelector(selectAudioSelectedCategoryId);
+
+  // Получаем категорию из URL при загрузке компонента
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get('category');
+    console.log('AudioCatalog: searchParams.get("category") =', categoryFromUrl);
+    console.log('AudioCatalog: available categories =', audioCategories.filter(c => c).map(c => ({ id: c!.documentId, name: c!.Name })));
+    
+    if (categoryFromUrl) {
+      console.log('Category from URL:', categoryFromUrl);
+      setInitialCategoryId(categoryFromUrl);
+      dispatch(setSelectedCategoryId(categoryFromUrl));
+    }
+  }, [searchParams, dispatch, audioCategories]);
 
   const handleControlButtonClick = () => {
     dispatch(setPlaylist(filteredItems))
@@ -36,10 +52,18 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
         filterConditionBySearchInput={(item, searchInput) =>
           searchFilteringCondition(item?.Name, searchInput)
         }
-        filterConditionByCategoryId={(item, categoryId) =>
-          item?.AudioCategory?.documentId === categoryId
-        }
+        filterConditionByCategoryId={(item, categoryId) => {
+          const matches = item?.AudioCategory?.documentId === categoryId;
+          console.log('Filter condition check:', {
+            itemName: item?.Name,
+            itemCategoryId: item?.AudioCategory?.documentId,
+            filterCategoryId: categoryId,
+            matches
+          });
+          return matches;
+        }}
         handleFilteredItemsSelection={setFilteredItems}
+        initialCategoryId={initialCategoryId}
       />
 
       <InfiniteVirtualGrid

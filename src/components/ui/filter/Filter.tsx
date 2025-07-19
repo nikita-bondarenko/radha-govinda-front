@@ -14,6 +14,7 @@ type Props<T> = {
   filterConditionByCategoryId: (item: T, selectedCategoryId: string) => boolean;
   handleFilteredItemsSelection: (items: T[]) => void;
   allCategoriesOptionText: string | undefined;
+  initialCategoryId?: string | null;
 };
 
 const Filter = <T,>({
@@ -23,23 +24,37 @@ const Filter = <T,>({
   filterConditionBySearchInput,
   handleFilteredItemsSelection,
   allCategoriesOptionText,
+  initialCategoryId,
 }: Props<T>) => {
   const [searchInputValue, setSearchInputValue] = useState<string>();
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(initialCategoryId || undefined);
   const [filteredItemsAmount, setFilteredItemsAmount] = useState<number>(0);
+  
+  // Обновляем selectedCategoryId при изменении initialCategoryId
   useEffect(() => {
+    console.log('Filter: initialCategoryId changed to:', initialCategoryId);
+    if (initialCategoryId) {
+      setSelectedCategoryId(initialCategoryId);
+      console.log('Filter: setSelectedCategoryId to:', initialCategoryId);
+    }
+  }, [initialCategoryId]);
+  
+  useEffect(() => {
+    console.log('Filter: filtering with selectedCategoryId:', selectedCategoryId, 'searchInputValue:', searchInputValue);
     let filteredItems: T[] = items;
 
     if (selectedCategoryId) {
       filteredItems = filteredItems.filter((item: T) =>
         filterConditionByCategoryId(item, selectedCategoryId)
       );
+      console.log('Filter: after category filter, items count:', filteredItems.length);
     }
 
     if (!!searchInputValue && searchInputValue.trim().length > 0) {
       filteredItems = filteredItems.filter((item) =>
         filterConditionBySearchInput(item, searchInputValue)
       );
+      console.log('Filter: after search filter, items count:', filteredItems.length);
     }
 
     handleFilteredItemsSelection(filteredItems);
