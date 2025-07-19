@@ -34,9 +34,10 @@ export type HeaderButton = {
 export type HeaderLectureBarProps = {
     button?: HeaderButton
     className?: string
+    disableMiniPlayer?: boolean
 }
 
-export default memo(function HeaderLectureBar({button, className}:HeaderLectureBarProps) {
+export default memo(function HeaderLectureBar({button, className, disableMiniPlayer = false}:HeaderLectureBarProps) {
   const [isClient, setIsClient] = useState(false);
   const audio = useAppSelector(selectAudio);
   const isPlaying = useAppSelector(selectAudioIsPlaying);
@@ -88,8 +89,8 @@ export default memo(function HeaderLectureBar({button, className}:HeaderLectureB
     dispatch(setIsMiniPlayerVisible(false));
   }, [dispatch, isClient]);
 
-  // Если есть аудиозапись И мы на клиенте, показываем мини-плеер
-  if (audio && isClient) {
+  // Если есть аудиозапись И мы на клиенте И мини-плеер не отключен, показываем мини-плеер
+  if (audio && isClient && !disableMiniPlayer) {
     // Используем ту же логику, что и в основном плеере
     const getDisplayLeftTime = (): number => {
       // Приоритет 1: Если leftTime доступно из реальных метаданных, используем его

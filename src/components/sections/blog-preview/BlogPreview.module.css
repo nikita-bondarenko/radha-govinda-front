@@ -9,5 +9,20 @@ scrollbar-width: none;
 }
 
 .list {
-@apply flex flex-col gap-[20px] md:gap-[10px] sm:flex-row 
+@apply flex flex-col gap-[20px] md:gap-[10px] sm:flex-row sm:gap-[20px] sm:pl-0 sm:pr-0
+}
+
+/* На мобильных устройствах элементы выходят за контейнер */
+@media (max-width: 740px) {
+  .wrapper {
+    @apply overflow-x-auto;
+    margin-left: -20px; /* Отрицательный отступ слева */
+    margin-right: -20px; /* Отрицательный отступ справа */
+    padding-left: 20px; /* Внутренний отступ для компенсации */
+    padding-right: 20px; /* Внутренний отступ для компенсации */
+  }
+  
+  .list {
+    @apply flex-row gap-[20px];
+  }
 }

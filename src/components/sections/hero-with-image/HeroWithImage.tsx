@@ -80,6 +80,7 @@ export default memo(function HeroWithImage({
               <HeaderLectureBar
                 button={section.BigButton}
                 className={styles["hero-with-image__big-button"]}
+                disableMiniPlayer={true}
               ></HeaderLectureBar>
             )}
           </div>

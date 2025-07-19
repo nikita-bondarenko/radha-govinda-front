@@ -209,4 +209,12 @@ export const selectCurrentBufferPosition = (state: RootState) => state.audio.cur
 export const selectPreviosAudioBuffer = (state: RootState) => state.audio.previosAudioBuffer;
 export const selectIsMiniPlayerVisible = (state: RootState) => state.audio.isMiniPlayerVisible;
 
+// Селектор для определения видимости большого плеера
+export const selectIsMainPlayerVisible = (state: RootState) => {
+  const { audio, isMiniPlayerVisible, isHeaderButtonVisible } = state.audio;
+  const shouldHidePlayer = !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
+  const forceShowPlayer = audio && !isHeaderButtonVisible;
+  return !(shouldHidePlayer && !forceShowPlayer);
+};
+
 export default audioSlice.reducer;

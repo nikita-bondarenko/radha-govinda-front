@@ -7,6 +7,8 @@ import { Enum_Componentinputpolevvoda_Inputtype } from "@/gql/generated/graphql"
 import SocialMediaLink, { SocialMediaList } from "./SocialMediaLink";
 import DocumentElement from "./FooterDocument";
 import clsx from "clsx";
+import { useAppSelector } from "@/lib/store/hooks";
+import { selectIsMainPlayerVisible } from "@/lib/store/audioSlice";
 export type FooterDocument = {
   __typename?: "ComponentDocsLinkSsylkaNaDokument";
   Text?: string | null;
@@ -32,8 +34,15 @@ type FooterProps = {
 };
 
 export default function Footer({ menu, footer }: FooterProps) {
+  const isMainPlayerVisible = useAppSelector(selectIsMainPlayerVisible);
+  
   return (
-    <footer className="bg-purple-main rounded-t-[20px] py-[40px]  md:py-[20px] md:rounded-t-[10px]">
+    <footer className={clsx(
+      "bg-purple-main rounded-t-[20px] py-[40px] md:py-[20px] md:rounded-t-[10px]",
+      {
+        "pb-[160px] md:pb-[140px] sm:pb-[200px]": isMainPlayerVisible // Отступ снизу когда большой плеер видим
+      }
+    )}>
       <div className="container">
         <div className="grid grid-cols-2 gap-[20px] md:grid-cols-1 md:gap-[31px] sm:gap-[25px]">
           <FooterForm form={footer?.SupportForm}></FooterForm>

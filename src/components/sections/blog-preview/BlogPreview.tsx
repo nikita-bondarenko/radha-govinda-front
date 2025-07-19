@@ -34,9 +34,13 @@ export default memo(function BlogPreview({
       <div className={styles.wrapper}>
         <ul className={styles.list}>
           {posts.map((post) => (
-            <PostPreview className="sm:w-[320px] min-h-[320px]
-md:min-h-[276px] sm:min-h-[410px]" key={post?.documentId} post={post}></PostPreview>
+            <PostPreview 
+              className=" min-h-[320px] md:min-h-[276px] sm:w-[320px] sm:min-h-[410px] shrink-0" 
+              key={post?.documentId} 
+              post={post}
+            />
           ))}
+          <li className="hidden sm:block w-[1px] shrink-0"></li>
         </ul>
       </div>
     </PreviewSection>
