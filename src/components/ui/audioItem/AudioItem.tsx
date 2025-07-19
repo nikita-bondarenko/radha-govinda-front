@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
   selectAudioId,
   selectAudioIsPlaying,
+  selectAudioSelectedCategoryId,
   setAudio,
   setIsPlaying,
 } from "@/lib/store/audioSlice";
@@ -72,11 +73,50 @@ export default memo(function AudioPreviewItem({
       location.protocol +
       "//" +
       location.host +
-      "/" +
-      (locale === "ru" ? "" : "en/") +
-      "lectures-and-kirtans" +
-      "?audioId=" +
-      audio?.documentId;
+  
+      (locale === "ru" ? "" : "/en") +
+      `/lectures-and-kirtans?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`
+ 
+    // Use Clipboard API if available, otherwise fallback to async copy using execCommand (for better macOS support)
+    const copyToClipboard = async (text: string) => {
+      if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (err) {
+          // fallback if clipboard API fails (e.g. macOS Safari)
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand('copy');
+          } catch (e) {
+            // ignore
+          }
+          document.body.removeChild(textarea);
+        }
+      } else {
+        // fallback for very old browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+        } catch (e) {
+          // ignore
+        }
+        document.body.removeChild(textarea);
+      }
+    };
+
+    copyToClipboard(link);
     setTimeout(() => {
       setSeccessMessageVisible(false);
       setAreOptionsOpen(false);
@@ -100,6 +140,7 @@ export default memo(function AudioPreviewItem({
   const localizedData = useLocalizedStaticData();
   return (
     <div
+      id={audio?.documentId}
       className={clsx(
         styles.audio,
         className,

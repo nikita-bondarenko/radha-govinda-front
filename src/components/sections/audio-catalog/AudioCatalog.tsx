@@ -16,17 +16,69 @@ type Props = {
   audioCategories: Category[];
 };
 
+const audioItemHeight ={
+  sm: 62,
+  md: 80,
+  lg: 120,
+}
+
+const audioCatalogGap = {
+  sm: 10,
+  md: 10,
+  lg: 20,
+}
+
 const AudioCatalog = ({ audioCategories, audios }: Props) => {
   const [filteredItems, setFilteredItems] = useState<Audio[]>(audios);
   const [initialCategoryId, setInitialCategoryId] = useState<string | null>(null);
   const localizedData = useLocalizedStaticData();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  const selectedCategoryId = useAppSelector(selectAudioSelectedCategoryId);
 
+  const [windowWidth, setWindowWidth] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 740
+  );
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+const scrollToAudio = (audioId: string) => {
+  let audioItemHeightValue = 0;
+  let audioItemGapValue = 0;
+  if (windowWidth <= 740) {
+    audioItemHeightValue = audioItemHeight.sm;
+  } else if (windowWidth <= 1200) {
+    audioItemHeightValue = audioItemHeight.md;
+  } else {
+    audioItemHeightValue = audioItemHeight.lg;
+  }
+
+  if (windowWidth <= 740) {
+    audioItemGapValue = audioCatalogGap.sm;
+  } else if (windowWidth <= 1200) {
+    audioItemGapValue = audioCatalogGap.md;
+  } else {
+    audioItemGapValue = audioCatalogGap.lg;
+  }
+  const firstAudioItemId = filteredItems[0]?.documentId;
+  if (firstAudioItemId) {
+    const firstAudioItem = document.getElementById(firstAudioItemId);
+    const currentAudioIndex = filteredItems.findIndex(item => item?.documentId === audioId);
+    console.log('AudioCatalog: currentAudioIndex =', currentAudioIndex);
+    console.log('AudioCatalog: firstAudioItem =', firstAudioItem);
+    if (firstAudioItem) {
+      const currentAudioPosition = currentAudioIndex * (audioItemHeightValue + audioItemGapValue) + firstAudioItem.offsetTop;
+      console.log('AudioCatalog: currentAudioPosition =', currentAudioPosition);
+      // Use window.scrollTo with absolute Y position, but adjust for sticky headers if needed
+      window.scrollTo(0, currentAudioPosition);
+    }
+  }
+}
   // Получаем категорию из URL при загрузке компонента
   useEffect(() => {
     const categoryFromUrl = searchParams.get('category');
+    const audioFromUrl = searchParams.get('audio');
     console.log('AudioCatalog: searchParams.get("category") =', categoryFromUrl);
     console.log('AudioCatalog: available categories =', audioCategories.filter(c => c).map(c => ({ id: c!.documentId, name: c!.Name })));
     
@@ -34,6 +86,13 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
       console.log('Category from URL:', categoryFromUrl);
       setInitialCategoryId(categoryFromUrl);
       dispatch(setSelectedCategoryId(categoryFromUrl));
+    
+    }
+
+    if (audioFromUrl) {
+      setTimeout(() => {
+        scrollToAudio(audioFromUrl);
+      }, 2000);
     }
   }, [searchParams, dispatch, audioCategories]);
 
@@ -73,16 +132,8 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
         )}
         getItemKey={(audio) => audio?.documentId || ""}
         itemsPerPage={12}
-        gap={{
-          sm: 10,
-          md: 10,
-          lg: 20,
-        }}
-        itemHeight={{
-          sm: 62,
-          md: 80,
-          lg: 120,
-        }}
+        gap={audioCatalogGap}
+        itemHeight={audioItemHeight}
         className="container"
         loadThreshold={200}
         viewportBuffer={12}
