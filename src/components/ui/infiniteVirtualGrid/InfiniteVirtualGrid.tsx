@@ -33,7 +33,7 @@ interface ResponsiveAspectRatio {
 
 interface InfiniteVirtualGridProps<T> {
   items: T[];
-  renderItem: (item: T, index: number) => React.ReactNode;
+  renderItem: (item: T, index: number, isHighlighted?: boolean) => React.ReactNode;
   getItemKey: (item: T, index: number) => string;
   itemsPerPage?: number;
   itemHeight?: number | ResponsiveHeight;
@@ -43,6 +43,9 @@ interface InfiniteVirtualGridProps<T> {
   columns?: GridColumns;
   loadThreshold?: number;
   viewportBuffer?: number;
+  highlightedAudioId?: string; // ID аудиозаписи для подсветки и скролла
+  smoothScroll?: boolean; // Плавный скролл или немедленный
+  scrollDuration?: number; // Длительность плавного скролла в миллисекундах
 }
 
 const InfiniteVirtualGrid = <T,>({
@@ -57,6 +60,9 @@ const InfiniteVirtualGrid = <T,>({
   columns = { sm: 1, md: 2, lg: 2 },
   loadThreshold = 1000,
   viewportBuffer = 3,
+  highlightedAudioId,
+  smoothScroll = true,
+  scrollDuration = 800,
 }: InfiniteVirtualGridProps<T>) => {
   const [visibleCount, setVisibleCount] = useState(items.length < itemsPerPage ? items.length : itemsPerPage);
   const [isClientMounted, setIsClientMounted] = useState(false);
@@ -192,6 +198,180 @@ const InfiniteVirtualGrid = <T,>({
     }
   }, [windowWidth, itemHeight, aspectRatio, itemWidth]);
 
+    // Состояние для подсветки элемента
+  const [highlightedItemId, setHighlightedItemId] = useState<string | null>(null);
+  
+  // Ref для отслеживания процесса скролла
+  const isScrollingRef = useRef(false);
+  const lastHighlightedIdRef = useRef<string | null>(null);
+
+  // Функция для скролла к элементу
+  const scrollToItem = useCallback((targetIndex: number) => {
+    if (!containerRef.current || isScrollingRef.current) {
+      console.log('InfiniteVirtualGrid: scrollToItem skipped - already scrolling or no container');
+      return;
+    }
+    
+    isScrollingRef.current = true;
+    console.log('InfiniteVirtualGrid: scrollToItem called with targetIndex:', targetIndex);
+    console.log('InfiniteVirtualGrid: currentItemHeight:', currentItemHeight);
+    console.log('InfiniteVirtualGrid: currentGap:', currentGap);
+    console.log('InfiniteVirtualGrid: columnCount:', columnCount);
+    
+    // Вычисляем позицию элемента
+    const rowHeight = currentItemHeight + currentGap;
+    const targetRow = Math.floor(targetIndex / columnCount);
+    const scrollPosition = targetRow * rowHeight;
+    
+    console.log('InfiniteVirtualGrid: rowHeight:', rowHeight);
+    console.log('InfiniteVirtualGrid: targetRow:', targetRow);
+    console.log('InfiniteVirtualGrid: scrollPosition:', scrollPosition);
+    
+    // Получаем позицию контейнера относительно страницы
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const containerTop = containerRect.top + window.pageYOffset;
+    
+    console.log('InfiniteVirtualGrid: containerTop:', containerTop);
+    
+    // Вычисляем абсолютную позицию элемента на странице
+    const absoluteScrollPosition = containerTop + scrollPosition;
+    
+    // Добавляем отступ для шапки
+    const headerOffset = 100;
+    const finalScrollPosition = Math.max(0, absoluteScrollPosition - headerOffset);
+    
+    console.log('InfiniteVirtualGrid: absoluteScrollPosition:', absoluteScrollPosition);
+    console.log('InfiniteVirtualGrid: finalScrollPosition:', finalScrollPosition);
+    
+    // Проверяем, какой элемент является скроллируемым
+    console.log('InfiniteVirtualGrid: document.documentElement.scrollHeight:', document.documentElement.scrollHeight);
+    console.log('InfiniteVirtualGrid: document.body.scrollHeight:', document.body.scrollHeight);
+    console.log('InfiniteVirtualGrid: window.innerHeight:', window.innerHeight);
+    console.log('InfiniteVirtualGrid: Current scroll position:', window.scrollY);
+    
+    // Сначала обновляем видимый диапазон, чтобы элементы были в DOM
+    const startRow = Math.max(0, targetRow - 2); // 2 строки выше
+    const endRow = targetRow + 3; // 3 строки ниже
+    
+    const newStart = Math.max(0, startRow * columnCount);
+    const newEnd = Math.min(visibleCount, endRow * columnCount);
+    
+    console.log('InfiniteVirtualGrid: Updating visible range before scroll to:', newStart, '-', newEnd);
+    setVisibleRange({ start: newStart, end: newEnd });
+    
+    // Ждем обновления DOM, затем скроллим
+    setTimeout(() => {
+      console.log('InfiniteVirtualGrid: DOM updated, now scrolling to:', finalScrollPosition);
+      
+      // Скроллим к позиции
+      try {
+        console.log('InfiniteVirtualGrid: Using scroll to position:', finalScrollPosition, 'smooth:', smoothScroll);
+        console.log('InfiniteVirtualGrid: Current scroll position before:', window.scrollY);
+        
+        // Используем стандартный window.scrollTo
+        window.scrollTo({
+          top: finalScrollPosition,
+          behavior: smoothScroll ? 'smooth' : 'auto'
+        });
+        
+        // Проверяем результат сразу и через задержку
+        console.log('InfiniteVirtualGrid: Scroll command executed');
+        
+        setTimeout(() => {
+          console.log('InfiniteVirtualGrid: After scroll, position:', window.scrollY);
+          console.log('InfiniteVirtualGrid: Expected position:', finalScrollPosition);
+          
+          // Если скролл не сработал, пробуем альтернативные методы
+          if (Math.abs(window.scrollY - finalScrollPosition) > 10) {
+            console.log('InfiniteVirtualGrid: Primary scroll failed, trying alternatives...');
+            
+            // Пробуем document.documentElement
+            document.documentElement.scrollTop = finalScrollPosition;
+            console.log('InfiniteVirtualGrid: After document.documentElement.scrollTop:', window.scrollY);
+            
+            // Пробуем document.body
+            if (Math.abs(window.scrollY - finalScrollPosition) > 10) {
+              document.body.scrollTop = finalScrollPosition;
+              console.log('InfiniteVirtualGrid: After document.body.scrollTop:', window.scrollY);
+            }
+          }
+          
+          isScrollingRef.current = false;
+        }, smoothScroll ? 1000 : 200);
+        
+      } catch (error) {
+        console.error('InfiniteVirtualGrid: Scroll error:', error);
+        isScrollingRef.current = false;
+      }
+    }, 100); // Ждем обновления DOM
+  }, [currentItemHeight, currentGap, columnCount, visibleCount]);
+
+  // Обработка подсветки аудиозаписи
+  useEffect(() => {
+    console.log('InfiniteVirtualGrid: highlightedAudioId changed:', highlightedAudioId);
+    console.log('InfiniteVirtualGrid: items length:', items.length);
+    
+    // Проверяем, что это новый ID и не идет скролл
+    if (highlightedAudioId && items.length > 0 && 
+        highlightedAudioId !== lastHighlightedIdRef.current && 
+        !isScrollingRef.current) {
+      
+      lastHighlightedIdRef.current = highlightedAudioId;
+      const targetIndex = items.findIndex(item => getItemKey(item, 0) === highlightedAudioId);
+      console.log('InfiniteVirtualGrid: targetIndex:', targetIndex);
+      console.log('InfiniteVirtualGrid: available item keys:', items.slice(0, 5).map(item => getItemKey(item, 0)));
+      
+      if (targetIndex !== -1) {
+        console.log(`InfiniteVirtualGrid: Found target index ${targetIndex} for ID ${highlightedAudioId}`);
+        
+        // Шаг 1: Загружаем все элементы до нужного индекса
+        const requiredCount = Math.min(targetIndex + 10, items.length); // +10 для буфера
+        if (requiredCount > visibleCount) {
+          console.log(`InfiniteVirtualGrid: Loading items from ${visibleCount} to ${requiredCount}`);
+          setVisibleCount(requiredCount);
+          
+          // Ждем, пока элементы загрузятся, затем скроллим
+          const checkAndScroll = () => {
+            // Проверяем актуальное состояние visibleCount
+            setVisibleCount(currentCount => {
+              if (currentCount >= requiredCount) {
+                console.log('InfiniteVirtualGrid: All items loaded, scrolling to target');
+                setHighlightedItemId(highlightedAudioId);
+                scrollToItem(targetIndex);
+                
+                // Убираем подсветку через 5 секунд
+                setTimeout(() => {
+                  setHighlightedItemId(null);
+                }, 5000);
+                
+                return currentCount;
+              } else {
+                console.log('InfiniteVirtualGrid: Items not yet loaded, retrying...');
+                setTimeout(checkAndScroll, 100);
+                return requiredCount;
+              }
+            });
+          };
+          
+          // Начинаем проверку через небольшую задержку
+          setTimeout(checkAndScroll, 200);
+        } else {
+          // Элементы уже загружены, сразу скроллим
+          console.log('InfiniteVirtualGrid: Items already loaded, scrolling immediately');
+          setHighlightedItemId(highlightedAudioId);
+          scrollToItem(targetIndex);
+          
+          // Убираем подсветку через 5 секунд
+          setTimeout(() => {
+            setHighlightedItemId(null);
+          }, 5000);
+        }
+      } else {
+        console.log('InfiniteVirtualGrid: Audio item not found in items array');
+      }
+    }
+  }, [highlightedAudioId, items, getItemKey, scrollToItem]);
+
   // Получаем загруженные элементы
   const loadedItems = items.slice(0, visibleCount);
   const hasMore = visibleCount < items.length;
@@ -311,6 +491,13 @@ const InfiniteVirtualGrid = <T,>({
 
   return (
     <div className={className}>
+      <style jsx>{`
+        .highlighted-item {
+          border: 4px solid #b6a9f1;
+          border-top: none;
+          border-radius: 12px;
+        }
+      `}</style>
       <div ref={containerRef} style={gridStyle}>
         {/* Рендерим только видимые элементы из видимого диапазона */}
         {items
@@ -323,6 +510,8 @@ const InfiniteVirtualGrid = <T,>({
             // Вычисляем позицию с учетом gap
             const leftPosition = columnIndex * (itemWidth + currentGap);
 
+            const isHighlighted = getItemKey(item, actualIndex) === highlightedItemId;
+            
             return (
               <div
                 key={getItemKey(item, actualIndex)}
@@ -332,9 +521,11 @@ const InfiniteVirtualGrid = <T,>({
                   left: `${leftPosition}px`,
                   width: `${itemWidth}px`,
                   height: `${currentItemHeight}px`,
+                  transition: 'all 0.3s ease-in-out',
                 }}
+                className={isHighlighted ? 'highlighted-item' : ''}
               >
-                {renderItem(item, actualIndex)}
+                {renderItem(item, actualIndex, isHighlighted)}
               </div>
             );
           })}

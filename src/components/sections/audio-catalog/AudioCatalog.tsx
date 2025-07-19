@@ -31,6 +31,8 @@ const audioCatalogGap = {
 const AudioCatalog = ({ audioCategories, audios }: Props) => {
   const [filteredItems, setFilteredItems] = useState<Audio[]>(audios);
   const [initialCategoryId, setInitialCategoryId] = useState<string | null>(null);
+  const [highlightedAudioId, setHighlightedAudioId] = useState<string | null>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const localizedData = useLocalizedStaticData();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
@@ -44,36 +46,14 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
   }, []);
 
 const scrollToAudio = (audioId: string) => {
-  let audioItemHeightValue = 0;
-  let audioItemGapValue = 0;
-  if (windowWidth <= 740) {
-    audioItemHeightValue = audioItemHeight.sm;
-  } else if (windowWidth <= 1200) {
-    audioItemHeightValue = audioItemHeight.md;
-  } else {
-    audioItemHeightValue = audioItemHeight.lg;
-  }
-
-  if (windowWidth <= 740) {
-    audioItemGapValue = audioCatalogGap.sm;
-  } else if (windowWidth <= 1200) {
-    audioItemGapValue = audioCatalogGap.md;
-  } else {
-    audioItemGapValue = audioCatalogGap.lg;
-  }
-  const firstAudioItemId = filteredItems[0]?.documentId;
-  if (firstAudioItemId) {
-    const firstAudioItem = document.getElementById(firstAudioItemId);
-    const currentAudioIndex = filteredItems.findIndex(item => item?.documentId === audioId);
-    console.log('AudioCatalog: currentAudioIndex =', currentAudioIndex);
-    console.log('AudioCatalog: firstAudioItem =', firstAudioItem);
-    if (firstAudioItem) {
-      const currentAudioPosition = currentAudioIndex * (audioItemHeightValue + audioItemGapValue) + firstAudioItem.offsetTop;
-      console.log('AudioCatalog: currentAudioPosition =', currentAudioPosition);
-      // Use window.scrollTo with absolute Y position, but adjust for sticky headers if needed
-      window.scrollTo(0, currentAudioPosition);
-    }
-  }
+  console.log('AudioCatalog: Setting highlighted audio ID:', audioId);
+  setHighlightedAudioId(audioId);
+  
+  // Сбрасываем highlightedAudioId через 4 секунды (после подсветки)
+  setTimeout(() => {
+    console.log('AudioCatalog: Clearing highlighted audio ID');
+    setHighlightedAudioId(null);
+  }, 4000);
 }
   // Получаем категорию из URL при загрузке компонента
   useEffect(() => {
@@ -90,9 +70,15 @@ const scrollToAudio = (audioId: string) => {
     }
 
     if (audioFromUrl) {
-      setTimeout(() => {
-        scrollToAudio(audioFromUrl);
-      }, 2000);
+      console.log('AudioCatalog: Found audioFromUrl:', audioFromUrl);
+      console.log('AudioCatalog: filteredItems length:', filteredItems.length);
+      
+      // Мгновенный скролл при открытии страницы
+      console.log('AudioCatalog: Executing immediate scrollToAudio');
+      scrollToAudio(audioFromUrl);
+      setIsInitialLoad(false);
+    } else {
+      setIsInitialLoad(false);
     }
   }, [searchParams, dispatch, audioCategories]);
 
@@ -127,8 +113,12 @@ const scrollToAudio = (audioId: string) => {
 
       <InfiniteVirtualGrid
         items={filteredItems}
-        renderItem={(audio) => (
-          <AudioItem handleControlButtonClick={handleControlButtonClick} className="w-full h-full" audio={audio} />
+        renderItem={(audio, index, isHighlighted) => (
+          <AudioItem 
+            handleControlButtonClick={handleControlButtonClick} 
+            className={`w-full h-full`} 
+            audio={audio} 
+          />
         )}
         getItemKey={(audio) => audio?.documentId || ""}
         itemsPerPage={12}
@@ -137,6 +127,8 @@ const scrollToAudio = (audioId: string) => {
         className="container"
         loadThreshold={200}
         viewportBuffer={12}
+        highlightedAudioId={highlightedAudioId || undefined}
+        smoothScroll={!isInitialLoad}
         columns={{
           sm: 1,
           md: 1,
