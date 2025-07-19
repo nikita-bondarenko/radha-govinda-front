@@ -13,7 +13,7 @@ import CloseButton from "../ui/closeButton/CloseButton";
 import Nav, { Menu } from "../ui/nav/Nav";
 import SiteName from "./SiteName";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setIsHeaderButtonVisible } from "@/lib/store/audioSlice";
+import { setIsHeaderButtonVisible, setIsMobile } from "@/lib/store/audioSlice";
 
 export type HeaderProps = {
   menu: Menu;
@@ -50,6 +50,25 @@ export default memo(function Header({
     console.log('Header setting button visibility:', IsBigButtonVisible);
     dispatch(setIsHeaderButtonVisible(!!IsBigButtonVisible));
   }, [IsBigButtonVisible, dispatch]);
+  
+  // Отслеживаем размер экрана для определения мобильного устройства
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobile = window.innerWidth <= 768;
+      console.log('Header checking mobile:', {
+        windowWidth: window.innerWidth,
+        isMobile
+      });
+      dispatch(setIsMobile(isMobile));
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [dispatch]);
   
   const burgerHandler = () => {
     setIsModalOpen(true);

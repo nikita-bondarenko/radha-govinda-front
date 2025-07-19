@@ -6,6 +6,7 @@ import {
   selectAudio,
   selectAudioIsPlaying,
   selectIsMiniPlayerVisible,
+  selectIsMainPlayerVisible,
   setIsPlaying,
   toggleIsPlaying,
 } from "@/lib/store/audioSlice";
@@ -31,30 +32,19 @@ type Position = {
 };
 
 export default function Player() {
-  const state = useAppSelector(state => state)
   const audio = useAppSelector(selectAudio);
   const isPlaying = useAppSelector(selectAudioIsPlaying);
-  const isHeaderButtonVisible = useAppSelector(state => state.audio.isHeaderButtonVisible)
-  const isMiniPlayerVisible = useAppSelector(selectIsMiniPlayerVisible);
-  
-  // Плеер скрывается только если нет аудиозаписи ИЛИ если мини-плеер видим и есть кнопка в шапке
-  const shouldHidePlayer = !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
-  
-  // Дополнительная проверка: если есть аудиозапись и нет кнопки в шапке, всегда показываем плеер
-  const forceShowPlayer = audio && !isHeaderButtonVisible;
+  const isMainPlayerVisible = useAppSelector(selectIsMainPlayerVisible);
   
   // Отладочные логи
   useEffect(() => {
     console.log('Player visibility:', {
       audio: !!audio,
-      isMiniPlayerVisible,
-      isHeaderButtonVisible,
-      shouldHidePlayer,
-      forceShowPlayer,
+      isMainPlayerVisible,
       audioName: audio?.Name,
       isPlaying: audio ? isPlaying : null
     });
-  }, [audio, isMiniPlayerVisible, isHeaderButtonVisible, shouldHidePlayer, forceShowPlayer, isPlaying]);
+  }, [audio, isMainPlayerVisible, isPlaying]);
 
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
   const dispatch = useAppDispatch();
@@ -72,7 +62,7 @@ export default function Player() {
         <div
           ref={playerRef}
           className={clsx(style.body, {
-            "translate-y-[200%]": shouldHidePlayer && !forceShowPlayer
+            "translate-y-[200%]": !isMainPlayerVisible
           })}
         >
          <PlayerImage audio={audio}></PlayerImage>

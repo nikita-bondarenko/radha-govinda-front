@@ -12,8 +12,10 @@ import {
   selectAudioLeftTime,
   selectAudioPassedTime,
   selectIsMiniPlayerVisible,
+  selectIsMobile,
   toggleIsPlaying,
   setIsMiniPlayerVisible,
+  setIsMobile,
 } from "@/lib/store/audioSlice";
 import { useInView } from "react-intersection-observer";
 import { formatRemainingTime, formatTime } from "@/utils/formatTime";
@@ -45,6 +47,7 @@ export default memo(function HeaderLectureBar({button, className, disableMiniPla
   const leftTime = useAppSelector(selectAudioLeftTime);
   const passedTime = useAppSelector(selectAudioPassedTime);
   const isMiniPlayerVisible = useAppSelector(selectIsMiniPlayerVisible);
+  const isMobile = useAppSelector(selectIsMobile);
   const dispatch = useAppDispatch();
   
   const { ref: inViewRef, inView } = useInView({
@@ -54,10 +57,21 @@ export default memo(function HeaderLectureBar({button, className, disableMiniPla
 
   const href = useLocalizedHref({pageSlug: button?.page?.Slug})
 
-  // Проверяем, что мы на клиенте
+  // Проверяем, что мы на клиенте и определяем размер экрана
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    
+    const checkMobile = () => {
+      dispatch(setIsMobile(window.innerWidth <= 768));
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [dispatch]);
 
   // Обновляем состояние видимости в Redux store (только на клиенте)
   useEffect(() => {
@@ -89,8 +103,8 @@ export default memo(function HeaderLectureBar({button, className, disableMiniPla
     dispatch(setIsMiniPlayerVisible(false));
   }, [dispatch, isClient]);
 
-  // Если есть аудиозапись И мы на клиенте И мини-плеер не отключен, показываем мини-плеер
-  if (audio && isClient && !disableMiniPlayer) {
+  // Если есть аудиозапись И мы на клиенте И мини-плеер не отключен И не мобильное устройство, показываем мини-плеер
+  if (audio && isClient && !disableMiniPlayer && !isMobile) {
     // Используем ту же логику, что и в основном плеере
     const getDisplayLeftTime = (): number => {
       // Приоритет 1: Если leftTime доступно из реальных метаданных, используем его

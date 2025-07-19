@@ -18,6 +18,7 @@ export type AudioState = {
   leftTime: number;
   passedTime: number;
   isMiniPlayerVisible: boolean; // новое состояние для видимости мини-плеера
+  isMobile: boolean; // состояние для определения мобильного устройства
 };
 
 const initialState: AudioState = {
@@ -35,6 +36,7 @@ const initialState: AudioState = {
   leftTime: 0,
   passedTime: 0,
   isMiniPlayerVisible: false, // по умолчанию мини-плеер скрыт
+  isMobile: false, // по умолчанию не мобильное устройство
 };
 
 const audioSlice = createSlice({
@@ -171,6 +173,9 @@ const audioSlice = createSlice({
     setIsHeaderButtonVisible: (state, action: PayloadAction<boolean>) => {
       state.isHeaderButtonVisible = action.payload;
     },
+    setIsMobile: (state, action: PayloadAction<boolean>) => {
+      state.isMobile = action.payload;
+    },
   },
 });
 
@@ -192,7 +197,8 @@ export const {
   toggleIsLooping,
   setSelectedCategoryId,
   setIsMiniPlayerVisible,
-  setIsHeaderButtonVisible
+  setIsHeaderButtonVisible,
+  setIsMobile
 } = audioSlice.actions;
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
@@ -209,12 +215,34 @@ export const selectCurrentBufferPosition = (state: RootState) => state.audio.cur
 export const selectPreviosAudioBuffer = (state: RootState) => state.audio.previosAudioBuffer;
 export const selectIsMiniPlayerVisible = (state: RootState) => state.audio.isMiniPlayerVisible;
 
+// Селектор для определения мобильного устройства
+export const selectIsMobile = (state: RootState) => state.audio.isMobile;
+
 // Селектор для определения видимости большого плеера
 export const selectIsMainPlayerVisible = (state: RootState) => {
-  const { audio, isMiniPlayerVisible, isHeaderButtonVisible } = state.audio;
+  const { audio, isMiniPlayerVisible, isHeaderButtonVisible, isMobile } = state.audio;
+  
+  console.log('selectIsMainPlayerVisible:', {
+    audio: !!audio,
+    isMiniPlayerVisible,
+    isHeaderButtonVisible,
+    isMobile,
+    windowWidth: typeof window !== 'undefined' ? window.innerWidth : 'server'
+  });
+  
+  // На мобильных устройствах мини-плеер не влияет на видимость большого плеера
+  if (isMobile) {
+    const result = !!audio;
+    console.log('Mobile device, showing main player:', result);
+    return result; // Показываем большой плеер, если есть аудиозапись
+  }
+  
+  // На десктопе используем обычную логику
   const shouldHidePlayer = !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
   const forceShowPlayer = audio && !isHeaderButtonVisible;
-  return !(shouldHidePlayer && !forceShowPlayer);
+  const result = !(shouldHidePlayer && !forceShowPlayer);
+  console.log('Desktop device, main player visibility:', result);
+  return result;
 };
 
 export default audioSlice.reducer;
