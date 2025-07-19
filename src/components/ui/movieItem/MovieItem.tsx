@@ -1,13 +1,14 @@
-import React, { memo, useEffect, useMemo } from "react";
+import React, { memo, useEffect, useMemo, useRef } from "react";
 import styles from "./MovieItem.module.css";
 import { Movie } from "@/components/sections/video-preview/VideoPreview";
 import { useInView } from "react-intersection-observer";
-import useVisibilityPersentage from "@/hooks/useVisibilityPersentage";
+import { useVisibilityPersentage } from "@/hooks/useVisibilityPersentage";
 import clsx from "clsx";
 
 
 export default memo(function MovieItem({ movie, className }: { movie: Movie, className?:string }) {
-  const { ref, percentInView } = useVisibilityPersentage();
+  const ref = useRef<HTMLDivElement>(null);
+  const percentInView = useVisibilityPersentage(ref);
   const youtubeEmbedLink = useMemo(() => {
     const urlObj = new URL(movie?.YoutubeLink || "");
     let videoId = "";

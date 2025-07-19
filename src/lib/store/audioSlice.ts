@@ -17,6 +17,7 @@ export type AudioState = {
   progress: number;
   leftTime: number;
   passedTime: number;
+  isMiniPlayerVisible: boolean; // новое состояние для видимости мини-плеера
 };
 
 const initialState: AudioState = {
@@ -33,6 +34,7 @@ const initialState: AudioState = {
   progress: 0,
   leftTime: 0,
   passedTime: 0,
+  isMiniPlayerVisible: false, // по умолчанию мини-плеер скрыт
 };
 
 const audioSlice = createSlice({
@@ -162,6 +164,13 @@ const audioSlice = createSlice({
     setBufferPosition: (state, action: PayloadAction<number>) => {
       state.currentBufferPosition = action.payload;
     },
+    setIsMiniPlayerVisible: (state, action: PayloadAction<boolean>) => {
+      console.log('Redux: setIsMiniPlayerVisible', action.payload);
+      state.isMiniPlayerVisible = action.payload;
+    },
+    setIsHeaderButtonVisible: (state, action: PayloadAction<boolean>) => {
+      state.isHeaderButtonVisible = action.payload;
+    },
   },
 });
 
@@ -181,7 +190,9 @@ export const {
   setBufferPosition,
   setIsLooping,
   toggleIsLooping,
-  setSelectedCategoryId
+  setSelectedCategoryId,
+  setIsMiniPlayerVisible,
+  setIsHeaderButtonVisible
 } = audioSlice.actions;
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
@@ -196,5 +207,6 @@ export const selectAudioId = (state: RootState) =>
   state.audio.audio?.documentId;
 export const selectCurrentBufferPosition = (state: RootState) => state.audio.currentBufferPosition;
 export const selectPreviosAudioBuffer = (state: RootState) => state.audio.previosAudioBuffer;
+export const selectIsMiniPlayerVisible = (state: RootState) => state.audio.isMiniPlayerVisible;
 
 export default audioSlice.reducer;

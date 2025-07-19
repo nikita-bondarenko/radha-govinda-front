@@ -12,6 +12,38 @@
     sm:mt-[5px] sm:py-[13.5px] sm:text-center sm:w-full;
 }
 
+/* Стили для мини-плеера */
+.header__button--mini-player {
+  @apply flex items-center gap-[12px] cursor-pointer;
+  height: 40px;
+  min-width: 214px;
+  max-width: 300px;
+  transition: all 0.3s ease;
+}
+
+.header__button--mini-player:hover {
+  opacity: 0.9;
+}
+
+.header__button__play-button {
+  @apply flex items-center justify-center w-[20px] h-[20px] rounded-full transition-colors mr-[-3px];
+}
+
+
+.header__button__progress-container {
+  @apply flex-1 h-[6px] rounded-full overflow-hidden;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header__button__progress-bar {
+  @apply h-full rounded-full transition-all duration-300;
+  background-color: white;
+}
+
+.header__button__duration {
+  @apply text-[12px] font-medium lowercase whitespace-nowrap;
+}
+
 
  .header__lang-button.black {
     color: var(--black-1);

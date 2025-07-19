@@ -12,6 +12,8 @@ import CloseIcon from "../svg/CloseIcon";
 import CloseButton from "../ui/closeButton/CloseButton";
 import Nav, { Menu } from "../ui/nav/Nav";
 import SiteName from "./SiteName";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { setIsHeaderButtonVisible } from "@/lib/store/audioSlice";
 
 export type HeaderProps = {
   menu: Menu;
@@ -40,7 +42,15 @@ export default memo(function Header({
   lectureBarClassName,
   isSiteName,
 }: HeaderProps) {
+  const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  
+  // Устанавливаем состояние кнопки в Redux
+  useEffect(() => {
+    console.log('Header setting button visibility:', IsBigButtonVisible);
+    dispatch(setIsHeaderButtonVisible(!!IsBigButtonVisible));
+  }, [IsBigButtonVisible, dispatch]);
+  
   const burgerHandler = () => {
     setIsModalOpen(true);
   };
@@ -61,7 +71,6 @@ export default memo(function Header({
       {isSiteName && <SiteName></SiteName>}
       </div>
       <div className={clsx(styles["header__right"])}>
-    
         {IsBigButtonVisible && (
           <HeaderLectureBar
             className={clsx("non-mobile", lectureBarClassName)}
