@@ -2,9 +2,7 @@ import { Enum_Componentinputpolevvoda_Inputtype } from "@/gql/generated/graphql"
 import React from "react";
 import FooterInput from "./FooterInput";
 import Link from "next/link";
-import { localizeHref } from "@/utils/localizeHref";
-import { useLocaleSelector } from "@/lib/localeStore/hooks";
-import { getLocalizedData } from "@/utils/getLocalizedData";
+
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import useLocalizedHref from "@/hooks/useLocalizedHref";
 import z from "zod";

@@ -8,8 +8,8 @@ import ReactMarkdown from "react-markdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store/store";
 import { getLocalizedData, type Locale } from "@/utils/getLocalizedData";
-import { LocaleState, LocaleStore } from "@/lib/localeStore/localeStore";
 import clsx from "clsx";
+import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 
 export type ParentElement = {
   children: ReactNode;
@@ -85,9 +85,9 @@ export default memo(function Schedule({ section }: ScheduleProps) {
     setIsEventModalOpen(false);
   };
 
-  const locale = useSelector((state: LocaleState) => state.locale.locale);
-  const detailsButtonText =
-    getLocalizedData(locale)?.section.schedule.detailsButton;
+  const localizedData = useLocalizedStaticData()
+
+
   return (
     <>
       <section className="container text-[18px] md:text-[14px] ">
@@ -98,7 +98,7 @@ export default memo(function Schedule({ section }: ScheduleProps) {
         <div className="flex flex-col ">
           {section.ScheduleItem?.map((item) => (
             <ScheduleItem
-              detailsButtonText={detailsButtonText}
+              detailsButtonText={localizedData?.section.schedule.detailsButton}
               onDetailsButtonClick={onDetailsButtonClick}
               data={item}
               key={item?.id}

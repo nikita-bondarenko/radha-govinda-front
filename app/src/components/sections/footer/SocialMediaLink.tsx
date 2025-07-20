@@ -1,5 +1,4 @@
 import Icon from "@/components/Icon";
-import { useLocaleSelector } from "@/lib/localeStore/hooks";
 import Link from "next/link";
 import React from "react";
 
