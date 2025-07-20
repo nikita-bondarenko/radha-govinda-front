@@ -11,20 +11,20 @@ type Props = {
 export default function useLocalizedHref({ pageSlug, postType = "page", categoryId }: Props) {
   const pageLocale = useAppSelector((state) => state.locale.locale);
   
-  console.log('useLocalizedHref: input params =', { pageSlug, postType, categoryId });
-  console.log('useLocalizedHref: pageLocale from store =', pageLocale);
+   // console.log('useLocalizedHref: input params =', { pageSlug, postType, categoryId });
+   // console.log('useLocalizedHref: pageLocale from store =', pageLocale);
   
   const baseHref = `${pageLocale === "ru" ? `` : "/" + pageLocale}${
     postType === 'post' ? "/articles" : postType === 'doc' ? "/documents" : ""
   }/${pageSlug === "home" ? "" : pageSlug}`;
   
-  console.log('useLocalizedHref: baseHref =', baseHref);
+   // console.log('useLocalizedHref: baseHref =', baseHref);
   
   // Если указана категория, добавляем её как query параметр
   const href = categoryId ? `${baseHref}?category=${categoryId}` : baseHref;
   
   // Отладочная информация
-  console.log('useLocalizedHref: final href =', href);
+   // console.log('useLocalizedHref: final href =', href);
   
   return href;
 }

@@ -32,29 +32,29 @@ const Filter = <T,>({
   
   // Обновляем selectedCategoryId при изменении initialCategoryId
   useEffect(() => {
-    console.log('Filter: initialCategoryId changed to:', initialCategoryId);
+     // console.log('Filter: initialCategoryId changed to:', initialCategoryId);
     if (initialCategoryId) {
       setSelectedCategoryId(initialCategoryId);
-      console.log('Filter: setSelectedCategoryId to:', initialCategoryId);
+       // console.log('Filter: setSelectedCategoryId to:', initialCategoryId);
     }
   }, [initialCategoryId]);
   
   useEffect(() => {
-    console.log('Filter: filtering with selectedCategoryId:', selectedCategoryId, 'searchInputValue:', searchInputValue);
+     // console.log('Filter: filtering with selectedCategoryId:', selectedCategoryId, 'searchInputValue:', searchInputValue);
     let filteredItems: T[] = items;
 
     if (selectedCategoryId) {
       filteredItems = filteredItems.filter((item: T) =>
         filterConditionByCategoryId(item, selectedCategoryId)
       );
-      console.log('Filter: after category filter, items count:', filteredItems.length);
+       // console.log('Filter: after category filter, items count:', filteredItems.length);
     }
 
     if (!!searchInputValue && searchInputValue.trim().length > 0) {
       filteredItems = filteredItems.filter((item) =>
         filterConditionBySearchInput(item, searchInputValue)
       );
-      console.log('Filter: after search filter, items count:', filteredItems.length);
+       // console.log('Filter: after search filter, items count:', filteredItems.length);
     }
 
     handleFilteredItemsSelection(filteredItems);

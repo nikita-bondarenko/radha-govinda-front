@@ -35,7 +35,7 @@ export default memo(function Picture({
   alternativeText,
   className,
 }: MyPicture) {
-  console.log(formats?.small?.url)
+   // console.log(formats?.small?.url)
 
   return (
 

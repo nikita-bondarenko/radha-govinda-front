@@ -15,7 +15,7 @@ export default function PostGenerator({ post, menu, footer, logo }: PostQuery) {
   // Устанавливаем локаль только один раз при монтировании компонента
   useEffect(() => {
     if (post?.locale) {
-      console.log('PostGenerator: Setting locale to:', post.locale);
+       // console.log('PostGenerator: Setting locale to:', post.locale);
       dispatch(setLocale(post.locale as Locale));
     }
   }, [dispatch, post?.locale]);

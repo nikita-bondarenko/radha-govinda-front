@@ -100,11 +100,11 @@ const scrollToAudio = (audioId: string) => {
         filterConditionByCategoryId={(item, categoryId) => {
           const matches = item?.AudioCategory?.documentId === categoryId;
            // console.log('Filter condition check:', {
-          //   itemName: item?.Name,
-          //   itemCategoryId: item?.AudioCategory?.documentId,
-          //   filterCategoryId: categoryId,
-          //   matches
-          // });
+            itemName: item?.Name,
+            itemCategoryId: item?.AudioCategory?.documentId,
+            filterCategoryId: categoryId,
+            matches
+          });
           return matches;
         }}
         handleFilteredItemsSelection={setFilteredItems}

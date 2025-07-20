@@ -16,37 +16,37 @@ const initAudioElement = (storeInstance?: any) => {
     
     // Обработчики событий аудио
     audioElement.addEventListener('loadstart', () => {
-      console.log('Audio loading started');
+       // console.log('Audio loading started');
     });
     
     audioElement.addEventListener('canplay', () => {
-      console.log('Audio can play');
+       // console.log('Audio can play');
     });
 
     audioElement.addEventListener('loadedmetadata', () => {
-      console.log('Audio metadata loaded');
+       // console.log('Audio metadata loaded');
       // Инициализируем время при загрузке метаданных
       if (storeInstance && audioElement) {
         const duration = audioElement.duration;
-        console.log('Duration from loadedmetadata:', duration);
+         // console.log('Duration from loadedmetadata:', duration);
         if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
           storeInstance.dispatch(setLeftTime(duration));
           storeInstance.dispatch(setPassedTime(0));
           storeInstance.dispatch(setProgress(0));
-          console.log('Duration set:', duration);
+           // console.log('Duration set:', duration);
         }
       }
     });
 
     audioElement.addEventListener('durationchange', () => {
-      console.log('Duration changed');
+       // console.log('Duration changed');
       // Дополнительная проверка на изменение длительности
       if (storeInstance && audioElement) {
         const duration = audioElement.duration;
-        console.log('Duration from durationchange:', duration);
+         // console.log('Duration from durationchange:', duration);
         if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
           storeInstance.dispatch(setLeftTime(duration));
-          console.log('Duration updated:', duration);
+           // console.log('Duration updated:', duration);
         }
       }
     });
@@ -65,14 +65,14 @@ const initAudioElement = (storeInstance?: any) => {
     });
     
     audioElement.addEventListener('ended', () => {
-      console.log('Audio ended');
+       // console.log('Audio ended');
       // Проверяем состояние зацикливания
       const currentState = storeInstance?.getState();
       const isLooping = currentState?.audio?.isLooping;
       
       if (isLooping && audioElement) {
         // Если зацикливание включено, перезапускаем текущий трек
-        console.log('Looping enabled, restarting current track');
+         // console.log('Looping enabled, restarting current track');
         audioElement.currentTime = 0;
         audioElement.play().catch(console.error);
       } else {
@@ -90,7 +90,7 @@ const initAudioElement = (storeInstance?: any) => {
       // Если произошла ошибка загрузки, сбрасываем состояние воспроизведения
       if (storeInstance) {
         storeInstance.dispatch(setIsPlaying(false));
-        console.log('Audio loading failed, setting isPlaying to false');
+         // console.log('Audio loading failed, setting isPlaying to false');
       }
     });
   }
@@ -108,7 +108,7 @@ const restoreAudioState = (store: any) => {
   const isLooping = state.audio?.isLooping;
   
   if (audio && audio.Audio?.url) {
-    console.log('Restoring audio state:', audio.Name, 'isLooping:', isLooping);
+     // console.log('Restoring audio state:', audio.Name, 'isLooping:', isLooping);
     const audioEl = initAudioElement(store);
     if (audioEl) {
       audioEl.src = audio.Audio.url;
@@ -169,9 +169,9 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
   
   // Обрабатываем смену трека
   if ((action.type === setAudio.type || action.type === playNextAudio.type || action.type === playPrevAudio.type) && audio) {
-    console.log('Setting new audio:', audio.Name);
-    console.log('Audio locale:', audio.locale);
-    console.log('Audio full data:', audio);
+     // console.log('Setting new audio:', audio.Name);
+     // console.log('Audio locale:', audio.locale);
+     // console.log('Audio full data:', audio);
 
     audioEl.src = audio.Audio.url;
     audioEl.load();
@@ -180,7 +180,7 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
     // Устанавливаем категорию текущего аудио
     if (audio.AudioCategory?.documentId) {
       dispatch(setSelectedCategoryId(audio.AudioCategory.documentId));
-      console.log('Set selected category:', audio.AudioCategory.documentId);
+       // console.log('Set selected category:', audio.AudioCategory.documentId);
     }
     
     // Добавляем в буфер только при setAudio и playNextAudio, НЕ при playPrevAudio
@@ -202,7 +202,7 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
   if (action.type === 'audio/setVolume') {
     const volume = state.audio.volume;
     audioEl.volume = volume / 100;
-    console.log('Volume set to:', volume);
+     // console.log('Volume set to:', volume);
   }
   
   return result;
@@ -211,14 +211,14 @@ export const audioMiddleware: Middleware<{}, RootState> = (store) => (next) => (
 // Функция для получения текущего времени аудио
 export const getCurrentTime = (): number => {
   const currentTime = audioElement?.currentTime || 0;
-  console.log('getCurrentTime:', currentTime);
+   // console.log('getCurrentTime:', currentTime);
   return currentTime;
 };
 
 // Функция для получения длительности аудио
 export const getDuration = (): number => {
   const duration = audioElement?.duration || 0;
-  console.log('getDuration:', duration);
+   // console.log('getDuration:', duration);
   return duration;
 };
 

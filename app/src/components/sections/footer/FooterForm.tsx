@@ -83,7 +83,7 @@ export default function FooterForm({ form }: FooterFormProps) {
 
   const onSubmit = methods.handleSubmit((data) => {
     
-  console.log(data)
+   // console.log(data)
   });
   return (
     <FormProvider {...methods}>

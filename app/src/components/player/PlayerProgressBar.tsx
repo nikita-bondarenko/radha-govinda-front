@@ -20,7 +20,7 @@ const PlayerProgressBar = (props: Props) => {
 
   // Отладка состояния
   useEffect(() => {
-    console.log('PlayerProgressBar state:', { progress, isPlaying, passedTime, leftTime });
+     // console.log('PlayerProgressBar state:', { progress, isPlaying, passedTime, leftTime });
   }, [progress, isPlaying, passedTime, leftTime]);
 
   // Функция для форматирования времени
@@ -55,7 +55,7 @@ const PlayerProgressBar = (props: Props) => {
     let interval: NodeJS.Timeout | null = null;
     
     if (isPlaying) {
-      console.log('Starting progress interval');
+       // console.log('Starting progress interval');
       interval = setInterval(() => {
         const currentTime = getCurrentTime();
         const realDuration = getDuration();
@@ -71,21 +71,21 @@ const PlayerProgressBar = (props: Props) => {
           }
         }
         
-        console.log('Progress update:', { 
-          currentTime, 
-          duration, 
-          realDuration,
-          usingFallbackDuration,
-          isPlaying, 
-          audioDuration: audio?.Duration 
-        });
+         // console.log('Progress update:', { 
+        //   currentTime, 
+        //   duration, 
+        //   realDuration,
+        //   usingFallbackDuration,
+        //   isPlaying, 
+        //   audioDuration: audio?.Duration 
+        // });
         
         if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
           const progressPercent = (currentTime / duration) * 100;
           const passed = currentTime;
           const left = duration - currentTime;
           
-          console.log('Dispatching progress:', { progressPercent, passed, left, usingFallbackDuration });
+           // console.log('Dispatching progress:', { progressPercent, passed, left, usingFallbackDuration });
           
           dispatch(setProgress(progressPercent));
           dispatch(setPassedTime(passed));
@@ -96,13 +96,13 @@ const PlayerProgressBar = (props: Props) => {
             dispatch(setLeftTime(left));
           }
         } else {
-          console.log('Invalid duration, skipping progress update:', duration);
+           // console.log('Invalid duration, skipping progress update:', duration);
           // Все равно обновляем passedTime даже если duration недоступен
           dispatch(setPassedTime(currentTime));
         }
       }, 1000);
     } else {
-      console.log('Not playing, clearing interval');
+       // console.log('Not playing, clearing interval');
     }
     
     return () => {
@@ -120,7 +120,7 @@ const PlayerProgressBar = (props: Props) => {
       const left = realDuration - currentTime;
       if (left !== leftTime) {
         dispatch(setLeftTime(left));
-        console.log('Updated leftTime with real metadata:', { realDuration, currentTime, left });
+         // console.log('Updated leftTime with real metadata:', { realDuration, currentTime, left });
       }
     }
   }, [leftTime, dispatch]);

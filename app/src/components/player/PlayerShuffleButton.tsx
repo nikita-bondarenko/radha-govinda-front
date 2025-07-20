@@ -11,12 +11,12 @@ type Props = {
 const PlayerShuffleButton = (props: Props) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   
-  console.log('PlayerShuffleButton selected:', props.selected)
+   // console.log('PlayerShuffleButton selected:', props.selected)
   
   useEffect(() => {
     if (buttonRef.current) {
-      console.log('PlayerShuffleButton DOM classes:', buttonRef.current.className);
-      console.log('PlayerShuffleButton has selected class:', buttonRef.current.classList.contains(style.selected));
+       // console.log('PlayerShuffleButton DOM classes:', buttonRef.current.className);
+       // console.log('PlayerShuffleButton has selected class:', buttonRef.current.classList.contains(style.selected));
     }
   }, [props.selected]);
   

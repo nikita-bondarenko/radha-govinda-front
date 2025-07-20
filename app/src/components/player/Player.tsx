@@ -38,12 +38,12 @@ export default function Player() {
   
   // Отладочные логи
   useEffect(() => {
-    console.log('Player visibility:', {
-      audio: !!audio,
-      isMainPlayerVisible,
-      audioName: audio?.Name,
-      isPlaying: audio ? isPlaying : null
-    });
+     // console.log('Player visibility:', {
+    //   audio: !!audio,
+    //   isMainPlayerVisible,
+    //   audioName: audio?.Name,
+    //   isPlaying: audio ? isPlaying : null
+    // });
   }, [audio, isMainPlayerVisible, isPlaying]);
 
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);

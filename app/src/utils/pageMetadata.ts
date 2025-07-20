@@ -27,7 +27,7 @@ type PageMetadataProps = {
 export const getPageMetadata = async ({params}: MetadataPropsType) => {
 
   const {slug, postType, locale} = await parseParams(params)
-  console.log(slug, postType, locale)
+   // console.log(slug, postType, locale)
   const apolloClient = initializeApollo();
   if (postType === "page") {
     const documentId = await getIdBySlug(slug, postType, apolloClient);

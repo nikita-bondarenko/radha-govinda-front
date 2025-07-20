@@ -78,10 +78,10 @@ export default memo(function HeaderLectureBar({button, className, disableMiniPla
     if (!isClient) return;
     
      // console.log('HeaderLectureBar inView:', {
-    //   inView,
-    //   isMiniPlayerVisible,
-    //   hasAudio: !!audio
-    // });
+      inView,
+      isMiniPlayerVisible,
+      hasAudio: !!audio
+    });
     
     dispatch(setIsMiniPlayerVisible(inView));
   }, [inView, dispatch, isClient, audio]);
@@ -129,14 +129,14 @@ export default memo(function HeaderLectureBar({button, className, disableMiniPla
     
     // Отладочные логи для проверки синхронизации
      // console.log('Mini player sync:', {
-    //   progress,
-    //   passedTime,
-    //   leftTime,
-    //   displayLeftTime,
-    //   remainingTime,
-    //   realDuration: getDuration(),
-    //   audioDuration: audio?.Duration
-    // });
+      progress,
+      passedTime,
+      leftTime,
+      displayLeftTime,
+      remainingTime,
+      realDuration: getDuration(),
+      audioDuration: audio?.Duration
+    });
     
     return (
       <div 

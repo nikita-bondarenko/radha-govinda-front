@@ -11,12 +11,12 @@ type Props = {
 const PlayerCircleButton = (props: Props) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   
-  console.log('PlayerCircleButton selected:', props.selected)
+   // console.log('PlayerCircleButton selected:', props.selected)
   
   useEffect(() => {
     if (buttonRef.current) {
-      console.log('PlayerCircleButton DOM classes:', buttonRef.current.className);
-      console.log('PlayerCircleButton has selected class:', buttonRef.current.classList.contains(style.selected));
+       // console.log('PlayerCircleButton DOM classes:', buttonRef.current.className);
+       // console.log('PlayerCircleButton has selected class:', buttonRef.current.classList.contains(style.selected));
     }
   }, [props.selected]);
   

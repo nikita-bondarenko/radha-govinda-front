@@ -13,11 +13,11 @@ export const useVisibilityPersentage = (ref: React.RefObject<HTMLElement>) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const percentage = entry.intersectionRatio * 100;
-        console.log('IntersectionObserver:', {
-          intersectionRatio: entry.intersectionRatio,
-          percentage,
-          isIntersecting: entry.isIntersecting
-        });
+         // console.log('IntersectionObserver:', {
+        //   intersectionRatio: entry.intersectionRatio,
+        //   percentage,
+        //   isIntersecting: entry.isIntersecting
+        // });
         setVisibilityPercentage(percentage);
       },
       {

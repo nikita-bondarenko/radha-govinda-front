@@ -111,12 +111,12 @@ const audioSlice = createSlice({
     },
 
     playPrevAudio: (state) => {
-      console.log('playPrevAudio called, current state:', {
-        currentBufferPosition: state.currentBufferPosition,
-        bufferLength: state.previosAudioBuffer.length,
-        flow: state.flow,
-        currentAudio: state.audio?.Name
-      });
+       // console.log('playPrevAudio called, current state:', {
+      //   currentBufferPosition: state.currentBufferPosition,
+      //   bufferLength: state.previosAudioBuffer.length,
+      //   flow: state.flow,
+      //   currentAudio: state.audio?.Name
+      // });
       
       const result = findNextAudioIndex(
         state.audio,
@@ -140,12 +140,12 @@ const audioSlice = createSlice({
           !result.usedFallback) { // Используем флаг fallback вместо проверки индекса
         const oldPosition = state.currentBufferPosition;
         state.currentBufferPosition = state.currentBufferPosition - 1;
-        console.log('Updated buffer position:', {
-          from: oldPosition,
-          to: state.currentBufferPosition
-        });
+         // console.log('Updated buffer position:', {
+        //   from: oldPosition,
+        //   to: state.currentBufferPosition
+        // });
       } else if (state.flow === "random" && (state.currentBufferPosition === 0 || result.usedFallback)) {
-        console.log('At buffer start or used fallback, not updating position');
+         // console.log('At buffer start or used fallback, not updating position');
       }
     },
     addItemInPreviosAudioBuffer: (state, action: PayloadAction<string>) => {
@@ -167,7 +167,7 @@ const audioSlice = createSlice({
       state.currentBufferPosition = action.payload;
     },
     setIsMiniPlayerVisible: (state, action: PayloadAction<boolean>) => {
-      console.log('Redux: setIsMiniPlayerVisible', action.payload);
+       // console.log('Redux: setIsMiniPlayerVisible', action.payload);
       state.isMiniPlayerVisible = action.payload;
     },
     setIsHeaderButtonVisible: (state, action: PayloadAction<boolean>) => {
@@ -222,18 +222,18 @@ export const selectIsMobile = (state: RootState) => state.audio.isMobile;
 export const selectIsMainPlayerVisible = (state: RootState) => {
   const { audio, isMiniPlayerVisible, isHeaderButtonVisible, isMobile } = state.audio;
   
-  console.log('selectIsMainPlayerVisible:', {
-    audio: !!audio,
-    isMiniPlayerVisible,
-    isHeaderButtonVisible,
-    isMobile,
-    windowWidth: typeof window !== 'undefined' ? window.innerWidth : 'server'
-  });
+   // console.log('selectIsMainPlayerVisible:', {
+  //   audio: !!audio,
+  //   isMiniPlayerVisible,
+  //   isHeaderButtonVisible,
+  //   isMobile,
+  //   windowWidth: typeof window !== 'undefined' ? window.innerWidth : 'server'
+  // });
   
   // На мобильных устройствах мини-плеер не влияет на видимость большого плеера
   if (isMobile) {
     const result = !!audio;
-    console.log('Mobile device, showing main player:', result);
+     // console.log('Mobile device, showing main player:', result);
     return result; // Показываем большой плеер, если есть аудиозапись
   }
   
@@ -241,7 +241,7 @@ export const selectIsMainPlayerVisible = (state: RootState) => {
   const shouldHidePlayer = !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
   const forceShowPlayer = audio && !isHeaderButtonVisible;
   const result = !(shouldHidePlayer && !forceShowPlayer);
-  console.log('Desktop device, main player visibility:', result);
+   // console.log('Desktop device, main player visibility:', result);
   return result;
 };
 

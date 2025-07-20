@@ -56,9 +56,9 @@ export default memo(function Header({
     const checkMobile = () => {
       const isMobile = window.innerWidth <= 768;
        // console.log('Header checking mobile:', {
-      //   windowWidth: window.innerWidth,
-      //   isMobile
-      // });
+        windowWidth: window.innerWidth,
+        isMobile
+      });
       dispatch(setIsMobile(isMobile));
     };
     

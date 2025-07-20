@@ -5,7 +5,7 @@ export type PostType = "page" | "post" | "doc";
 
 export const parseParams = async (params: Promise<{ slug: string[] }>) => {
   const slugArray = (await params).slug;
-  console.log('parseParams: slugArray =', slugArray);
+   // console.log('parseParams: slugArray =', slugArray);
   
   const locale: Locale = !slugArray
   ? "ru"
@@ -13,7 +13,7 @@ export const parseParams = async (params: Promise<{ slug: string[] }>) => {
   ? "en"
   : "ru";
   
-  console.log('parseParams: determined locale =', locale);
+   // console.log('parseParams: determined locale =', locale);
   
   const isEnglish = locale === "en";
 

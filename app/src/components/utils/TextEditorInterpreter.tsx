@@ -7,6 +7,6 @@ export type TextEditorInterpreterProps = {
 export default memo(function TextEditorInterpreter({
   children,
 }: TextEditorInterpreterProps) {
-  console.log(children)
+   // console.log(children)
   return <span dangerouslySetInnerHTML={{__html: children || ''}}></span>;
 });

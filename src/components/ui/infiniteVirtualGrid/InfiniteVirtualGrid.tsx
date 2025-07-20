@@ -270,11 +270,11 @@ const InfiniteVirtualGrid = <T,>({
     const remainingHeight = remainingRows * rowHeight;
     
      // console.log('InfiniteVirtualGrid: Remaining items analysis:', {
-    //   remainingItems,
-    //   remainingRows,
-    //   remainingHeight,
-    //   windowHeight: window.innerHeight
-    // });
+      remainingItems,
+      remainingRows,
+      remainingHeight,
+      windowHeight: window.innerHeight
+    });
     
     // Проверяем, не выходим ли мы за пределы страницы
     const maxScrollPosition = Math.max(
@@ -291,26 +291,26 @@ const InfiniteVirtualGrid = <T,>({
     }
     
      // console.log('InfiniteVirtualGrid: Scroll position calculation:', {
-    //   absoluteScrollPosition,
-    //   headerOffset,
-    //   finalScrollPosition,
-    //   maxScrollPosition,
-    //   remainingHeight,
-    //   documentHeight: document.documentElement.scrollHeight,
-    //   bodyHeight: document.body.scrollHeight,
-    //   windowHeight: window.innerHeight
-    // });
+      absoluteScrollPosition,
+      headerOffset,
+      finalScrollPosition,
+      maxScrollPosition,
+      remainingHeight,
+      documentHeight: document.documentElement.scrollHeight,
+      bodyHeight: document.body.scrollHeight,
+      windowHeight: window.innerHeight
+    });
     
     // Проверяем, нужно ли вообще скроллить
     const currentScrollY = window.scrollY;
     const scrollDistance = Math.abs(finalScrollPosition - currentScrollY);
     
      // console.log('InfiniteVirtualGrid: Scroll check:', {
-    //   currentScrollY,
-    //   finalScrollPosition,
-    //   scrollDistance,
-    //   needsScroll: scrollDistance > 50 // Скроллим только если расстояние больше 50px
-    // });
+      currentScrollY,
+      finalScrollPosition,
+      scrollDistance,
+      needsScroll: scrollDistance > 50 // Скроллим только если расстояние больше 50px
+    });
     
     // Если скролл не нужен, просто выходим
     if (scrollDistance < 50) {
@@ -475,14 +475,14 @@ const InfiniteVirtualGrid = <T,>({
     const calculatedHeight = totalRows * rowHeight;
     
      // console.log('InfiniteVirtualGrid: Height calculation:', {
-    //   itemsLength: items.length,
-    //   columnCount,
-    //   totalRows,
-    //   rowHeight,
-    //   calculatedHeight,
-    //   shouldDisableVirtualization,
-    //   isTransitioning
-    // });
+      itemsLength: items.length,
+      columnCount,
+      totalRows,
+      rowHeight,
+      calculatedHeight,
+      shouldDisableVirtualization,
+      isTransitioning
+    });
     
     return calculatedHeight;
   }, [items.length, columnCount, currentItemHeight, currentGap, shouldDisableVirtualization, isTransitioning]);

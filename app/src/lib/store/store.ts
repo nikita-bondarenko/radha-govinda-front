@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 export type RootState = ReturnType<typeof rootReducer>;
 
 const persistedState = loadState() as Partial<RootState> | undefined;
-console.log('store: persistedState from localStorage:', persistedState);
+ // console.log('store: persistedState from localStorage:', persistedState);
 
 // Debounce для сохранения состояния
 let saveTimeout: NodeJS.Timeout | null = null;
@@ -27,7 +27,7 @@ export const store = configureStore({
     }).concat(audioMiddleware)
 });
 
-console.log('store: initial state after configureStore:', store.getState());
+ // console.log('store: initial state after configureStore:', store.getState());
 
 store.subscribe(() => {
   const state = store.getState();

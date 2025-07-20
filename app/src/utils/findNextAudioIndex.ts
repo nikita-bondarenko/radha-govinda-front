@@ -37,15 +37,15 @@ const handleRandomPrevious = (
   previosAudioBuffer: string[],
   currentBufferPosition?: number
 ): { index: number; usedFallback: boolean } => {
-  console.log('handleRandomPrevious called:', {
-    currentAudio: audioData?.Name,
-    currentBufferPosition,
-    bufferLength: previosAudioBuffer.length,
-    buffer: previosAudioBuffer
-  });
+   // console.log('handleRandomPrevious called:', {
+  //   currentAudio: audioData?.Name,
+  //   currentBufferPosition,
+  //   bufferLength: previosAudioBuffer.length,
+  //   buffer: previosAudioBuffer
+  // });
 
   if (previosAudioBuffer.length === 0) {
-    console.log('Buffer is empty, returning 0');
+     // console.log('Buffer is empty, returning 0');
     return { index: 0, usedFallback: true };
   }
 
@@ -59,12 +59,12 @@ const handleRandomPrevious = (
       (audio) => audio?.documentId === prevTrackId
     );
     
-    console.log('Moving back in buffer (strict position):', {
-      fromPosition: currentBufferPosition,
-      toPosition: currentBufferPosition - 1,
-      prevTrackId,
-      foundAtPlaylistIndex: prevIndex
-    });
+     // console.log('Moving back in buffer (strict position):', {
+    //   fromPosition: currentBufferPosition,
+    //   toPosition: currentBufferPosition - 1,
+    //   prevTrackId,
+    //   foundAtPlaylistIndex: prevIndex
+    // });
     
     if (prevIndex !== -1) {
       return { index: prevIndex, usedFallback: false };
@@ -76,7 +76,7 @@ const handleRandomPrevious = (
     (id) => id === audioData?.documentId
   );
   
-  console.log('Fallback: found current track in buffer at index:', bufferIndex);
+   // console.log('Fallback: found current track in buffer at index:', bufferIndex);
 
   if (bufferIndex > 0) {
     const prevTrackId = previosAudioBuffer[bufferIndex - 1];
@@ -90,7 +90,7 @@ const handleRandomPrevious = (
   }
 
   // Если нет предыдущего в буфере, используем логику direct
-  console.log('Using direct logic fallback');
+   // console.log('Using direct logic fallback');
   const currentIndex = playlist.findIndex(
     (audio) => audio?.documentId === audioData?.documentId
   );
