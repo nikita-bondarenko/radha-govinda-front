@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+ 
+    container_name: iast-converter
+    restart: always
+
+    networks:
+      - traefik_net
+networks:
+  traefik_net:
+    name: "traefik_net"  # или какое имя у вас реально в Docker
+    external: true
+
