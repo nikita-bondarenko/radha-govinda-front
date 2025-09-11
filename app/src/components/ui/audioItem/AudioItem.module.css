@@ -67,9 +67,12 @@
 }
 
 .play-icon {
-  @apply w-[28px] h-[28px] absolute top-[50%] left-[50%] translate-x-[-42%] translate-y-[-50%] opacity-0
+  @apply w-[28px] h-[28px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
   md:w-[22px] md:h-[22px];
 }
+
+
+
 .pause-icon {
   @apply w-[24px] h-[24px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
   md:w-[19px] md:h-[19px];

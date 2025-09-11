@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import style from "./Player.module.css";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
-    playNextAudio,
-    playPrevAudio,
   selectAudioFlow,
   selectAudioIsPlaying,
   selectAudioVolume,
@@ -14,6 +12,11 @@ import {
   setVolume,
   toggleIsPlaying,
   toggleIsLooping,
+  setAudio,
+  setIsPlaying,
+  selectAudio,
+  selectAudioIsLoading,
+  selectAudioProgress,
 } from "@/lib/store/audioSlice";
 import { getRangePercent } from "@/utils/getRangePersent";
 import PlayerCircleButton from "./PlayerCircleButton";
@@ -25,11 +28,16 @@ import PlayerPlaylistButton from "./PlayerPlaylistButton";
 import PlayerVolumeControl from "./PlayerVolumeControl";
 import useLocalizedHref from "@/hooks/useLocalizedHref";
 import { useRouter } from "next/navigation";
+import { store } from "@/lib/store/store";
+import { AudioElement } from "../utils/audioModel";
 
 type Props = {};
 
 const PlayerControls = (props: Props) => {
   const isPlaying = useAppSelector(selectAudioIsPlaying);
+
+  const isLoading = useAppSelector(selectAudioIsLoading);
+  const audio = useAppSelector(selectAudio);
   const volume = useAppSelector(selectAudioVolume);
   const flow = useAppSelector(selectAudioFlow);
   const isLooping = useAppSelector(selectAudioIsLooping);
@@ -38,92 +46,91 @@ const PlayerControls = (props: Props) => {
   const currentLocale = useAppSelector((state) => state.locale.locale);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  
+
   // Используем локаль текущей аудиозаписи, если она есть, иначе используем локаль страницы
   const audioLocale = currentAudio?.locale || currentLocale;
-  
+
   // Генерируем ссылку на основе локали аудиозаписи
-  const audioCatalogHref = audioLocale === "ru" 
-    ? `/lectures-and-kirtans${selectedCategoryId ? `?category=${selectedCategoryId}` : ''}`
-    : `/en/lectures-and-kirtans${selectedCategoryId ? `?category=${selectedCategoryId}` : ''}`;
-  
-  // Отладочная информация
-   // console.log('PlayerControls state:', { flow, isLooping, isPlaying, selectedCategoryId });
-   // console.log('PlayerControls: currentAudio =', currentAudio);
-   // console.log('PlayerControls: currentAudio locale:', currentAudio?.locale);
-   // console.log('PlayerControls: page locale:', currentLocale);
-   // console.log('PlayerControls: using audioLocale:', audioLocale);
-   // console.log('PlayerControls: generated href:', audioCatalogHref);
-  
+  const audioCatalogHref =
+    audioLocale === "ru"
+      ? `/lectures-and-kirtans${
+          selectedCategoryId ? `?category=${selectedCategoryId}` : ""
+        }`
+      : `/en/lectures-and-kirtans${
+          selectedCategoryId ? `?category=${selectedCategoryId}` : ""
+        }`;
+
   const handlePrevButtonClick = () => {
-    dispatch(playPrevAudio());
+    const audioElement = new AudioElement();
+    audioElement.playPrevAudio();
   };
   const handleNextButtonClick = () => {
-    dispatch(playNextAudio());
+    const audioElement = new AudioElement();
+    audioElement.playNextAudio();
   };
   const handleShuffleButtonClick = () => {
-     // console.log('Shuffle button clicked, current flow:', flow);
-    const newFlow = flow === 'random' ? 'direct' : 'random';
+    const newFlow = flow === "random" ? "direct" : "random";
     dispatch(setFlow(newFlow));
   };
   const handleCircleButtonClick = () => {
-     // console.log('Circle button clicked, current isLooping:', isLooping);
     dispatch(toggleIsLooping());
   };
   const volumeInputHandler: React.ChangeEventHandler = (e) => {
-    dispatch(setVolume(getRangePercent(e.target as HTMLInputElement)));
+    const volume = getRangePercent(e.target as HTMLInputElement);
+    dispatch(setVolume(volume));
+    const audioElement = new AudioElement();
+    audioElement.setVolume(volume);
   };
-  
+
   const playingButtonClickHandler: React.MouseEventHandler = () => {
-    dispatch(toggleIsPlaying());
+    const audioElement = new AudioElement();
+    if (isPlaying) {
+      dispatch(setIsPlaying(false));
+      audioElement.pause();
+    } else {
+      audioElement.play({ audio, volume }).then(() => {
+        dispatch(setIsPlaying(true));
+      });
+    }
   };
 
   const handlePlaylistButtonClick = () => {
-     // console.log('Playlist button clicked, selected category:', selectedCategoryId);
-     // console.log('Generated href:', audioCatalogHref);
-     // console.log('Current audio locale:', currentAudio?.locale);
-     // console.log('Current page locale:', currentLocale);
-     // console.log('Using audioLocale for navigation:', audioLocale);
-    // Навигация на страницу аудиозаписей с выбранной категорией
     router.push(audioCatalogHref);
   };
 
-  const [forceRender, setForceRender] = useState(0)
-useEffect(() => {
-     // console.log('PlayerControls useEffect triggered, flow:', flow, 'isLooping:', isLooping);
-    setForceRender(prev=>prev+1)
-}, [flow, isLooping])
+  const [forceRender, setForceRender] = useState(0);
+  useEffect(() => {
+    setForceRender((prev) => prev + 1);
+  }, [flow, isLooping]);
 
-// Принудительное обновление при изменении состояний
-useEffect(() => {
-   // console.log('States changed - flow:', flow, 'isLooping:', isLooping);
-}, [flow, isLooping]);
+  useEffect(() => {
+    dispatch(setIsPlaying(false));
+  }, []);
+
   return (
     <div className={clsx(style.controls)}>
       <div className={clsx(style.controls__left)}>
-        <PlayerCircleButton 
+        <PlayerCircleButton
           key={`circle-${isLooping}-${forceRender}`}
-          selected={isLooping} 
-          onClick={handleCircleButtonClick} 
+          selected={isLooping}
+          onClick={handleCircleButtonClick}
         />
         <PlayerPrevButton onClick={handlePrevButtonClick} />
-        <PlayerPlayPauseButton 
+        <PlayerPlayPauseButton
           onClick={playingButtonClickHandler}
           isPlaying={isPlaying}
+          isLoading={isLoading}
         />
         <PlayerNextButton onClick={handleNextButtonClick} />
-        <PlayerShuffleButton 
+        <PlayerShuffleButton
           key={`shuffle-${flow}-${forceRender}`}
-          selected={flow ==='random'} 
-          onClick={handleShuffleButtonClick} 
+          selected={flow === "random"}
+          onClick={handleShuffleButtonClick}
         />
       </div>
       <div className={clsx(style.controls__right)}>
         <PlayerPlaylistButton onClick={handlePlaylistButtonClick} />
-        <PlayerVolumeControl 
-          volume={volume}
-          onChange={volumeInputHandler}
-        />
+        <PlayerVolumeControl volume={volume} onChange={volumeInputHandler} />
       </div>
     </div>
   );

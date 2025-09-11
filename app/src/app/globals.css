@@ -50,26 +50,7 @@
   outline: none;
 }
 
-::selection {
-  background: var(--purple-3);
-  color: var(--white);
-}
-::-moz-selection {
-  background: var(--purple-3);
-  color: var(--white);
-}
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--main-purple);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--purple-2);
-}
 .container {
   margin-inline: auto;
   max-width: 1512px;
@@ -188,6 +169,7 @@ input[type="range"].progress-bar {
       var(--white) 100%);
   border-radius: 9px;
   cursor: pointer;
+  position: relative
 }
 
 /* — WebKit — */
@@ -197,6 +179,7 @@ input[type="range"].progress-bar::-webkit-slider-runnable-track {
 }
 
 input[type="range"].progress-bar::-webkit-slider-thumb {
+  opacity: 0;
   -webkit-appearance: none;
   width: 4px;
   height: 4px;
@@ -205,13 +188,29 @@ input[type="range"].progress-bar::-webkit-slider-thumb {
   border-radius: 50%;
 }
 
+input[type="range"].progress-bar.with-thumb::after {
+content: '';
+display: block;
+position: absolute;
+top: 50%;
+left: 0;
+height: 10px;
+width: 10px;
+border-radius: 100%;
+  background: var(--main-purple);
+  transform: translate(var(--thumb-translate-x),-50%)
+
+}
+
 input[type="range"].progress-bar.with-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
+  opacity: 0;
   width: 10px;
   height: 10px;
   margin-top: -3px;
   background: var(--main-purple);
   border-radius: 50%;
+  transition: opacity 0.5s ease-in-out
 }
 
 /* — Firefox — */
@@ -275,6 +274,12 @@ input[type="range"].progress-bar.with-thumb::-ms-thumb {
   border-radius: 50%;
 }
 
+.play-button-loading {
+  animation: rotating 1.5s ease-in-out infinite;
+}
+@keyframes rotating {
+  to { transform: translate(-50%,-50%) rotate(360deg)}
+}
 
 @media (max-width: 1200px) {
   .container {

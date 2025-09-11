@@ -21,7 +21,7 @@ export type Biography = {
 
 export default function Biography({ section }: Biography) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const tabsGroup = useRef<HTMLUListElement>(null);
+  const tabsGroup = useRef<HTMLDivElement>(null);
   const tabsWrapper = useRef<HTMLDivElement>(null);
   const tabsContent = useRef<(HTMLParagraphElement | null)[]>([]);
   const [displayHeight, setDisplayHeight] = useState(0);
@@ -71,21 +71,21 @@ export default function Biography({ section }: Biography) {
           {section.SectionTitle}
         </h2>
         <div ref={tabsWrapper} className={clsx(styles.body)}>
-          <ul ref={tabsGroup} className={clsx(styles.tabs)}>
-            {section.BioigrafyPeriods?.map((period, index) => (
-              <li className={styles.tabs__item} key={period?.id}>
-                <button
-                  onClick={(e) => tabClickHandler(e, index)}
-                  className={clsx(
-                    styles.tabs__button,
-                    activeTabIndex === index && styles.active
-                  )}
-                >
-                  {period?.PeriodName}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div ref={tabsGroup} className={clsx(styles.tabs)}>
+              {section.BioigrafyPeriods?.map((period, index) => (
+                <div className={styles.tabs__item} key={period?.id}>
+                  <button
+                    onClick={(e) => tabClickHandler(e, index)}
+                    className={clsx(
+                      styles.tabs__button,
+                      activeTabIndex === index && styles.active
+                    )}
+                  >
+                    {period?.PeriodName}
+                  </button>
+                </div>
+              ))}
+          </div>
           <div style={{ height: displayHeight }} className={styles.display}>
             {section.BioigrafyPeriods?.map((period, index) => (
               <p

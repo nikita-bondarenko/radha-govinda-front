@@ -3,31 +3,35 @@ import { Audio } from "@/components/sections/audio-preview/AudioPreview";
 export const findNextAudioIndex = (
   audioData: Audio,
   playlist: Audio[],
-  previosAudioBuffer: string[],
   flow: "direct" | "random",
   direction: "next" | "prev",
-  currentBufferPosition?: number
-): { index: number; usedFallback: boolean } => {
+): number => {
   const currentIndex = playlist.findIndex(
     (audio) => audio?.documentId === audioData?.documentId
   );
+
+  let newIndex = 0;
 
   const playlistLength = playlist.length;
 
   if (flow === "direct") {
     if (direction === "next") {
-      return { index: currentIndex < playlistLength - 1 ? currentIndex + 1 : 0, usedFallback: false };
+      newIndex = currentIndex < playlistLength - 1 ? currentIndex + 1 : 0;
     } else {
-      return { index: currentIndex > 0 ? currentIndex - 1 : playlistLength - 1, usedFallback: false };
+      newIndex = currentIndex > 0 ? currentIndex - 1 : playlistLength - 1;
     }
   } else {
     // Random flow logic
-    if (direction === "prev") {
-      return handleRandomPrevious(audioData, playlist, previosAudioBuffer, currentBufferPosition);
-    } else {
-      return { index: handleRandomNext(playlist, previosAudioBuffer, currentBufferPosition), usedFallback: false };
-    }
+    newIndex = Math.floor(Math.random() * playlistLength);
   }
+  return newIndex === currentIndex
+    ? findNextAudioIndex(
+        audioData,
+        playlist,
+        flow,
+        direction,
+      )
+    : newIndex;
 };
 
 // Обработка предыдущего трека в случайном режиме
@@ -36,66 +40,38 @@ const handleRandomPrevious = (
   playlist: Audio[],
   previosAudioBuffer: string[],
   currentBufferPosition?: number
-): { index: number; usedFallback: boolean } => {
-   // console.log('handleRandomPrevious called:', {
-  //   currentAudio: audioData?.Name,
-  //   currentBufferPosition,
-  //   bufferLength: previosAudioBuffer.length,
-  //   buffer: previosAudioBuffer
-  // });
+): number => {
+  const currentIndex = playlist.findIndex(
+    (audio) => audio?.documentId === audioData?.documentId
+  );
 
-  if (previosAudioBuffer.length === 0) {
-     // console.log('Buffer is empty, returning 0');
-    return { index: 0, usedFallback: true };
-  }
+  console.log("currentBufferPosition", currentBufferPosition);
 
   // ВАЖНО: используем ТОЛЬКО переданную позицию, НЕ ищем трек в буфере заново
-  if (currentBufferPosition !== undefined && 
-      currentBufferPosition >= 0 && 
-      currentBufferPosition > 0) {
-    
+  if (
+    currentBufferPosition !== undefined &&
+    currentBufferPosition > 0 &&
+    previosAudioBuffer.length > 1
+  ) {
     const prevTrackId = previosAudioBuffer[currentBufferPosition - 1];
     const prevIndex = playlist.findIndex(
       (audio) => audio?.documentId === prevTrackId
     );
-    
-     // console.log('Moving back in buffer (strict position):', {
-    //   fromPosition: currentBufferPosition,
-    //   toPosition: currentBufferPosition - 1,
-    //   prevTrackId,
-    //   foundAtPlaylistIndex: prevIndex
-    // });
-    
+    console.log("item not first");
+    console.log("prevTrackId", prevTrackId);
+    console.log("prevIndex", prevIndex);
+
     if (prevIndex !== -1) {
-      return { index: prevIndex, usedFallback: false };
+      return prevIndex;
     }
   }
 
-  // Если позиция не передана или мы в начале буфера, ищем трек в буфере
-  const bufferIndex = previosAudioBuffer.findIndex(
-    (id) => id === audioData?.documentId
+  console.log("item first");
+  console.log(
+    "prevIndex",
+    currentIndex === 0 ? playlist.length - 1 : currentIndex - 1
   );
-  
-   // console.log('Fallback: found current track in buffer at index:', bufferIndex);
-
-  if (bufferIndex > 0) {
-    const prevTrackId = previosAudioBuffer[bufferIndex - 1];
-    const prevIndex = playlist.findIndex(
-      (audio) => audio?.documentId === prevTrackId
-    );
-    
-    if (prevIndex !== -1) {
-      return { index: prevIndex, usedFallback: true };
-    }
-  }
-
-  // Если нет предыдущего в буфере, используем логику direct
-   // console.log('Using direct logic fallback');
-  const currentIndex = playlist.findIndex(
-    (audio) => audio?.documentId === audioData?.documentId
-  );
-  
-  return { index: currentIndex > 0 ? currentIndex - 1 : playlist.length - 1, usedFallback: true };
+  return currentIndex === 0 ? playlist.length - 1 : currentIndex - 1;
 };
 
 // Обработка следующего трека в случайном режиме
@@ -105,22 +81,23 @@ const handleRandomNext = (
   currentBufferPosition?: number
 ): number => {
   const playlistLength = playlist.length;
-  
+
   // Если мы не в конце буфера, двигаемся вперед по буферу
-  if (currentBufferPosition !== undefined && 
-      currentBufferPosition >= 0 && 
-      currentBufferPosition < previosAudioBuffer.length - 1) {
-    
+  if (
+    currentBufferPosition !== undefined &&
+    currentBufferPosition >= 0 &&
+    currentBufferPosition < previosAudioBuffer.length - 1
+  ) {
     const nextTrackId = previosAudioBuffer[currentBufferPosition + 1];
     const nextIndex = playlist.findIndex(
       (audio) => audio?.documentId === nextTrackId
     );
-    
+
     if (nextIndex !== -1) {
       return nextIndex;
     }
   }
-  
+
   // Если мы в конце буфера или буфер пустой, выбираем новый случайный трек
   if (previosAudioBuffer.length === 0) {
     return Math.floor(Math.random() * playlistLength);

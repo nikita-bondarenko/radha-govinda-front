@@ -19,6 +19,7 @@ export type AudioState = {
   passedTime: number;
   isMiniPlayerVisible: boolean; // новое состояние для видимости мини-плеера
   isMobile: boolean; // состояние для определения мобильного устройства
+  isLoading: boolean
 };
 
 const initialState: AudioState = {
@@ -31,6 +32,7 @@ const initialState: AudioState = {
   isLooping: false, // по умолчанию зацикливание выключено
   selectedCategoryId: null, // по умолчанию категория не выбрана
   isPlaying: false,
+  isLoading: false,
   volume: 50,
   progress: 0,
   leftTime: 0,
@@ -48,6 +50,9 @@ const audioSlice = createSlice({
     },
     setIsPlaying: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
+    },
+     setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
     },
     toggleIsPlaying: (state) => {
       state.isPlaying = !state.isPlaying;
@@ -82,86 +87,75 @@ const audioSlice = createSlice({
     setPassedTime: (state, action: PayloadAction<number>) => {
       state.passedTime = action.payload;
     },
-    playNextAudio: (state) => {
-      const result = findNextAudioIndex(
-        state.audio,
-        state.playlist,
-        state.previosAudioBuffer,
-        state.flow,
-        "next",
-        state.currentBufferPosition
-      );
-      state.audio = state.playlist[result.index];
-      state.isPlaying = true;
-      state.progress = 0;
-      state.leftTime = 0;
-      state.passedTime = 0;
+    // playNextAudio: (state) => {
+    //   const result = findNextAudioIndex(
+    //     state.audio,
+    //     state.playlist,
+    //     state.previosAudioBuffer,
+    //     state.flow,
+    //     "next",
+    //     state.currentBufferPosition
+    //   );
+    //   state.audio = state.playlist[result.index];
+    //   state.isPlaying = false;
+    //   state.progress = 0;
+    //   state.leftTime = 0;
+    //   state.passedTime = 0;
       
-      // При переходе к следующему треку в random режиме
-      if (state.flow === "random") {
-        // Если мы двигались вперед по буферу, увеличиваем позицию
-        if (state.currentBufferPosition >= 0 && 
-            state.currentBufferPosition < state.previosAudioBuffer.length - 1) {
-          state.currentBufferPosition = state.currentBufferPosition + 1;
-        } else {
-          // Если выбрали новый случайный трек, позиция остается на конце буфера
-          state.currentBufferPosition = state.previosAudioBuffer.length - 1;
-        }
-      }
-    },
+    //   // При переходе к следующему треку в random режиме
+    //   if (state.flow === "random") {
+    //     // Если мы двигались вперед по буферу, увеличиваем позицию
+    //     if (state.currentBufferPosition >= 0 && 
+    //         state.currentBufferPosition < state.previosAudioBuffer.length - 1) {
+    //       state.currentBufferPosition = state.currentBufferPosition + 1;
+    //     } else {
+    //       // Если выбрали новый случайный трек, позиция остается на конце буфера
+    //       state.currentBufferPosition = state.previosAudioBuffer.length - 1;
+    //     }
+    //   }
+    // },
 
-    playPrevAudio: (state) => {
-       // console.log('playPrevAudio called, current state:', {
-      //   currentBufferPosition: state.currentBufferPosition,
-      //   bufferLength: state.previosAudioBuffer.length,
-      //   flow: state.flow,
-      //   currentAudio: state.audio?.Name
-      // });
+    // playPrevAudio: (state) => {
+    
       
-      const result = findNextAudioIndex(
-        state.audio,
-        state.playlist,
-        state.previosAudioBuffer,
-        state.flow,
-        "prev",
-        state.currentBufferPosition
-      );
+    //   const result = findNextAudioIndex(
+    //     state.audio,
+    //     state.playlist,
+    //     state.flow,
+    //     "prev",
+    //   );
       
-      state.audio = state.playlist[result.index];
-      state.isPlaying = true;
-      state.progress = 0;
-      state.leftTime = 0;
-      state.passedTime = 0;
+    //   state.audio = state.playlist[result.index];
+    //   state.isPlaying = true;
+    //   state.progress = 0;
+    //   state.leftTime = 0;
+    //   state.passedTime = 0;
       
-      // При переходе к предыдущему треку в random режиме, сдвигаем позицию назад
-      // ТОЛЬКО если мы НЕ в fallback режиме
-      if (state.flow === "random" && 
-          state.currentBufferPosition > 0 && 
-          !result.usedFallback) { // Используем флаг fallback вместо проверки индекса
-        const oldPosition = state.currentBufferPosition;
-        state.currentBufferPosition = state.currentBufferPosition - 1;
-         // console.log('Updated buffer position:', {
-        //   from: oldPosition,
-        //   to: state.currentBufferPosition
-        // });
-      } else if (state.flow === "random" && (state.currentBufferPosition === 0 || result.usedFallback)) {
-         // console.log('At buffer start or used fallback, not updating position');
-      }
-    },
-    addItemInPreviosAudioBuffer: (state, action: PayloadAction<string>) => {
-      // Добавляем новый элемент
-      const newBuffer = [...state.previosAudioBuffer, action.payload];
+
+    //   if (state.flow === "random" && 
+    //       state.currentBufferPosition > 0 && 
+    //       !result.usedFallback) { // Используем флаг fallback вместо проверки индекса
+    //     const oldPosition = state.currentBufferPosition;
+    //     state.currentBufferPosition = state.currentBufferPosition - 1;
+
+    //   } else if (state.flow === "random" && (state.currentBufferPosition === 0 || result.usedFallback)) {
+    //      // console.log('At buffer start or used fallback, not updating position');
+    //   }
+    // },
+    // addItemInPreviosAudioBuffer: (state, action: PayloadAction<string>) => {
+    //   // Добавляем новый элемент
+    //   const newBuffer = [...(state.previosAudioBuffer || []), action.payload];
       
-      // Ограничиваем буфер до 15 элементов
-      if (newBuffer.length > 15) {
-        state.previosAudioBuffer = newBuffer.slice(-15);
-      } else {
-        state.previosAudioBuffer = newBuffer;
-      }
+    //   // Ограничиваем буфер до 15 элементов
+    //   if (newBuffer.length > 15) {
+    //     state.previosAudioBuffer = newBuffer.slice(-15);
+    //   } else {
+    //     state.previosAudioBuffer = newBuffer;
+    //   }
       
-      // Устанавливаем позицию на последний элемент
-      state.currentBufferPosition = state.previosAudioBuffer.length - 1;
-    },
+    //   // Устанавливаем позицию на последний элемент
+    //   state.currentBufferPosition = state.previosAudioBuffer.length - 1;
+    // },
     
     setBufferPosition: (state, action: PayloadAction<number>) => {
       state.currentBufferPosition = action.payload;
@@ -189,19 +183,20 @@ export const {
   setLeftTime,
   setPassedTime,
   setPlaylist,
-  playNextAudio,
-  playPrevAudio,
-  addItemInPreviosAudioBuffer,
+
   setBufferPosition,
   setIsLooping,
   toggleIsLooping,
   setSelectedCategoryId,
   setIsMiniPlayerVisible,
   setIsHeaderButtonVisible,
-  setIsMobile
+  setIsMobile,
+  setIsLoading
 } = audioSlice.actions;
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
+export const selectAudioIsLoading = (state: RootState) => state.audio.isLoading;
+
 export const selectAudioFlow = (state: RootState) => state.audio.flow;
 export const selectAudioIsLooping = (state: RootState) => state.audio.isLooping;
 export const selectAudioSelectedCategoryId = (state: RootState) => state.audio.selectedCategoryId;
@@ -221,15 +216,7 @@ export const selectIsMobile = (state: RootState) => state.audio.isMobile;
 // Селектор для определения видимости большого плеера
 export const selectIsMainPlayerVisible = (state: RootState) => {
   const { audio, isMiniPlayerVisible, isHeaderButtonVisible, isMobile } = state.audio;
-  
-   // console.log('selectIsMainPlayerVisible:', {
-  //   audio: !!audio,
-  //   isMiniPlayerVisible,
-  //   isHeaderButtonVisible,
-  //   isMobile,
-  //   windowWidth: typeof window !== 'undefined' ? window.innerWidth : 'server'
-  // });
-  
+
   // На мобильных устройствах мини-плеер не влияет на видимость большого плеера
   if (isMobile) {
     const result = !!audio;

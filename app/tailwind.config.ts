@@ -18,6 +18,9 @@ export default {
       xs: { max: "572px" },
     },
     extend: {
+      animation: {
+     
+      },
       colors: {
         bg: {
           "light-grey": "var(--bg-light-grey)",

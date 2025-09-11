@@ -1,43 +1,32 @@
 .section {
-  @apply overflow-hidden  py-[40px] relative max-w-[1530px] mx-auto rounded-[10px] min-h-[500px]
-    md:min-h-[569px] md:pt-[330px] md:pb-[40px]
-    sm:min-h-[705px] sm:pb-[20px] sm:pt-[391px];
+  @apply overflow-hidden py-[40px] relative max-w-[1530px] mx-auto rounded-[10px] min-h-[500px] md:min-h-[569px] md:pt-[330px] md:pb-[40px] sm:min-h-[705px] sm:pb-[20px] sm:pt-[391px];
 }
 
 .gradient {
   @apply z-10 absolute top-0 left-0 w-full h-full;
-  background: linear-gradient(
-    270deg,
-    rgba(0, 0, 0, 0) 54.96%,
-    rgba(0, 0, 0, 0.4) 74.5%
-  );
+  background: linear-gradient(270deg,
+      rgba(0, 0, 0, 0) 54.96%,
+      rgba(0, 0, 0, 0.4) 74.5%);
 
   @media (max-width: 1200px) {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 36.5%,
-      rgba(0, 0, 0, 0.6) 74%
-    );
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0) 36.5%,
+        rgba(0, 0, 0, 0.6) 74%);
   }
 
   @media (max-width: 766px) {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 35%,
-      rgba(0, 0, 0, 0.75) 71%
-    );
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, 0) 35%,
+        rgba(0, 0, 0, 0.75) 71%);
   }
 }
 
 .background {
-  @apply z-0 absolute bottom-0 left-0 w-full h-[103%] 
-  md:left-[50%] md:h-[100%]  md:translate-x-[-50%] md:w-[1200px] md:bg-[right_top]
-  tb:bg-[149%_top] tb:w-[900px]
-  sm:bg-[89%_top];
+  @apply z-0 absolute bottom-0 left-0 w-full h-[103%] md:left-[50%] md:h-[100%] md:translate-x-[-50%] md:w-[1200px] md:bg-[right_top] tb:bg-[149%_top] tb:w-[900px] sm:bg-[89%_top];
 }
 
 .title {
-  @apply text-white mb-[20px] md:mb-[15px] sm:mb-[10px];
+  @apply text-white mb-[20px] md:mb-[15px] sm:mb-[10px] relative z-20;
 }
 
 .body {
@@ -45,36 +34,38 @@
 }
 
 .tabs {
-  @apply flex gap-[10px] mb-[36px] 
-  md:mb-[16px] 
-  sm:mb-[20px] sm:gap-[5px] sm:mx-[-19px] sm:px-[19px] sm:overflow-x-auto sm:touch-pan-x sm:touch-none;
+  @apply z-30 absolute top-0 left-0 mb-[36px] md:mb-[16px] sm:mb-[20px] sm:mx-[-19px] sm:px-[19px]
+   flex gap-[10px] sm:gap-[5px] sm:overflow-x-auto sm:touch-pan-x sm:touch-none sm:h-full;
+}
+
+.tabs__list {
+  @apply max-w-full
 }
 
 .tabs::-webkit-scrollbar {
-    @apply hidden
+  @apply hidden
 }
 
 .tabs__item {
-    @apply shrink-0
+  @apply shrink-0
 }
 
 .tabs__button {
-    @apply px-[19px] pt-[9px] pb-[11px]  rounded-full bg-transparent-white2  font-mulish font-semibold text-[16px] text-black leading-[110%] tracking-[0.32px] transition-colors hover:bg-white
+  @apply px-[19px] pt-[9px] pb-[11px] rounded-full bg-transparent-white2 font-mulish font-semibold text-[16px] text-black leading-[110%] tracking-[0.32px] transition-colors hover:bg-white
 }
 
 .tabs__button.active {
-    @apply bg-purple text-white pointer-events-none
+  @apply bg-purple text-white pointer-events-none
 }
 
 .display {
-    @apply relative w-[590px] md:w-full md:max-w-[703px]
+  @apply relative w-[590px] md:w-full md:max-w-[703px]
 }
 
 .content {
-    @apply text-white text-[18px] leading-[120%] tracking-[0.36px] font-mulish opacity-0 absolute top-0 left-0 w-full transition-opacity
-    md:text-[14px]
+  @apply text-white text-[18px] leading-[120%] tracking-[0.36px] font-mulish opacity-0 absolute top-0 left-0 w-full transition-opacity md:text-[14px] pt-[72px] md:pt-[54px] sm:pt-[47px]
 }
 
 .content.active {
-    @apply opacity-100 
+  @apply opacity-100
 }

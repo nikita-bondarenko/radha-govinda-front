@@ -2,7 +2,6 @@ import { combineReducers, configureStore, createStore } from '@reduxjs/toolkit'
 import audio from './audioSlice'
 import locale from './localeSlice'
 import { loadState, saveState } from './persistConfig'
-import { audioMiddleware } from './audioMiddleware'
 
 const rootReducer = combineReducers({
       audio: audio,
@@ -20,11 +19,11 @@ let saveTimeout: NodeJS.Timeout | null = null;
 export const store = configureStore({
   reducer: rootReducer,
   preloadedState: persistedState,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-      immutableCheck: false,
-    }).concat(audioMiddleware)
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: false,
+  //     immutableCheck: false,
+  //   }).concat(audioMiddleware)
 });
 
  // console.log('store: initial state after configureStore:', store.getState());

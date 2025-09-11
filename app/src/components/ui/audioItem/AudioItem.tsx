@@ -17,11 +17,15 @@ import Sign from "@/components/svg/Sign";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
   selectAudioId,
+  selectAudioIsLoading,
   selectAudioIsPlaying,
   selectAudioSelectedCategoryId,
+  selectAudioVolume,
   setAudio,
   setIsPlaying,
 } from "@/lib/store/audioSlice";
+import { store } from "@/lib/store/store";
+import { AudioElement } from "@/components/utils/audioModel";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
   className?: string;
@@ -37,6 +41,8 @@ export default memo(function AudioPreviewItem({
 }: AudioPreviewItemProps) {
   const dispatch = useAppDispatch();
   const isPlaying = useAppSelector(selectAudioIsPlaying);
+  const isLoading = useAppSelector(selectAudioIsLoading);
+  const volume = useAppSelector(selectAudioVolume);
   const selectedAudioId = useAppSelector(selectAudioId);
 
   const isThisAudioPlaying = useMemo(() => {
@@ -44,14 +50,15 @@ export default memo(function AudioPreviewItem({
   }, [isPlaying, selectedAudioId]);
   const controlsClickHandler = () => {
     handleControlButtonClick();
-
-    if (selectedAudioId === audio?.documentId) {
-      dispatch(setIsPlaying(!isPlaying));
-    } else {
-       // console.log('AudioItem: Setting audio:', audio);
-       // console.log('AudioItem: Audio locale:', audio?.locale);
+    const audioElement = new AudioElement();
+    if (isThisAudioPlaying) {
+      dispatch(setIsPlaying(false));
+      audioElement.pause();
+    } else  {
       dispatch(setAudio(audio || null));
-      dispatch(setIsPlaying(true));
+      audioElement.play({ audio, volume }).then(() => {
+        dispatch(setIsPlaying(true));
+      });
     }
   };
 
@@ -73,26 +80,29 @@ export default memo(function AudioPreviewItem({
       location.protocol +
       "//" +
       location.host +
-  
       (locale === "ru" ? "" : "/en") +
-      `/lectures-and-kirtans?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`
- 
+      `/lectures-and-kirtans?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`;
+
     // Use Clipboard API if available, otherwise fallback to async copy using execCommand (for better macOS support)
     const copyToClipboard = async (text: string) => {
-      if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      if (
+        navigator &&
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function"
+      ) {
         try {
           await navigator.clipboard.writeText(text);
         } catch (err) {
           // fallback if clipboard API fails (e.g. macOS Safari)
-          const textarea = document.createElement('textarea');
+          const textarea = document.createElement("textarea");
           textarea.value = text;
-          textarea.setAttribute('readonly', '');
-          textarea.style.position = 'absolute';
-          textarea.style.left = '-9999px';
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "absolute";
+          textarea.style.left = "-9999px";
           document.body.appendChild(textarea);
           textarea.select();
           try {
-            document.execCommand('copy');
+            document.execCommand("copy");
           } catch (e) {
             // ignore
           }
@@ -100,15 +110,15 @@ export default memo(function AudioPreviewItem({
         }
       } else {
         // fallback for very old browsers
-        const textarea = document.createElement('textarea');
+        const textarea = document.createElement("textarea");
         textarea.value = text;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
         document.body.appendChild(textarea);
         textarea.select();
         try {
-          document.execCommand('copy');
+          document.execCommand("copy");
         } catch (e) {
           // ignore
         }
@@ -137,6 +147,10 @@ export default memo(function AudioPreviewItem({
     }
   }, [areOptionsOpen]);
 
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
+
   const localizedData = useLocalizedStaticData();
   return (
     <div
@@ -147,7 +161,7 @@ export default memo(function AudioPreviewItem({
         isPreviewSection && styles.preview
       )}
     >
-      <button onClick={controlsClickHandler} className={styles.controls}>
+      <button onClick={controlsClickHandler} className={clsx(styles.controls, {"pointer-event-none": isLoading})}>
         <Background
           className={styles.controls__background}
           imageUrl={audio?.Image.url}
@@ -157,14 +171,18 @@ export default memo(function AudioPreviewItem({
             fill={"white"}
             className={clsx(
               styles["pause-icon"],
-              isThisAudioPlaying && styles["icon-visible"]
+              isThisAudioPlaying && !isLoading && styles["icon-visible"]
             )}
           ></PauseIcon>
           <PlayIcon
             fill={"white"}
             className={clsx(
               styles["play-icon"],
-              !isThisAudioPlaying && styles["icon-visible"]
+              (!isThisAudioPlaying || isLoading) && styles["icon-visible"],
+              {
+                "play-button-loading":
+                  isLoading && selectedAudioId === audio?.documentId,
+              }
             )}
           ></PlayIcon>
         </div>
