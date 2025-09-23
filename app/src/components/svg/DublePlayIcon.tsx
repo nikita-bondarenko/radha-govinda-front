@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import { SvgIconProps } from './Burger'
+import { SvgIconProps } from './BurgerIcon'
 
 export default function DublePlayIcon({className, fill}: SvgIconProps) {
   return (

@@ -1,0 +1,72 @@
+query Playlist($documentId: ID!, $locale: I18NLocaleCode, $pagination: PaginationArg, $sort: [String]) {
+ menu(locale: $locale) {
+    Menu {
+      PageLink {
+        Slug
+        locale
+      }
+      Text
+      id
+    }
+  }
+  audioCategory(documentId: $documentId, locale: $locale) {
+    Name
+    Image {
+      formats
+      url
+      alternativeText
+    }
+    locale
+    documentId
+  }
+  audiorecords(sort: $sort, pagination: $pagination, locale: $locale) {
+    createdAt
+    Place
+    Name
+    Duration
+    Date
+    documentId
+    locale
+    Audio {
+      url
+      size
+    }
+    AudioCategory {
+      documentId
+    }
+  }
+  footer(locale: $locale) {
+    SiteName  
+    Documents {
+      Text
+      id
+      Page {
+        Slug
+      }
+    }
+    SocialMedia {
+      Href
+      Icon {
+        url
+      }
+      Name
+      id
+    }
+    SupportForm {
+      id
+      Title
+      TextWithDocument {
+        Text
+        LinkText
+        LinkPage {
+          Slug
+        }
+      }
+      Inputs {
+        Placeholder
+        InputType
+        id
+      }
+    }
+  }
+}

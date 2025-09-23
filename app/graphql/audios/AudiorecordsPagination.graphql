@@ -4,13 +4,16 @@ query AudiorecordsPagination($locale: I18NLocaleCode, $sort: [String], $paginati
     Duration
     Name
     Place
-    Image {
-      url
-      formats
-      alternativeText
-    }
     Audio {
       url
+    }
+    AudioCategory {
+      documentId
+      Image {
+        formats
+        url
+        alternativeText
+      }
     }
   }
 }

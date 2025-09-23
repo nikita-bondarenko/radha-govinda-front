@@ -277,6 +277,13 @@ input[type="range"].progress-bar.with-thumb::-ms-thumb {
 .play-button-loading {
   animation: rotating 1.5s ease-in-out infinite;
 }
+
+.mobile-menu {
+  @apply h-full relative
+}
+.mobile-menu__body {
+  @apply relative z-20 h-full flex flex-col items-end justify-between gap-[60px] pt-[80] pb-[48px] px-[20px] sm:pt-[128px] sm:pb-[234px]
+ }
 @keyframes rotating {
   to { transform: translate(-50%,-50%) rotate(360deg)}
 }

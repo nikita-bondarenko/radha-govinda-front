@@ -29,7 +29,7 @@ import PlayerVolumeControl from "./PlayerVolumeControl";
 import useLocalizedHref from "@/hooks/useLocalizedHref";
 import { useRouter } from "next/navigation";
 import { store } from "@/lib/store/store";
-import { AudioElement } from "../utils/audioModel";
+import { AudioElement } from "../../utils/audioModel";
 
 type Props = {};
 

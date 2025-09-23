@@ -14,7 +14,7 @@ import {
 } from "@/lib/store/audioSlice";
 import { getRangePercent } from "@/utils/getRangePersent";
 import { parseDurationToSeconds } from "@/utils/parseDate";
-import { AudioElement } from "../utils/audioModel";
+import { AudioElement } from "../../utils/audioModel";
 
 type Props = {};
 

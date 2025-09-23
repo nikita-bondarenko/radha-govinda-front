@@ -25,7 +25,7 @@ import {
   setIsPlaying,
 } from "@/lib/store/audioSlice";
 import { store } from "@/lib/store/store";
-import { AudioElement } from "@/components/utils/audioModel";
+import { AudioElement } from "@/utils/audioModel";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
   className?: string;
@@ -164,7 +164,7 @@ export default memo(function AudioPreviewItem({
       <button onClick={controlsClickHandler} className={clsx(styles.controls, {"pointer-event-none": isLoading})}>
         <Background
           className={styles.controls__background}
-          imageUrl={audio?.Image.url}
+          imageUrl={audio?.AudioCategory?.Image?.formats?.thumbnail.url}
         ></Background>
         <div className={styles.controls__button}>
           <PauseIcon

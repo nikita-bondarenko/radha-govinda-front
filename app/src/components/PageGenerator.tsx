@@ -61,15 +61,8 @@ export default function PageGenerator({
   const dispatch = useDispatch();
   const currentStoreLocale = useAppSelector((state) => state.locale.locale);
   
-  // Отладочная информация
-   // console.log('PageGenerator: audiorecords =', audiorecords);
-   // console.log('PageGenerator: first audio locale =', audiorecords?.[0]?.locale);
-  
-  // Устанавливаем локаль только один раз при монтировании компонента
   useEffect(() => {
     if (page?.locale) {
-       // console.log('PageGenerator: Setting locale to:', page.locale);
-       // console.log('PageGenerator: Current store locale before set:', currentStoreLocale);
       dispatch(setLocale(page.locale as Locale));
     } else {
        // console.log('PageGenerator: No locale in page data');

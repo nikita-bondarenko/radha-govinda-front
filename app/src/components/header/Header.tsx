@@ -1,5 +1,12 @@
 "use client";
-import React, { memo, ReactNode, useEffect, useState } from "react";
+import React, {
+  createRef,
+  memo,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import HeaderNavItem from "./NavItem";
 import HeaderLectureBar, { HeaderButton } from "./HeaderLectureBar";
 import HeaderLangButton from "./HeaderLangButton";
@@ -7,13 +14,16 @@ import { Maybe } from "@/gql/generated/graphql";
 import Modal from "../utils/modal/Modal";
 import styles from "./Header.module.css";
 import clsx from "clsx";
-import Burger from "../svg/Burger";
 import CloseIcon from "../svg/CloseIcon";
 import CloseButton from "../ui/closeButton/CloseButton";
 import Nav, { Menu } from "../ui/nav/Nav";
 import SiteName from "./SiteName";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setIsHeaderButtonVisible, setIsMobile } from "@/lib/store/audioSlice";
+import { createPortal } from "react-dom";
+import MobileMenuLangButton from "./MobileMenuLangButton";
+import MobileMenu from "../ui/mobileMenu/MobileMenu";
+import Burger from "../ui/burger/Burger";
 
 export type HeaderProps = {
   menu: Menu;
@@ -43,39 +53,34 @@ export default memo(function Header({
   isSiteName,
 }: HeaderProps) {
   const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  
-  // Устанавливаем состояние кнопки в Redux
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+
   useEffect(() => {
-     // console.log('Header setting button visibility:', IsBigButtonVisible);
     dispatch(setIsHeaderButtonVisible(!!IsBigButtonVisible));
   }, [IsBigButtonVisible, dispatch]);
-  
-  // Отслеживаем размер экрана для определения мобильного устройства
+
   useEffect(() => {
     const checkMobile = () => {
       const isMobile = window.innerWidth <= 768;
-       // console.log('Header checking mobile:', {
-      //   windowWidth: window.innerWidth,
-      //   isMobile
-      // });
       dispatch(setIsMobile(isMobile));
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
+    window.addEventListener("resize", checkMobile);
+
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, [dispatch]);
-  
+
+
   const burgerHandler = () => {
-    setIsModalOpen(true);
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+
   };
 
   const closeMobileMenuButtonHandler = () => {
-    setIsModalOpen(false);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -87,7 +92,7 @@ export default memo(function Header({
         </div>
       </div>
       <div className="pr-[70px] justify-self-end flex-grow flex justify-end lgs:pr-[20px] translate-y-[-1px] md:justify-center md:pr-0 sm:hidden">
-      {isSiteName && <SiteName></SiteName>}
+        {isSiteName && <SiteName></SiteName>}
       </div>
       <div className={clsx(styles["header__right"])}>
         {IsBigButtonVisible && (
@@ -103,26 +108,18 @@ export default memo(function Header({
             locale={locale}
           ></HeaderLangButton>
         )}
-        <button onClick={burgerHandler} className={styles["header__burger"]}>
-          <Burger fill={dark ? "black" : "white"}></Burger>
-        </button>
+        <Burger
+          dark={dark}
+          isMobileMenuOpen={isMobileMenuOpen}
+          clickHandler={burgerHandler}
+        ></Burger>
       </div>
-
-      <Modal isOpen={isModalOpen}>
-        <div className={styles["mobile-menu"]}>
-          <div className={styles["mobile-menu__body"]}>
-            <CloseButton
-              className="mr-[-8px]"
-              onClick={closeMobileMenuButtonHandler}
-            ></CloseButton>
-
-            <Nav
-              menu={menu}
-              handleButtonClick={closeMobileMenuButtonHandler}
-            ></Nav>
-          </div>
-        </div>
-      </Modal>
+      <MobileMenu
+        locale={locale}
+        isMobileMenuOpen={isMobileMenuOpen}
+        menu={menu}
+        closeMobileMenuButtonHandler={closeMobileMenuButtonHandler}
+      ></MobileMenu>
     </header>
   );
 });

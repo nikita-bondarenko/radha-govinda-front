@@ -24,16 +24,26 @@ type PageMetadataProps = {
   locale: Locale;
   postType: "page" | "post";
 };
-export const getPageMetadata = async ({params}: MetadataPropsType) => {
+export const getPageMetadata = async ({ params }: MetadataPropsType) => {
+  const { slug, postType, locale } = await parseParams(params);
 
-  const {slug, postType, locale} = await parseParams(params)
-   // console.log(slug, postType, locale)
   const apolloClient = initializeApollo();
   if (postType === "page") {
-    const documentId = await getIdBySlug(slug, postType, apolloClient);
+    const documentId = await getIdBySlug(
+      slug === "playlist" ? "lectures-and-kirtans" : slug,
+      postType,
+      apolloClient
+    );
+
+    console.log(documentId)
 
     if (documentId) {
-      const { page: data } = await getSeoDataById(documentId, postType, locale, apolloClient);
+      const { page: data } = await getSeoDataById(
+        documentId,
+        postType,
+        locale,
+        apolloClient
+      );
 
       return getDynamicMetadata({
         title: data?.page?.SEO?.Title,
@@ -49,7 +59,12 @@ export const getPageMetadata = async ({params}: MetadataPropsType) => {
     const documentId = await getIdBySlug(slug, postType, apolloClient);
 
     if (documentId) {
-      const { post: data } = await getSeoDataById(documentId, postType, locale, apolloClient);
+      const { post: data } = await getSeoDataById(
+        documentId,
+        postType,
+        locale,
+        apolloClient
+      );
 
       return getDynamicMetadata({
         title: data?.post?.SEO?.Title,
@@ -61,11 +76,16 @@ export const getPageMetadata = async ({params}: MetadataPropsType) => {
     }
   }
 
-  if (postType === 'doc') {
+  if (postType === "doc") {
     const documentId = await getIdBySlug(slug, postType, apolloClient);
 
     if (documentId) {
-      const { doc: data } = await getSeoDataById(documentId, postType, locale, apolloClient);
+      const { doc: data } = await getSeoDataById(
+        documentId,
+        postType,
+        locale,
+        apolloClient
+      );
 
       return getDynamicMetadata({
         title: data?.doc?.SEO?.Title,

@@ -24,6 +24,7 @@ export type Scalars = {
 
 export type AudioCategory = {
   __typename?: 'AudioCategory';
+  Image?: Maybe<UploadFile>;
   Name: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
@@ -68,6 +69,7 @@ export type AudioCategoryFiltersInput = {
 };
 
 export type AudioCategoryInput = {
+  Image?: InputMaybe<Scalars['ID']['input']>;
   Name?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -83,7 +85,6 @@ export type Audiorecord = {
   AudioCategory?: Maybe<AudioCategory>;
   Date?: Maybe<Scalars['Date']['output']>;
   Duration: Scalars['String']['output'];
-  Image: UploadFile;
   Name: Scalars['String']['output'];
   Place?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -137,7 +138,6 @@ export type AudiorecordInput = {
   AudioCategory?: InputMaybe<Scalars['ID']['input']>;
   Date?: InputMaybe<Scalars['Date']['input']>;
   Duration?: InputMaybe<Scalars['String']['input']>;
-  Image?: InputMaybe<Scalars['ID']['input']>;
   Name?: InputMaybe<Scalars['String']['input']>;
   Place?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2430,7 +2430,7 @@ export type AudiorecordsPaginationQueryVariables = Exact<{
 }>;
 
 
-export type AudiorecordsPaginationQuery = { __typename?: 'Query', audiorecords: Array<{ __typename?: 'Audiorecord', Date?: any | null, Duration: string, Name: string, Place?: string | null, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null }, Audio: { __typename?: 'UploadFile', url: string } } | null> };
+export type AudiorecordsPaginationQuery = { __typename?: 'Query', audiorecords: Array<{ __typename?: 'Audiorecord', Date?: any | null, Duration: string, Name: string, Place?: string | null, Audio: { __typename?: 'UploadFile', url: string }, AudioCategory?: { __typename?: 'AudioCategory', documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null } | null> };
 
 export type DocumentQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2484,7 +2484,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', Slug: string, PageName: string, locale?: string | null, PageConstructor?: Array<{ __typename?: 'ComponentAudioKatalogAudiozopisej', id: string } | { __typename?: 'ComponentCommonSectionIzobrazhenie', image?: { __typename?: 'UploadFile', alternativeText?: string | null, url: string, formats?: any | null } | null } | { __typename?: 'ComponentCommonSectionRaspisanie', TextBelow?: string | null, SectionTitle?: string | null, ScheduleItem?: Array<{ __typename?: 'ComponentHomePageSobytie', Place?: string | null, Period?: string | null, Name?: string | null, MoreButtonHref?: string | null, EventDescription?: string | null, id: string } | null> | null } | { __typename?: 'ComponentHeaderWithImagePervyjBlokSIzobrazheniem', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHeaderWithTextPervyjBlokSTekstom', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null } | { __typename?: 'ComponentHomePageBiografiya', SectionTitle?: string | null, BioigrafyPeriods?: Array<{ __typename?: 'ComponentHomePageBiografy', PeriodName?: string | null, PeriodDescription?: string | null, id: string } | null> | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHomePageParampara', SectionTitle?: string | null, LineageMember?: Array<{ __typename?: 'ComponentHomePageChlenParampary', Description?: string | null, Name?: string | null, Role?: string | null, id: string, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | null> | null } | { __typename?: 'ComponentHomePagePrevyuRazdelaSajta', Title?: string | null, DivisionName?: Enum_Componenthomepageprevyurazdelasajta_Divisionname | null } | { __typename?: 'ComponentPostKatalogStatej', id: string } | { __typename?: 'ComponentVideoKatalogVideo', id: string } | { __typename?: 'Error' } | null> | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, documentId: string, locale?: string | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string } | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, Image: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null>, posts: Array<{ __typename?: 'Post', documentId: string, Slug: string, PostTitle: string, PostPreviewContent?: string | null, locale?: string | null, Date?: any | null, PostCategory?: { __typename?: 'PostCategory', documentId: string, Name: string } | null } | null>, movies: Array<{ __typename?: 'Movie', createdAt?: any | null, YoutubeLink: string, documentId: string, MovieName: string, VideoCategory?: { __typename?: 'VideoCategory', documentId: string, Name: string } | null } | null>, audioCategories: Array<{ __typename?: 'AudioCategory', Name: string, documentId: string } | null>, postCategories: Array<{ __typename?: 'PostCategory', Name: string, documentId: string } | null>, videoCategories: Array<{ __typename?: 'VideoCategory', Name: string, documentId: string } | null>, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
+export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'Page', Slug: string, PageName: string, locale?: string | null, PageConstructor?: Array<{ __typename?: 'ComponentAudioKatalogAudiozopisej', id: string } | { __typename?: 'ComponentCommonSectionIzobrazhenie', image?: { __typename?: 'UploadFile', alternativeText?: string | null, url: string, formats?: any | null } | null } | { __typename?: 'ComponentCommonSectionRaspisanie', TextBelow?: string | null, SectionTitle?: string | null, ScheduleItem?: Array<{ __typename?: 'ComponentHomePageSobytie', Place?: string | null, Period?: string | null, Name?: string | null, MoreButtonHref?: string | null, EventDescription?: string | null, id: string } | null> | null } | { __typename?: 'ComponentHeaderWithImagePervyjBlokSIzobrazheniem', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHeaderWithTextPervyjBlokSTekstom', Title?: string | null, Subtitle?: string | null, IsLanguageButtonVisible?: boolean | null, IsBigButtonVisible?: boolean | null, BigButton?: { __typename?: 'ComponentBigButtonBolshayaKnopka', ButtonText?: string | null, page?: { __typename?: 'Page', Slug: string } | null } | null } | { __typename?: 'ComponentHomePageBiografiya', SectionTitle?: string | null, BioigrafyPeriods?: Array<{ __typename?: 'ComponentHomePageBiografy', PeriodName?: string | null, PeriodDescription?: string | null, id: string } | null> | null, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | { __typename?: 'ComponentHomePageParampara', SectionTitle?: string | null, LineageMember?: Array<{ __typename?: 'ComponentHomePageChlenParampary', Description?: string | null, Name?: string | null, Role?: string | null, id: string, Image?: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } | null } | null> | null } | { __typename?: 'ComponentHomePagePrevyuRazdelaSajta', Title?: string | null, DivisionName?: Enum_Componenthomepageprevyurazdelasajta_Divisionname | null } | { __typename?: 'ComponentPostKatalogStatej', id: string } | { __typename?: 'ComponentVideoKatalogVideo', id: string } | { __typename?: 'Error' } | null> | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, documentId: string, locale?: string | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null, Audio: { __typename?: 'UploadFile', url: string, size: number } } | null>, posts: Array<{ __typename?: 'Post', documentId: string, Slug: string, PostTitle: string, PostPreviewContent?: string | null, locale?: string | null, Date?: any | null, PostCategory?: { __typename?: 'PostCategory', documentId: string, Name: string } | null } | null>, movies: Array<{ __typename?: 'Movie', createdAt?: any | null, YoutubeLink: string, documentId: string, MovieName: string, VideoCategory?: { __typename?: 'VideoCategory', documentId: string, Name: string } | null } | null>, audioCategories: Array<{ __typename?: 'AudioCategory', Name: string, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null>, postCategories: Array<{ __typename?: 'PostCategory', Name: string, documentId: string } | null>, videoCategories: Array<{ __typename?: 'VideoCategory', Name: string, documentId: string } | null>, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
 
 export type PageSeoQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2498,6 +2498,16 @@ export type PagesConnectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PagesConnectionsQuery = { __typename?: 'Query', pages_connection?: { __typename?: 'PageEntityResponseCollection', nodes: Array<{ __typename?: 'Page', Slug: string, documentId: string }> } | null };
+
+export type PlaylistQueryVariables = Exact<{
+  documentId: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+}>;
+
+
+export type PlaylistQuery = { __typename?: 'Query', menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, audioCategory?: { __typename?: 'AudioCategory', Name: string, locale?: string | null, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, documentId: string, locale?: string | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, AudioCategory?: { __typename?: 'AudioCategory', documentId: string } | null } | null>, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
 
 export type PostQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2545,13 +2555,16 @@ export const AudiorecordsPaginationDocument = gql`
     Duration
     Name
     Place
-    Image {
-      url
-      formats
-      alternativeText
-    }
     Audio {
       url
+    }
+    AudioCategory {
+      documentId
+      Image {
+        formats
+        url
+        alternativeText
+      }
     }
   }
 }
@@ -2938,15 +2951,15 @@ export const PageDocument = gql`
     AudioCategory {
       Name
       documentId
+      Image {
+        formats
+        url
+        alternativeText
+      }
     }
     Audio {
       url
       size
-    }
-    Image {
-      url
-      formats
-      alternativeText
     }
   }
   posts(pagination: $postsPagination2, sort: $postsSort2, locale: $postsLocale2) {
@@ -2978,6 +2991,11 @@ export const PageDocument = gql`
   audioCategories(locale: $audioCategoriesLocale2) {
     Name
     documentId
+    Image {
+      formats
+      url
+      alternativeText
+    }
   }
   postCategories(locale: $postCategoriesLocale2) {
     Name
@@ -3184,6 +3202,116 @@ export type PagesConnectionsQueryHookResult = ReturnType<typeof usePagesConnecti
 export type PagesConnectionsLazyQueryHookResult = ReturnType<typeof usePagesConnectionsLazyQuery>;
 export type PagesConnectionsSuspenseQueryHookResult = ReturnType<typeof usePagesConnectionsSuspenseQuery>;
 export type PagesConnectionsQueryResult = Apollo.QueryResult<PagesConnectionsQuery, PagesConnectionsQueryVariables>;
+export const PlaylistDocument = gql`
+    query Playlist($documentId: ID!, $locale: I18NLocaleCode, $pagination: PaginationArg, $sort: [String]) {
+  menu(locale: $locale) {
+    Menu {
+      PageLink {
+        Slug
+        locale
+      }
+      Text
+      id
+    }
+  }
+  audioCategory(documentId: $documentId, locale: $locale) {
+    Name
+    Image {
+      formats
+      url
+      alternativeText
+    }
+    locale
+    documentId
+  }
+  audiorecords(sort: $sort, pagination: $pagination, locale: $locale) {
+    createdAt
+    Place
+    Name
+    Duration
+    Date
+    documentId
+    locale
+    Audio {
+      url
+      size
+    }
+    AudioCategory {
+      documentId
+    }
+  }
+  footer(locale: $locale) {
+    SiteName
+    Documents {
+      Text
+      id
+      Page {
+        Slug
+      }
+    }
+    SocialMedia {
+      Href
+      Icon {
+        url
+      }
+      Name
+      id
+    }
+    SupportForm {
+      id
+      Title
+      TextWithDocument {
+        Text
+        LinkText
+        LinkPage {
+          Slug
+        }
+      }
+      Inputs {
+        Placeholder
+        InputType
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __usePlaylistQuery__
+ *
+ * To run a query within a React component, call `usePlaylistQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePlaylistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePlaylistQuery({
+ *   variables: {
+ *      documentId: // value for 'documentId'
+ *      locale: // value for 'locale'
+ *      pagination: // value for 'pagination'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function usePlaylistQuery(baseOptions: Apollo.QueryHookOptions<PlaylistQuery, PlaylistQueryVariables> & ({ variables: PlaylistQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PlaylistQuery, PlaylistQueryVariables>(PlaylistDocument, options);
+      }
+export function usePlaylistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PlaylistQuery, PlaylistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PlaylistQuery, PlaylistQueryVariables>(PlaylistDocument, options);
+        }
+export function usePlaylistSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PlaylistQuery, PlaylistQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PlaylistQuery, PlaylistQueryVariables>(PlaylistDocument, options);
+        }
+export type PlaylistQueryHookResult = ReturnType<typeof usePlaylistQuery>;
+export type PlaylistLazyQueryHookResult = ReturnType<typeof usePlaylistLazyQuery>;
+export type PlaylistSuspenseQueryHookResult = ReturnType<typeof usePlaylistSuspenseQuery>;
+export type PlaylistQueryResult = Apollo.QueryResult<PlaylistQuery, PlaylistQueryVariables>;
 export const PostDocument = gql`
     query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
   post(documentId: $documentId, locale: $locale) {

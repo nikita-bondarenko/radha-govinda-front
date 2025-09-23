@@ -1,5 +1,5 @@
 import React from 'react'
-import { SvgIconProps } from './Burger'
+import { SvgIconProps } from './BurgerIcon'
 import clsx from 'clsx'
 
 export default function ListIcon({className, fill}: SvgIconProps) {

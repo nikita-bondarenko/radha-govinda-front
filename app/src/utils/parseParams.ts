@@ -3,10 +3,11 @@ import { Locale } from "./getLocalizedData";
 
 export type PostType = "page" | "post" | "doc";
 
-export const parseParams = async (params: Promise<{ slug: string[] }>) => {
+export const parseParams = async (params: Promise<{ slug: string[], id: string }>) => {
   const slugArray = (await params).slug;
+    const id = (await params).id;
+
    // console.log('parseParams: slugArray =', slugArray);
-  
   const locale: Locale = !slugArray
   ? "ru"
   : slugArray[0] === "en"
@@ -18,7 +19,7 @@ export const parseParams = async (params: Promise<{ slug: string[] }>) => {
   const isEnglish = locale === "en";
 
   const postType: PostType = !slugArray
-    ? "page"
+    ? ("page" )
     : (!isEnglish && slugArray[0] === "articles" && slugArray.length === 2) ||
       (isEnglish && slugArray[1] === "articles" && slugArray.length === 3)
     ? "post" : (!isEnglish && slugArray[0] === "documents") ||
@@ -30,7 +31,7 @@ export const parseParams = async (params: Promise<{ slug: string[] }>) => {
   const isDoc = postType === "doc";
 
   const slug = (!slugArray || slugArray.length === 1 && isEnglish)
-    ? "home"
+    ? (id ? "playlist" : "home")
     : isPost && isEnglish || isDoc && isEnglish
     ? slugArray[2]
     : isPost || isEnglish || isDoc
@@ -69,7 +70,7 @@ export const parseParams = async (params: Promise<{ slug: string[] }>) => {
       start: 0,
       limit: 9999,
     };
-  } else if (slug === "lectures-and-kirtans") {
+  } else if (slug === "lectures-and-kirtans" ) {
     audiosPagination = {
       start: 0,
       limit: 9999,

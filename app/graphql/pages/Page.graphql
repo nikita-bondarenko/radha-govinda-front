@@ -105,15 +105,15 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
     AudioCategory {
       Name
       documentId
+      Image {
+        formats
+        url
+        alternativeText
+      }
     }
     Audio {
       url
       size
-    }
-    Image {
-      url
-      formats
-      alternativeText
     }
   }
   posts(pagination: $postsPagination2, sort: $postsSort2, locale: $postsLocale2) {
@@ -141,6 +141,11 @@ query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $posts
   audioCategories(locale: $audioCategoriesLocale2) {
     Name
     documentId
+    Image {
+        formats
+        url
+        alternativeText
+    }
   }
   postCategories(locale: $postCategoriesLocale2) {
     Name

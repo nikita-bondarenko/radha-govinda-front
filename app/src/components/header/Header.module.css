@@ -56,17 +56,10 @@
   @apply flex items-center gap-[140px];
 }
 .header__right {
-  @apply flex items-center gap-[20px];
+  @apply flex items-center gap-[20px] md:mr-[60px] sm:mr-0;
 }
-.header__burger {
-    @apply hidden md:block h-[16px] w-[20px]
-}
-.mobile-menu {
-  @apply h-full  bg-white
-}
-.mobile-menu__body {
-  @apply bg-[var(--black-2)] h-full flex flex-col items-end gap-[32px] py-[28px] px-[20px]
-}
+
+
 .header__lang-button {
   color: var(--white);
   font-size: 18px;

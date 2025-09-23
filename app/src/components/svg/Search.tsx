@@ -1,5 +1,5 @@
 import React from "react";
-import { SvgIconProps } from "./Burger";
+import { SvgIconProps } from "./BurgerIcon";
 
 type Props = SvgIconProps;
 

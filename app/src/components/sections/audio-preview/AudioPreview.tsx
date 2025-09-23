@@ -9,6 +9,7 @@ import styles from "./AudioPreview.module.css";
 import PreviewSection from "@/components/ui/previewSection/PreviewSection";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setAudio, setPlaylist } from "@/lib/store/audioSlice";
+import { Image } from "@/components/utils/Picture";
 
 export type PreviewSectionProps = {
   title: Maybe<string>;
@@ -28,14 +29,10 @@ export type Audio = {
     __typename?: "AudioCategory";
     Name: string;
     documentId: string;
+    Image?: Image
   } | null;
   Audio: { __typename?: "UploadFile"; url: string; size: number };
-  Image: {
-    __typename?: "UploadFile";
-    url: string;
-    formats?: any | null;
-    alternativeText?: string | null;
-  };
+  
 } | null;
 
 export type AudioPreviewProps = {

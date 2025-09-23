@@ -24,7 +24,7 @@ import { formatRemainingTime, formatTime } from "@/utils/formatTime";
 import { parseDurationToSeconds } from "@/utils/parseDate";
 import PlayIcon from "../svg/PlayIcon";
 import PauseIcon from "../svg/PauseIcon";
-import { AudioElement } from "../utils/audioModel";
+import { AudioElement } from "../../utils/audioModel";
 
 export type HeaderButton = {
   __typename?: "ComponentBigButtonBolshayaKnopka";
