@@ -1,19 +1,24 @@
 query AudiorecordsPagination($locale: I18NLocaleCode, $sort: [String], $pagination: PaginationArg, $filters: AudiorecordFiltersInput) {
   audiorecords(locale: $locale, sort: $sort, pagination: $pagination, filters: $filters) {
-    Date
-    Duration
-    Name
+   createdAt
     Place
-    Audio {
-      url
-    }
+    Name
+    Duration
+    Date
+    documentId
+    locale
     AudioCategory {
+      Name
       documentId
       Image {
         formats
         url
         alternativeText
       }
+    }
+    Audio {
+      url
+      size
     }
   }
 }

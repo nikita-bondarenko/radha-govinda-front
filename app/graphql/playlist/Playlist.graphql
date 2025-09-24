@@ -27,12 +27,18 @@ query Playlist($documentId: ID!, $locale: I18NLocaleCode, $pagination: Paginatio
     Date
     documentId
     locale
+    AudioCategory {
+      Name
+      documentId
+      Image {
+        formats
+        url
+        alternativeText
+      }
+    }
     Audio {
       url
       size
-    }
-    AudioCategory {
-      documentId
     }
   }
   footer(locale: $locale) {

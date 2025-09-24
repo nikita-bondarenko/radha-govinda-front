@@ -50,6 +50,10 @@
   outline: none;
 }
 
+body {
+  @apply relative
+}
+
 
 .container {
   margin-inline: auto;
@@ -84,7 +88,7 @@ body {
   @apply flex flex-col gap-[120px] md:gap-[90px] justify-between h-full;
 }
 
-.main > * {
+.main>* {
   @apply shrink-0
 }
 
@@ -115,22 +119,22 @@ section {
 
 
 
-.page-content-markdown > * {
+.page-content-markdown>* {
   @apply pl-[184px] pr-[231px] md:pr-0 md:pl-0
 }
 
 
 
 .page-content-markdown p, li, ol, ul {
-  @apply  text-[16px] leading-[110%] tracking-[0.32px]  sm:text-[14px] 
+  @apply text-[16px] leading-[110%] tracking-[0.32px] sm:text-[14px]
 }
 
 .page-content-markdown p:not(:last-child), .page-content-markdown li:not(:last-child), .page-content-markdown ol:not(:last-child) {
-@apply mb-[14px] md:mb-[12] sm:mb-[10px]
+  @apply mb-[14px] md:mb-[12] sm:mb-[10px]
 }
 
 .page-content-markdown img {
-  @apply w-full 
+  @apply w-full
 }
 
 .page-content-markdown img, .page-content-markdown blockquote {
@@ -142,11 +146,11 @@ section {
 }
 
 .page-content-markdown blockquote {
-  @apply pl-[17px] py-[5px]  border-l-[2px] border-[#7A66D5] 
+  @apply pl-[17px] py-[5px] border-l-[2px] border-[#7A66D5]
 }
 
 .page-content-markdown blockquote, .page-content-markdown blockquote p {
-  @apply text-[20px] leading-[120%] font-semibold  md:text-[16px] sm:text-[14px]
+  @apply text-[20px] leading-[120%] font-semibold md:text-[16px] sm:text-[14px]
 }
 
 
@@ -189,17 +193,16 @@ input[type="range"].progress-bar::-webkit-slider-thumb {
 }
 
 input[type="range"].progress-bar.with-thumb::after {
-content: '';
-display: block;
-position: absolute;
-top: 50%;
-left: 0;
-height: 10px;
-width: 10px;
-border-radius: 100%;
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
   background: var(--main-purple);
-  transform: translate(var(--thumb-translate-x),-50%)
-
+  transform: translate(var(--thumb-translate-x), -50%)
 }
 
 input[type="range"].progress-bar.with-thumb::-webkit-slider-thumb {
@@ -275,18 +278,65 @@ input[type="range"].progress-bar.with-thumb::-ms-thumb {
 }
 
 .play-button-loading {
-  animation: rotating 1.5s ease-in-out infinite;
+  animation: rotating 4s infinite;
 }
 
 .mobile-menu {
   @apply h-full relative
 }
+
 .mobile-menu__body {
   @apply relative z-20 h-full flex flex-col items-end justify-between gap-[60px] pt-[80] pb-[48px] px-[20px] sm:pt-[128px] sm:pb-[234px]
- }
-@keyframes rotating {
-  to { transform: translate(-50%,-50%) rotate(360deg)}
 }
+.play-icon {
+  @apply w-[28px] h-[28px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
+  md:w-[22px] md:h-[22px];
+}
+
+
+
+.pause-icon {
+  @apply w-[24px] h-[24px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
+  md:w-[19px] md:h-[19px];
+}
+
+
+
+.icon-visible.play-icon, .icon-visible.pause-icon {
+    @apply opacity-100
+}
+
+
+/* @keyframes rotating {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg)
+  }
+} */
+
+@keyframes rotating {
+      /* Этап 1: 0° → 120° с ease-in-out */
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      20% { 
+        transform: translate(-50%, -50%) rotate(120deg); 
+        animation-timing-function: ease-in-out; 
+      }
+      /* Пауза на 120° */
+      33.33% { transform: translate(-50%, -50%) rotate(120deg); }
+      /* Этап 2: 120° → 240° с ease-in-out */
+      53.33% { 
+        transform: translate(-50%, -50%) rotate(240deg); 
+        animation-timing-function: ease-in-out; 
+      }
+      /* Пауза на 240° */
+      66.67% { transform: translate(-50%, -50%) rotate(240deg); }
+      /* Этап 3: 240° → 360° с ease-in-out */
+      86.67% { 
+        transform: translate(-50%, -50%) rotate(360deg); 
+        animation-timing-function: ease-in-out; 
+      }
+      /* Завершение цикла */
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
 
 @media (max-width: 1200px) {
   .container {

@@ -1,11 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../utils/modal/Modal";
 import MobileMenu, { MobileMenuProps } from "../ui/mobileMenu/MobileMenu";
 import Nav, { Menu } from "../ui/nav/Nav";
 import Burger from "../ui/burger/Burger";
 import BoldArrow from "../svg/BoldArrow";
 import { useRouter } from "next/navigation";
+import { setLocale } from "@/lib/store/localeSlice";
+import { Locale } from "@/utils/getLocalizedData";
+import { useDispatch } from "react-redux";
 type Props = {
   menu?: Menu | null;
   locale?: string | null | undefined;
@@ -13,6 +16,11 @@ type Props = {
 
 export default function PlaylistHeader({ menu, locale }: Props) {
   const router = useRouter();
+   const dispatch = useDispatch();
+  
+    useEffect(() => {
+      dispatch(setLocale(locale as Locale));
+    }, []);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
@@ -28,7 +36,7 @@ export default function PlaylistHeader({ menu, locale }: Props) {
     router.back();
   };
   return (
-    <header>
+    <header className="absolute top-0 left-0 w-full">
       <div className="container flex items-center py-[17px]">
         <button
           onClick={backButtonHandler}

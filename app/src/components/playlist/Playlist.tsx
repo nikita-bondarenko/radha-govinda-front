@@ -1,29 +1,22 @@
-import { MetadataPropsType } from "@/app/[[...slug]]/page";
 import {
   PlaylistDocument,
   PlaylistQuery,
   PlaylistQueryVariables,
 } from "@/gql/generated/graphql";
 import { initializeApollo } from "@/lib/apollo/client";
-import { parseParams } from "@/utils/parseParams";
-import { RenderPage } from "next/dist/shared/lib/utils";
+
 import React from "react";
 import { RenderPageProps } from "../RenderPage";
-import PlaylistAudios from "./PlaylistAudios";
-import PlaylistControls from "./PlaylistControls";
 import PlaylistHeader from "./PlaylistHeader";
+import Footer from "../sections/footer/Footer";
+import PlaylistBody from "./PlaylistBody";
 
-async function Playlist(props: RenderPageProps) {
+type PlaylistProps = RenderPageProps & {
+  locale: string;
+};
+
+async function Playlist(props: PlaylistProps) {
   const apolloClient = initializeApollo();
-  const {
-    slug,
-    postType,
-    locale,
-    postsPagination,
-    moviesPagination,
-    audiosPagination,
-  } = await parseParams(props.params);
-
   const audioCategoryId = (await props.params).id;
 
   const { data } = await apolloClient.query<
@@ -33,7 +26,7 @@ async function Playlist(props: RenderPageProps) {
     query: PlaylistDocument,
     variables: {
       sort: ["Date:DESC"],
-      locale: locale,
+      locale: props.locale,
       pagination: {
         start: 0,
         limit: 99999,
@@ -48,10 +41,13 @@ async function Playlist(props: RenderPageProps) {
 
   return (
     <>
-      <main className="main">
-        <PlaylistHeader menu={data?.menu} locale={locale}></PlaylistHeader>
-        <PlaylistControls></PlaylistControls>
-        <PlaylistAudios></PlaylistAudios>
+      <main className="main max-w-[600px] mx-auto">
+        <PlaylistHeader
+          menu={data?.menu}
+          locale={props.locale}
+        ></PlaylistHeader>
+        <PlaylistBody audioCategory={data.audioCategory} audios={audios}></PlaylistBody>
+        <Footer menu={data?.menu} footer={data?.footer} />
       </main>
     </>
   );

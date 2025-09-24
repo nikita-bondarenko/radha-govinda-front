@@ -11,10 +11,8 @@ import { useDispatch } from 'react-redux'
 const DocumentGenerator = ({menu, logo,doc,footer}: DocumentQuery) => {
   const dispatch = useDispatch();
   
-  // Устанавливаем локаль только один раз при монтировании компонента
   useEffect(() => {
     if (doc?.locale) {
-       // console.log('DocumentGenerator: Setting locale to:', doc.locale);
       dispatch(setLocale(doc.locale as Locale));
     }
   }, [dispatch, doc?.locale]);

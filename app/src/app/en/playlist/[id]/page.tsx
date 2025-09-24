@@ -8,5 +8,5 @@ export const generateMetadata = getPageMetadata
 
 export default async function Page(props: MetadataPropsType) {
 
-  return <Playlist {...props} locale='ru'></Playlist>
+  return <Playlist {...props} locale='en'></Playlist>
 }

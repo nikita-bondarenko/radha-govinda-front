@@ -1,0 +1,45 @@
+import React from "react";
+import { SvgIconProps } from "./BurgerIcon";
+
+export default function Shuffle(props: SvgIconProps) {
+  return (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 15 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={props.className}
+    >
+      <path
+        d="M10.1308 11.3182C9.17089 11.3182 8.27222 10.9253 7.60547 10.2584"
+        stroke={props.fill}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.74705 4.98755C3.91558 4.16545 2.80021 3.68176 1.60938 3.68176"
+        stroke={props.fill}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.7192 12.28C14.3232 11.8853 14.3233 11.0003 13.7192 10.6057L11.6779 9.27182C11.0127 8.83722 10.1309 9.31443 10.1309 10.109V12.7767C10.1309 13.5712 11.0127 14.0484 11.6779 13.6138L13.7192 12.28Z"
+        fill={props.fill}
+      />
+      <path
+        d="M10.1311 3.68175C8.66093 3.68175 7.33921 4.57781 6.7949 5.94352L5.77964 8.4909C5.09926 10.198 3.44711 11.3181 1.60938 11.3181"
+        stroke={props.fill}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.1099 4.6436C13.7139 4.24893 13.7139 3.36399 13.1099 2.96932L11.0685 1.63546C10.4034 1.20087 9.52148 1.67808 9.52148 2.4726V5.14032C9.52148 5.93484 10.4034 6.41206 11.0685 5.97746L13.1099 4.6436Z"
+        fill={props.fill}
+      />
+    </svg>
+  );
+}

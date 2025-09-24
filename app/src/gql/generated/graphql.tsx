@@ -2430,7 +2430,7 @@ export type AudiorecordsPaginationQueryVariables = Exact<{
 }>;
 
 
-export type AudiorecordsPaginationQuery = { __typename?: 'Query', audiorecords: Array<{ __typename?: 'Audiorecord', Date?: any | null, Duration: string, Name: string, Place?: string | null, Audio: { __typename?: 'UploadFile', url: string }, AudioCategory?: { __typename?: 'AudioCategory', documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null } | null> };
+export type AudiorecordsPaginationQuery = { __typename?: 'Query', audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, documentId: string, locale?: string | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null, Audio: { __typename?: 'UploadFile', url: string, size: number } } | null> };
 
 export type DocumentQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2507,7 +2507,7 @@ export type PlaylistQueryVariables = Exact<{
 }>;
 
 
-export type PlaylistQuery = { __typename?: 'Query', menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, audioCategory?: { __typename?: 'AudioCategory', Name: string, locale?: string | null, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, documentId: string, locale?: string | null, Audio: { __typename?: 'UploadFile', url: string, size: number }, AudioCategory?: { __typename?: 'AudioCategory', documentId: string } | null } | null>, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
+export type PlaylistQuery = { __typename?: 'Query', menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string, locale?: string | null } | null } | null> | null } | null, audioCategory?: { __typename?: 'AudioCategory', Name: string, locale?: string | null, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null, audiorecords: Array<{ __typename?: 'Audiorecord', createdAt?: any | null, Place?: string | null, Name: string, Duration: string, Date?: any | null, documentId: string, locale?: string | null, AudioCategory?: { __typename?: 'AudioCategory', Name: string, documentId: string, Image?: { __typename?: 'UploadFile', formats?: any | null, url: string, alternativeText?: string | null } | null } | null, Audio: { __typename?: 'UploadFile', url: string, size: number } } | null>, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null };
 
 export type PostQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2551,20 +2551,25 @@ export const AudiorecordsPaginationDocument = gql`
     pagination: $pagination
     filters: $filters
   ) {
-    Date
-    Duration
-    Name
+    createdAt
     Place
-    Audio {
-      url
-    }
+    Name
+    Duration
+    Date
+    documentId
+    locale
     AudioCategory {
+      Name
       documentId
       Image {
         formats
         url
         alternativeText
       }
+    }
+    Audio {
+      url
+      size
     }
   }
 }
@@ -3232,12 +3237,18 @@ export const PlaylistDocument = gql`
     Date
     documentId
     locale
+    AudioCategory {
+      Name
+      documentId
+      Image {
+        formats
+        url
+        alternativeText
+      }
+    }
     Audio {
       url
       size
-    }
-    AudioCategory {
-      documentId
     }
   }
   footer(locale: $locale) {

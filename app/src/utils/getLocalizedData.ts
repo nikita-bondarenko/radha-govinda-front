@@ -1,7 +1,21 @@
 type StaticElementsData = {
+  playlist: {
+    controls: {
+      audio: string;
+      duration: string;
+      playButton: {
+        play: string
+        stop: string
+      };
+      mixButton: {
+        shuffle: string;
+        sort: string;
+      };
+    };
+  };
   audioPreview: {
     shareButton: string;
-    succesMessage: string
+    succesMessage: string;
   };
   postPreview: {
     detailsButton: string;
@@ -41,9 +55,23 @@ type StaticElementsData = {
 };
 
 const staticElementsDataRu: StaticElementsData = {
+  playlist: {
+    controls: {
+      audio: "аудио",
+      duration: "часов",
+      playButton: {
+        play: "слушать",
+        stop: "остановить"
+      },
+      mixButton: {
+        shuffle: "перемешать",
+        sort: "сортировать"
+      }
+    },
+  },
   audioPreview: {
     shareButton: "поделиться",
-    succesMessage: "ccылка скопирована"
+    succesMessage: "ccылка скопирована",
   },
   postPreview: {
     detailsButton: "читать дальше",
@@ -83,10 +111,23 @@ const staticElementsDataRu: StaticElementsData = {
 };
 
 const staticElementsDataEn: StaticElementsData = {
+  playlist: {
+    controls: {
+      audio: "audios",
+      duration: "hours",
+      playButton: {
+        play: 'listen',
+        stop: "pause"
+      },
+      mixButton: {
+        shuffle: "shuffle",
+        sort: "sort"
+      }
+    },
+  },
   audioPreview: {
     shareButton: "share",
-    succesMessage: "link copied"
-
+    succesMessage: "link copied",
   },
   postPreview: {
     detailsButton: "read more",
