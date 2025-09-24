@@ -46,17 +46,17 @@ export default function PlaylistControls({
   const isLoading = useAppSelector(selectAudioIsLoading);
   const isPlaying = useAppSelector(selectAudioIsPlaying);
   const playingFlow = useAppSelector(selectAudioFlow);
-  const [isFlowDirect, setIsFlowDirect] = useState(true)
+  const [isFlowDirect, setIsFlowDirect] = useState(true);
 
-   useEffect(() => {
-    setIsFlowDirect(playingFlow === 'direct')
-  }, [playingFlow])
-  
+  useEffect(() => {
+    setIsFlowDirect(playingFlow === "direct");
+  }, [playingFlow]);
+
   const texts = useLocalizedStaticData();
 
   return (
     <section>
-      <div className="container">
+      <div className="container pb-[21px]">
         <PlaylistMainScreen
           image={audioCategory?.Image}
           title={audioCategory?.Name}

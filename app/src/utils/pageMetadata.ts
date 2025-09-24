@@ -35,8 +35,6 @@ export const getPageMetadata = async ({ params }: MetadataPropsType) => {
       apolloClient
     );
 
-    console.log(documentId)
-
     if (documentId) {
       const { page: data } = await getSeoDataById(
         documentId,

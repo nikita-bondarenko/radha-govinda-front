@@ -1,0 +1,48 @@
+
+.share {
+  @apply w-[20px] h-[20px]
+}
+
+.options {
+
+  @apply relative
+
+}
+
+.options__open-button {
+  @apply w-[18px] h-[17px] 
+}
+
+.options__share-button {
+  @apply absolute right-[-21px] bottom-[100%] h-[36px] flex items-center px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] opacity-0 pointer-events-none
+} s
+
+
+.options__share-button.open {
+  @apply opacity-100 pointer-events-auto 
+}
+
+.options__share-button.success {
+  @apply opacity-100 pointer-events-none
+}
+
+.options__share-icon {
+  @apply w-[20px] h-[20px]
+}
+
+.options__action-description, .options__success-message {
+@apply  items-center gap-[16px] hidden
+}
+
+.options__action-description.open, .options__success-message.open {
+  @apply  flex
+  }
+
+  .options__text {
+    @apply whitespace-nowrap
+  }
+
+
+.duration-box {
+  @apply sm:w-[35px] sm:flex sm:justify-center
+}

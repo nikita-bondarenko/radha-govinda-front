@@ -39,26 +39,21 @@ export default function PlaylistBody({
     )
   );
 
-  const [sortedAudios, setSortedAudios] = useState(audios);
+  const [audiosPositionList, setAudiosPositionList] = useState(
+    audios.map((audio) => audio?.documentId || '')
+  );
 
   const dispatch = useAppDispatch();
   const shuffle = () => {
     dispatch(setFlow("random"));
-
     const newAudioList = shuffleAudioList(audios);
-
-    setSortedAudios(newAudioList);
+    setAudiosPositionList(newAudioList);
   };
 
   const sort = () => {
     dispatch(setFlow("direct"));
-
-    setSortedAudios(audios);
+    setAudiosPositionList(audios.map((audio) => audio?.documentId || ''));
   };
-
-  useEffect(() => {
-    console.log(sortedAudios.map((audio) => audio?.Name));
-  }, [sortedAudios]);
 
   const play = () => {};
 
@@ -75,7 +70,7 @@ export default function PlaylistBody({
         pause={pause}
         play={play}
       ></PlaylistControls>
-      <PlaylistAudioList audios={sortedAudios}></PlaylistAudioList>
+      <PlaylistAudioList audiosPositionList={audiosPositionList} audios={audios}></PlaylistAudioList>
     </>
   );
 }

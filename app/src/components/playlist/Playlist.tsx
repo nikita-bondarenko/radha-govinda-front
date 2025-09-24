@@ -41,7 +41,7 @@ async function Playlist(props: PlaylistProps) {
 
   return (
     <>
-      <main className="main max-w-[600px] mx-auto">
+      <main className="main">
         <PlaylistHeader
           menu={data?.menu}
           locale={props.locale}
