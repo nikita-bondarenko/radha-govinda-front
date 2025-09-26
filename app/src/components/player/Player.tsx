@@ -33,18 +33,7 @@ type Position = {
 
 export default function Player() {
   const audio = useAppSelector(selectAudio);
-  const isPlaying = useAppSelector(selectAudioIsPlaying);
   const isMainPlayerVisible = useAppSelector(selectIsMainPlayerVisible);
-  
-  // Отладочные логи
-  useEffect(() => {
-     // console.log('Player visibility:', {
-    //   audio: !!audio,
-    //   isMainPlayerVisible,
-    //   audioName: audio?.Name,
-    //   isPlaying: audio ? isPlaying : null
-    // });
-  }, [audio, isMainPlayerVisible, isPlaying]);
 
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
   const dispatch = useAppDispatch();

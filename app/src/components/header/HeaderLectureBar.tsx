@@ -80,15 +80,8 @@ export default memo(function HeaderLectureBar({
     };
   }, [dispatch]);
 
-  // Обновляем состояние видимости в Redux store (только на клиенте)
   useEffect(() => {
     if (!isClient) return;
-
-    // console.log('HeaderLectureBar inView:', {
-    //   inView,
-    //   isMiniPlayerVisible,
-    //   hasAudio: !!audio
-    // });
 
     dispatch(setIsMiniPlayerVisible(inView));
   }, [inView, dispatch, isClient, audio]);
@@ -102,7 +95,7 @@ export default memo(function HeaderLectureBar({
       dispatch(setIsPlaying(false));
       audioElement.pause();
     } else {
-      audioElement.play({ audio, volume }).then(() => {
+      audioElement.play({ audio }).then(() => {
         dispatch(setIsPlaying(true));
       });
     }

@@ -15,7 +15,7 @@
 
 .options__share-button {
   @apply absolute right-[-21px] bottom-[100%] h-[36px] flex items-center px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] opacity-0 pointer-events-none
-} s
+} 
 
 
 .options__share-button.open {

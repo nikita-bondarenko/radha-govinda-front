@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Audiorecord } from "@/gql/generated/graphql";
 import { Maybe } from "graphql/jsutils/Maybe";
 import Link from "next/link";
@@ -7,9 +7,10 @@ import AudioPreviewItem from "../../ui/audioItem/AudioItem";
 import { localizeHref } from "@/utils/localizeHref";
 import styles from "./AudioPreview.module.css";
 import PreviewSection from "@/components/ui/previewSection/PreviewSection";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { setAudio, setPlaylist } from "@/lib/store/audioSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { selectAudioFlow, setAudio, setPlaylist, setPlaylistAudioPositions } from "@/lib/store/audioSlice";
 import { Image } from "@/components/utils/Picture";
+import { shuffleAudioList } from "@/utils/shuffleAudioList";
 
 export type PreviewSectionProps = {
   title: Maybe<string>;
@@ -29,10 +30,9 @@ export type Audio = {
     __typename?: "AudioCategory";
     Name: string;
     documentId: string;
-    Image?: Image
+    Image?: Image;
   } | null;
   Audio: { __typename?: "UploadFile"; url: string; size: number };
-  
 } | null;
 
 export type AudioPreviewProps = {
@@ -45,14 +45,20 @@ export default memo(function AudioPreview({
   audiorecords,
 }: AudioPreviewProps) {
   const dispatch = useAppDispatch();
-
-  // Отладочная информация
-   // console.log('AudioPreview: audiorecords =', audiorecords);
-   // console.log('AudioPreview: first audio locale =', audiorecords?.[0]?.locale);
+  const flow = useAppSelector(selectAudioFlow);
 
   const handleControlButtonClick = () => {
-    dispatch(setPlaylist(audiorecords))
-  }
+    dispatch(setPlaylist(audiorecords));
+    let playlistAudioPositions = [];
+    if (flow === "direct") {
+      playlistAudioPositions = audiorecords.map(
+        (audio) => audio?.documentId || ""
+      );
+    } else {
+      playlistAudioPositions = shuffleAudioList(audiorecords);
+    }
+    dispatch(setPlaylistAudioPositions(playlistAudioPositions));
+  };
 
   return (
     <PreviewSection
@@ -64,8 +70,8 @@ export default memo(function AudioPreview({
       <div className={styles.body}>
         {audiorecords?.map((audio, index) => (
           <AudioPreviewItem
-          handleControlButtonClick={handleControlButtonClick}
-          isPreviewSection
+            handleControlButtonClick={handleControlButtonClick}
+            isPreviewSection
             key={index}
             audio={audio}
           ></AudioPreviewItem>

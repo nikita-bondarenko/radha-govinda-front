@@ -128,7 +128,7 @@
 }
 
 .duration {
-    @apply flex flex-col gap-[6px] md:gap-[2px] sm:gap-[7px] w-[360px] md:w-[289px] sm:w-full
+    @apply flex flex-col gap-[6px] md:gap-[6px] sm:gap-[7px] w-[360px] md:w-[289px] sm:w-full
 }
 
 .duration__input {

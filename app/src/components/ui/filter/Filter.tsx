@@ -27,34 +27,41 @@ const Filter = <T,>({
   initialCategoryId,
 }: Props<T>) => {
   const [searchInputValue, setSearchInputValue] = useState<string>();
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(initialCategoryId || undefined);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<
+    string | undefined
+  >(initialCategoryId || undefined);
   const [filteredItemsAmount, setFilteredItemsAmount] = useState<number>(0);
-  
-  // Обновляем selectedCategoryId при изменении initialCategoryId
+
   useEffect(() => {
-     // console.log('Filter: initialCategoryId changed to:', initialCategoryId);
     if (initialCategoryId) {
       setSelectedCategoryId(initialCategoryId);
-       // console.log('Filter: setSelectedCategoryId to:', initialCategoryId);
     }
   }, [initialCategoryId]);
-  
+
+ useEffect(() => {
+  const url = new URL(window.location.href);
+
+  if (selectedCategoryId) {
+    url.searchParams.set('category', selectedCategoryId);
+  } else {
+    url.searchParams.delete('category');
+  }
+  window.history.pushState({}, '', url.toString());
+}, [selectedCategoryId]);
+
   useEffect(() => {
-     // console.log('Filter: filtering with selectedCategoryId:', selectedCategoryId, 'searchInputValue:', searchInputValue);
     let filteredItems: T[] = items;
 
     if (selectedCategoryId) {
       filteredItems = filteredItems.filter((item: T) =>
         filterConditionByCategoryId(item, selectedCategoryId)
       );
-       // console.log('Filter: after category filter, items count:', filteredItems.length);
     }
 
     if (!!searchInputValue && searchInputValue.trim().length > 0) {
       filteredItems = filteredItems.filter((item) =>
         filterConditionBySearchInput(item, searchInputValue)
       );
-       // console.log('Filter: after search filter, items count:', filteredItems.length);
     }
 
     handleFilteredItemsSelection(filteredItems);
@@ -93,7 +100,9 @@ const Filter = <T,>({
       </div>
 
       {filteredItemsAmount === 0 && (
-        <div className={`text-center py-10 section-heading text-grey-middle mt-[50px]`}>
+        <div
+          className={`text-center py-10 section-heading text-grey-middle mt-[50px]`}
+        >
           <p>{localizedData?.section.catalog.emptyMessage}</p>
         </div>
       )}

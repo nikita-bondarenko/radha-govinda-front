@@ -5,7 +5,6 @@ import {
   setIsPlaying,
   setIsLoading,
   setAudio,
-  setBufferPosition,
   setSelectedCategoryId,
 } from "@/lib/store/audioSlice";
 import { store } from "@/lib/store/store";
@@ -66,14 +65,10 @@ export class AudioElement {
       });
 
       audioElement.addEventListener("ended", () => {
-        // console.log('Audio ended');
-        // Проверяем состояние зацикливания
         const currentState = storeInstance?.getState();
         const isLooping = currentState?.audio?.isLooping;
 
         if (isLooping && audioElement) {
-          // Если зацикливание включено, перезапускаем текущий трек
-          // console.log('Looping enabled, restarting current track');
           audioElement.currentTime = 0;
           audioElement.play().catch((error) => {
             console.error("Error restarting audio:", error);
@@ -86,11 +81,9 @@ export class AudioElement {
 
       audioElement.addEventListener("error", (e) => {
         console.error("Audio error:", e);
-        // Если произошла ошибка загрузки, сбрасываем состояние воспроизведения
         if (storeInstance) {
           storeInstance.dispatch(setIsPlaying(false));
           storeInstance.dispatch(setIsLoading(false));
-          // console.log('Audio loading failed, setting isPlaying to false');
         }
       });
 
@@ -101,16 +94,11 @@ export class AudioElement {
     this._element = audioElement;
   }
 
-  play({
-    audio,
-    volume,
-  }: {
-    audio?: AudioType | null;
-    volume: number | null | undefined;
-  }) {
+  play({ audio }: { audio?: AudioType | null }) {
     const dispatch = store.dispatch;
     dispatch(setIsLoading(true));
     const state = store.getState();
+    const volume = state.audio.volume;
     this.setCurrentTime(state.audio.passedTime);
 
     if (audio?.AudioCategory?.documentId)
@@ -175,15 +163,15 @@ export class AudioElement {
 
   playPrevAudio() {
     const { audio: state } = store.getState();
-    const index = findNextAudioIndex(
-      state.audio,
-      state.playlist,
-      state.flow,
-      "prev"
-    );
+    const index = findNextAudioIndex({
+      audio: state.audio,
+      playlist: state.playlist,
+      playlistAudioPositions: state.playlistAudioPositions,
+      direction: 'prev'
+    });
 
     const newAudio = state.playlist[index];
-    this.play({ audio: newAudio, volume: state.volume });
+    this.play({ audio: newAudio });
     this.dispatch(setAudio(newAudio));
     this.dispatch(setIsPlaying(true));
     this.dispatch(setProgress(0));
@@ -194,16 +182,17 @@ export class AudioElement {
   playNextAudio() {
     const { audio: state } = store.getState();
 
-    const index = findNextAudioIndex(
-      state.audio,
-      state.playlist,
-      state.flow,
-      "next"
-    );
+    const index = findNextAudioIndex({
+      audio: state.audio,
+      playlist: state.playlist,
+      playlistAudioPositions: state.playlistAudioPositions,
+      direction: 'next'
+    });
 
     const newAudio = state.playlist[index];
+    console.log(newAudio, state.playlist, state.playlistAudioPositions.map(id=> state.playlist.find(audio => audio?.documentId  === id)?.Name))
 
-    this.play({ audio: newAudio, volume: state.volume });
+    this.play({ audio: newAudio });
     this.dispatch(setAudio(newAudio));
     this.dispatch(setIsPlaying(true));
     this.dispatch(setProgress(0));

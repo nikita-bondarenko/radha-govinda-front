@@ -19,6 +19,7 @@ import { AudioElement } from "../../utils/audioModel";
 type Props = {};
 
 const PlayerProgressBar = (props: Props) => {
+  const [thumbTranslate, setThumbTranslate] = useState(0);
   const dispatch = useAppDispatch();
   const progress = useAppSelector(selectAudioProgress);
   const isPlaying = useAppSelector(selectAudioIsPlaying);
@@ -26,11 +27,6 @@ const PlayerProgressBar = (props: Props) => {
   const leftTime = useAppSelector(selectAudioLeftTime);
   const audio = useAppSelector(selectAudio);
   const progressBar = useRef<HTMLInputElement>(null);
-
-  // Отладка состояния
-  useEffect(() => {
-    // console.log('PlayerProgressBar state:', { progress, isPlaying, passedTime, leftTime });
-  }, [progress, isPlaying, passedTime, leftTime]);
 
   // Функция для форматирования времени
   const formatTime = (seconds: number): string => {
@@ -72,7 +68,6 @@ const PlayerProgressBar = (props: Props) => {
 
     if (isPlaying) {
       const audioElement = new AudioElement();
-      // console.log('Starting progress interval');
       interval = setInterval(() => {
         const currentTime = audioElement.getCurrentTime();
         const realDuration = audioElement.getDuration();
@@ -91,33 +86,18 @@ const PlayerProgressBar = (props: Props) => {
           }
         }
 
-        // console.log('Progress update:', {
-        //   currentTime,
-        //   duration,
-        //   realDuration,
-        //   usingFallbackDuration,
-        //   isPlaying,
-        //   audioDuration: audio?.Duration
-        // });
-
         if (duration > 0 && !isNaN(duration) && isFinite(duration)) {
           const progressPercent = (currentTime / duration) * 100;
           const passed = currentTime;
           const left = duration - currentTime;
 
-          // console.log('Dispatching progress:', { progressPercent, passed, left, usingFallbackDuration });
-
           dispatch(setProgress(progressPercent));
           dispatch(setPassedTime(passed));
 
-          // Обновляем leftTime только если используем реальную длительность
-          // При использовании fallback Duration не перезаписываем leftTime в Redux
           if (!usingFallbackDuration) {
             dispatch(setLeftTime(left));
           }
         } else {
-          // console.log('Invalid duration, skipping progress update:', duration);
-          // Все равно обновляем passedTime даже если duration недоступен
           dispatch(setPassedTime(currentTime));
         }
       }, 1000);
@@ -147,7 +127,6 @@ const PlayerProgressBar = (props: Props) => {
   }, [leftTime, dispatch]);
 
   const progressInputHandler: React.ChangeEventHandler = (e) => {
- 
     const audioElement = new AudioElement();
     const input = e.target as HTMLInputElement;
     const percent = getRangePercent(input);
@@ -179,6 +158,13 @@ const PlayerProgressBar = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (progressBar.current)
+      setThumbTranslate(
+        progressBar.current?.clientWidth * (progress / 100) - 2
+      );
+  }, [progress]);
+
   return (
     <div className={style.duration}>
       <input
@@ -187,7 +173,7 @@ const PlayerProgressBar = (props: Props) => {
         style={
           {
             "--percent": `${progress}%`,
-            "--thumb-translate-x": (progressBar.current?.clientWidth || 0) * (progress/100) - 2 + 'px',
+            "--thumb-translate-x": `${thumbTranslate}px`,
           } as React.CSSProperties
         }
         onChange={progressInputHandler}

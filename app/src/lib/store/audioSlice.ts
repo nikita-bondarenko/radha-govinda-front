@@ -9,36 +9,34 @@ export type AudioState = {
   isPlaying: boolean;
   volume: number;
   playlist: Audio[];
-  previosAudioBuffer: string[];
-  currentBufferPosition: number; // текущая позиция в буфере для навигации
   flow: "direct" | "random";
-  isLooping: boolean; // новое состояние для зацикливания
-  selectedCategoryId: string | null; // ID выбранной категории для плейлиста
+  isLooping: boolean;
+  selectedCategoryId: string | null;
   progress: number;
   leftTime: number;
   passedTime: number;
-  isMiniPlayerVisible: boolean; // новое состояние для видимости мини-плеера
-  isMobile: boolean; // состояние для определения мобильного устройства
-  isLoading: boolean
+  isMiniPlayerVisible: boolean;
+  isMobile: boolean;
+  isLoading: boolean;
+  playlistAudioPositions: string[];
 };
 
 const initialState: AudioState = {
   isHeaderButtonVisible: false,
   audio: null,
   playlist: [],
-  previosAudioBuffer: [],
-  currentBufferPosition: -1,
   flow: "direct",
-  isLooping: false, // по умолчанию зацикливание выключено
-  selectedCategoryId: null, // по умолчанию категория не выбрана
+  isLooping: false,
+  selectedCategoryId: null,
   isPlaying: false,
   isLoading: false,
   volume: 50,
   progress: 0,
   leftTime: 0,
   passedTime: 0,
-  isMiniPlayerVisible: false, // по умолчанию мини-плеер скрыт
-  isMobile: false, // по умолчанию не мобильное устройство
+  isMiniPlayerVisible: false,
+  isMobile: false,
+  playlistAudioPositions: [],
 };
 
 const audioSlice = createSlice({
@@ -51,7 +49,7 @@ const audioSlice = createSlice({
     setIsPlaying: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
     },
-     setIsLoading: (state, action: PayloadAction<boolean>) => {
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
     toggleIsPlaying: (state) => {
@@ -78,6 +76,9 @@ const audioSlice = createSlice({
     setPlaylist: (state, action: PayloadAction<Audio[]>) => {
       state.playlist = action.payload;
     },
+    setPlaylistAudioPositions: (state, action: PayloadAction<string[]>) => {
+      state.playlistAudioPositions = action.payload;
+    },
     setProgress: (state, action: PayloadAction<number>) => {
       state.progress = action.payload;
     },
@@ -87,81 +88,7 @@ const audioSlice = createSlice({
     setPassedTime: (state, action: PayloadAction<number>) => {
       state.passedTime = action.payload;
     },
-    // playNextAudio: (state) => {
-    //   const result = findNextAudioIndex(
-    //     state.audio,
-    //     state.playlist,
-    //     state.previosAudioBuffer,
-    //     state.flow,
-    //     "next",
-    //     state.currentBufferPosition
-    //   );
-    //   state.audio = state.playlist[result.index];
-    //   state.isPlaying = false;
-    //   state.progress = 0;
-    //   state.leftTime = 0;
-    //   state.passedTime = 0;
-      
-    //   // При переходе к следующему треку в random режиме
-    //   if (state.flow === "random") {
-    //     // Если мы двигались вперед по буферу, увеличиваем позицию
-    //     if (state.currentBufferPosition >= 0 && 
-    //         state.currentBufferPosition < state.previosAudioBuffer.length - 1) {
-    //       state.currentBufferPosition = state.currentBufferPosition + 1;
-    //     } else {
-    //       // Если выбрали новый случайный трек, позиция остается на конце буфера
-    //       state.currentBufferPosition = state.previosAudioBuffer.length - 1;
-    //     }
-    //   }
-    // },
-
-    // playPrevAudio: (state) => {
-    
-      
-    //   const result = findNextAudioIndex(
-    //     state.audio,
-    //     state.playlist,
-    //     state.flow,
-    //     "prev",
-    //   );
-      
-    //   state.audio = state.playlist[result.index];
-    //   state.isPlaying = true;
-    //   state.progress = 0;
-    //   state.leftTime = 0;
-    //   state.passedTime = 0;
-      
-
-    //   if (state.flow === "random" && 
-    //       state.currentBufferPosition > 0 && 
-    //       !result.usedFallback) { // Используем флаг fallback вместо проверки индекса
-    //     const oldPosition = state.currentBufferPosition;
-    //     state.currentBufferPosition = state.currentBufferPosition - 1;
-
-    //   } else if (state.flow === "random" && (state.currentBufferPosition === 0 || result.usedFallback)) {
-    //      // console.log('At buffer start or used fallback, not updating position');
-    //   }
-    // },
-    // addItemInPreviosAudioBuffer: (state, action: PayloadAction<string>) => {
-    //   // Добавляем новый элемент
-    //   const newBuffer = [...(state.previosAudioBuffer || []), action.payload];
-      
-    //   // Ограничиваем буфер до 15 элементов
-    //   if (newBuffer.length > 15) {
-    //     state.previosAudioBuffer = newBuffer.slice(-15);
-    //   } else {
-    //     state.previosAudioBuffer = newBuffer;
-    //   }
-      
-    //   // Устанавливаем позицию на последний элемент
-    //   state.currentBufferPosition = state.previosAudioBuffer.length - 1;
-    // },
-    
-    setBufferPosition: (state, action: PayloadAction<number>) => {
-      state.currentBufferPosition = action.payload;
-    },
     setIsMiniPlayerVisible: (state, action: PayloadAction<boolean>) => {
-       // console.log('Redux: setIsMiniPlayerVisible', action.payload);
       state.isMiniPlayerVisible = action.payload;
     },
     setIsHeaderButtonVisible: (state, action: PayloadAction<boolean>) => {
@@ -183,53 +110,49 @@ export const {
   setLeftTime,
   setPassedTime,
   setPlaylist,
-
-  setBufferPosition,
   setIsLooping,
   toggleIsLooping,
   setSelectedCategoryId,
   setIsMiniPlayerVisible,
   setIsHeaderButtonVisible,
   setIsMobile,
-  setIsLoading
+  setIsLoading,
+  setPlaylistAudioPositions,
 } = audioSlice.actions;
+
 export const selectAudio = (state: RootState) => state.audio.audio;
 export const selectAudioIsPlaying = (state: RootState) => state.audio.isPlaying;
 export const selectAudioIsLoading = (state: RootState) => state.audio.isLoading;
-
 export const selectAudioFlow = (state: RootState) => state.audio.flow;
 export const selectAudioIsLooping = (state: RootState) => state.audio.isLooping;
-export const selectAudioSelectedCategoryId = (state: RootState) => state.audio.selectedCategoryId;
+export const selectAudioSelectedCategoryId = (state: RootState) =>
+  state.audio.selectedCategoryId;
 export const selectAudioVolume = (state: RootState) => state.audio.volume;
 export const selectAudioProgress = (state: RootState) => state.audio.progress;
-export const selectAudioPassedTime = (state: RootState) => state.audio.passedTime;
+export const selectAudioPassedTime = (state: RootState) =>
+  state.audio.passedTime;
 export const selectAudioLeftTime = (state: RootState) => state.audio.leftTime;
 export const selectAudioId = (state: RootState) =>
   state.audio.audio?.documentId;
-export const selectCurrentBufferPosition = (state: RootState) => state.audio.currentBufferPosition;
-export const selectPreviosAudioBuffer = (state: RootState) => state.audio.previosAudioBuffer;
-export const selectIsMiniPlayerVisible = (state: RootState) => state.audio.isMiniPlayerVisible;
-
-// Селектор для определения мобильного устройства
+export const selectIsMiniPlayerVisible = (state: RootState) =>
+  state.audio.isMiniPlayerVisible;
 export const selectIsMobile = (state: RootState) => state.audio.isMobile;
-
-// Селектор для определения видимости большого плеера
 export const selectIsMainPlayerVisible = (state: RootState) => {
-  const { audio, isMiniPlayerVisible, isHeaderButtonVisible, isMobile } = state.audio;
+  const { audio, isMiniPlayerVisible, isHeaderButtonVisible, isMobile } =
+    state.audio;
 
-  // На мобильных устройствах мини-плеер не влияет на видимость большого плеера
   if (isMobile) {
     const result = !!audio;
-     // console.log('Mobile device, showing main player:', result);
-    return result; // Показываем большой плеер, если есть аудиозапись
+    return result;
   }
-  
-  // На десктопе используем обычную логику
-  const shouldHidePlayer = !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
+
+  const shouldHidePlayer =
+    !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
   const forceShowPlayer = audio && !isHeaderButtonVisible;
   const result = !(shouldHidePlayer && !forceShowPlayer);
-   // console.log('Desktop device, main player visibility:', result);
   return result;
 };
+export const selectPlaylistAudioPositions = (state: RootState) => state.audio.playlistAudioPositions
+export const selectPlaylist = (state: RootState) => state.audio.playlist
 
 export default audioSlice.reducer;

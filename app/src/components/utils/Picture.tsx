@@ -15,8 +15,7 @@ type Formats = {
   };
 };
 
-export type Image =
-  | {
+export type Image = {
       __typename?: string;
       url?: string;
       formats?: Formats | null;

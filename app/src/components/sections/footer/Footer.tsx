@@ -3,7 +3,6 @@
 import React from "react";
 import FooterForm, { SupportForm } from "./FooterForm";
 import Nav, { Menu } from "@/components/ui/nav/Nav";
-import { Enum_Componentinputpolevvoda_Inputtype } from "@/gql/generated/graphql";
 import SocialMediaLink, { SocialMediaList } from "./SocialMediaLink";
 import DocumentElement from "./FooterDocument";
 import clsx from "clsx";
@@ -40,7 +39,7 @@ export default function Footer({ menu, footer }: FooterProps) {
     <footer className={clsx(
       "bg-purple-main rounded-t-[20px] py-[40px] md:py-[20px] md:rounded-t-[10px]",
       {
-        "pb-[160px] md:pb-[140px] sm:pb-[200px]": isMainPlayerVisible // Отступ снизу когда большой плеер видим
+        // "pb-[160px] md:pb-[140px] sm:pb-[200px]": isMainPlayerVisible
       }
     )}>
       <div className="container">

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import style from "./Player.module.css";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
@@ -17,6 +17,8 @@ import {
   selectAudio,
   selectAudioIsLoading,
   selectAudioProgress,
+  selectPlaylist,
+  setPlaylistAudioPositions,
 } from "@/lib/store/audioSlice";
 import { getRangePercent } from "@/utils/getRangePersent";
 import PlayerCircleButton from "./PlayerCircleButton";
@@ -30,35 +32,32 @@ import useLocalizedHref from "@/hooks/useLocalizedHref";
 import { useRouter } from "next/navigation";
 import { store } from "@/lib/store/store";
 import { AudioElement } from "../../utils/audioModel";
+import { shuffleAudioList } from "@/utils/shuffleAudioList";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 type Props = {};
 
 const PlayerControls = (props: Props) => {
   const isPlaying = useAppSelector(selectAudioIsPlaying);
-
   const isLoading = useAppSelector(selectAudioIsLoading);
   const audio = useAppSelector(selectAudio);
+  const playlist = useAppSelector(selectPlaylist);
   const volume = useAppSelector(selectAudioVolume);
   const flow = useAppSelector(selectAudioFlow);
   const isLooping = useAppSelector(selectAudioIsLooping);
-  const selectedCategoryId = useAppSelector(selectAudioSelectedCategoryId);
-  const currentAudio = useAppSelector((state) => state.audio.audio);
   const currentLocale = useAppSelector((state) => state.locale.locale);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { innerWidth } = useWindowSize();
 
-  // Используем локаль текущей аудиозаписи, если она есть, иначе используем локаль страницы
-  const audioLocale = currentAudio?.locale || currentLocale;
 
-  // Генерируем ссылку на основе локали аудиозаписи
-  const audioCatalogHref =
-    audioLocale === "ru"
-      ? `/lectures-and-kirtans${
-          selectedCategoryId ? `?category=${selectedCategoryId}` : ""
-        }`
-      : `/en/lectures-and-kirtans${
-          selectedCategoryId ? `?category=${selectedCategoryId}` : ""
-        }`;
+  const audioCatalogHref = useMemo(() => {
+      const audioLocale = audio?.locale || currentLocale;
+
+    return `${audioLocale === "ru" ? "" : "/en"}/${
+      innerWidth > 1200 ? "lectures-and-kirtans?category=" : "playlist/"
+    }${audio?.AudioCategory?.documentId}`;
+  }, [innerWidth, audio, currentLocale]);
 
   const handlePrevButtonClick = () => {
     const audioElement = new AudioElement();
@@ -71,6 +70,14 @@ const PlayerControls = (props: Props) => {
   const handleShuffleButtonClick = () => {
     const newFlow = flow === "random" ? "direct" : "random";
     dispatch(setFlow(newFlow));
+
+    let playlistAudioPositions = [];
+    if (newFlow === "direct") {
+      playlistAudioPositions = playlist.map((audio) => audio?.documentId || "");
+    } else {
+      playlistAudioPositions = shuffleAudioList(playlist);
+    }
+    dispatch(setPlaylistAudioPositions(playlistAudioPositions));
   };
   const handleCircleButtonClick = () => {
     dispatch(toggleIsLooping());
@@ -88,7 +95,7 @@ const PlayerControls = (props: Props) => {
       dispatch(setIsPlaying(false));
       audioElement.pause();
     } else {
-      audioElement.play({ audio, volume }).then(() => {
+      audioElement.play({ audio }).then(() => {
         dispatch(setIsPlaying(true));
       });
     }

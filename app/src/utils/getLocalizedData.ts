@@ -2,10 +2,10 @@ type StaticElementsData = {
   playlist: {
     controls: {
       audio: string;
-      duration: string;
+      duration: (duration: number) => string;
       playButton: {
-        play: string
-        stop: string
+        play: string;
+        stop: string;
       };
       mixButton: {
         shuffle: string;
@@ -58,15 +58,19 @@ const staticElementsDataRu: StaticElementsData = {
   playlist: {
     controls: {
       audio: "аудио",
-      duration: "часов",
+      duration: (duration: number) => {
+        if (duration === 1) return "час";
+        else if (duration > 1 && duration < 5) return "часа";
+        else return "часов";
+      },
       playButton: {
         play: "слушать",
-        stop: "остановить"
+        stop: "остановить",
       },
       mixButton: {
         shuffle: "перемешать",
-        sort: "сортировать"
-      }
+        sort: "сортировать",
+      },
     },
   },
   audioPreview: {
@@ -114,15 +118,15 @@ const staticElementsDataEn: StaticElementsData = {
   playlist: {
     controls: {
       audio: "audios",
-      duration: "hours",
+      duration: (duration: number) => duration === 1 ? "hour" : "hours",
       playButton: {
-        play: 'listen',
-        stop: "pause"
+        play: "listen",
+        stop: "pause",
       },
       mixButton: {
         shuffle: "shuffle",
-        sort: "sort"
-      }
+        sort: "sort",
+      },
     },
   },
   audioPreview: {

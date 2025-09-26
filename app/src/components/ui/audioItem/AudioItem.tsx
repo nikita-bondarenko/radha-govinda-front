@@ -1,6 +1,5 @@
 "use client";
 
-import { Audiorecord } from "@/gql/generated/graphql";
 import { Maybe } from "graphql/jsutils/Maybe";
 import React, { memo, useEffect, useMemo, useState } from "react";
 import { Audio } from "../../sections/audio-preview/AudioPreview";
@@ -8,29 +7,24 @@ import styles from "./AudioItem.module.css";
 import Background from "@/components/utils/Background";
 import PauseIcon from "@/components/svg/PauseIcon";
 import PlayIcon from "@/components/svg/PlayIcon";
-import DotsIcon from "@/components/svg/DotsIcon";
 import clsx from "clsx";
 import { parseDate } from "@/utils/parseDate";
-import ShareIcon from "@/components/svg/ShareIcon";
-import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
-import Sign from "@/components/svg/Sign";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
   selectAudioId,
   selectAudioIsLoading,
   selectAudioIsPlaying,
-  selectAudioSelectedCategoryId,
-  selectAudioVolume,
   setAudio,
   setIsPlaying,
 } from "@/lib/store/audioSlice";
-import { store } from "@/lib/store/store";
 import { AudioElement } from "@/utils/audioModel";
+import { OptionsButton } from "@/shared/ui";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
   className?: string;
   isPreviewSection?: boolean;
   handleControlButtonClick: () => void;
+  
 };
 
 export default memo(function AudioPreviewItem({
@@ -42,7 +36,6 @@ export default memo(function AudioPreviewItem({
   const dispatch = useAppDispatch();
   const isPlaying = useAppSelector(selectAudioIsPlaying);
   const isLoading = useAppSelector(selectAudioIsLoading);
-  const volume = useAppSelector(selectAudioVolume);
   const selectedAudioId = useAppSelector(selectAudioId);
 
   const isThisAudioPlaying = useMemo(() => {
@@ -56,102 +49,12 @@ export default memo(function AudioPreviewItem({
       audioElement.pause();
     } else  {
       dispatch(setAudio(audio || null));
-      audioElement.play({ audio, volume }).then(() => {
+      audioElement.play({ audio }).then(() => {
         dispatch(setIsPlaying(true));
       });
     }
   };
 
-  const [areOptionsOpen, setAreOptionsOpen] = useState(false);
-
-  const optionsClickHandler: React.MouseEventHandler = (e) => {
-    e.stopPropagation();
-    setAreOptionsOpen((prev) => !prev);
-  };
-
-  const [successMessageVisible, setSeccessMessageVisible] = useState(false);
-
-  const locale = useAppSelector((state) => state.locale.locale);
-
-  const shareButtonClickHandler: React.MouseEventHandler = (e) => {
-    e.stopPropagation();
-    setSeccessMessageVisible(true);
-    const link =
-      location.protocol +
-      "//" +
-      location.host +
-      (locale === "ru" ? "" : "/en") +
-      `/lectures-and-kirtans?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`;
-
-    // Use Clipboard API if available, otherwise fallback to async copy using execCommand (for better macOS support)
-    const copyToClipboard = async (text: string) => {
-      if (
-        navigator &&
-        navigator.clipboard &&
-        typeof navigator.clipboard.writeText === "function"
-      ) {
-        try {
-          await navigator.clipboard.writeText(text);
-        } catch (err) {
-          // fallback if clipboard API fails (e.g. macOS Safari)
-          const textarea = document.createElement("textarea");
-          textarea.value = text;
-          textarea.setAttribute("readonly", "");
-          textarea.style.position = "absolute";
-          textarea.style.left = "-9999px";
-          document.body.appendChild(textarea);
-          textarea.select();
-          try {
-            document.execCommand("copy");
-          } catch (e) {
-            // ignore
-          }
-          document.body.removeChild(textarea);
-        }
-      } else {
-        // fallback for very old browsers
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.setAttribute("readonly", "");
-        textarea.style.position = "absolute";
-        textarea.style.left = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-          document.execCommand("copy");
-        } catch (e) {
-          // ignore
-        }
-        document.body.removeChild(textarea);
-      }
-    };
-
-    copyToClipboard(link);
-    setTimeout(() => {
-      setSeccessMessageVisible(false);
-      setAreOptionsOpen(false);
-    }, 1000);
-  };
-
-  useEffect(() => {
-    const documentClickHandler = (e: Event) => {
-      e.preventDefault();
-      setAreOptionsOpen(false);
-    };
-
-    if (areOptionsOpen) {
-      document.addEventListener("click", documentClickHandler);
-      return () => {
-        document.removeEventListener("click", documentClickHandler);
-      };
-    }
-  }, [areOptionsOpen]);
-
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
-
-  const localizedData = useLocalizedStaticData();
   return (
     <div
       id={audio?.documentId}
@@ -196,48 +99,7 @@ export default memo(function AudioPreviewItem({
             <span className={clsx(styles["info__duration"], "small-text grey")}>
               {audio?.Duration}
             </span>
-            <div className={styles.options}>
-              <button
-                onClick={shareButtonClickHandler}
-                className={clsx(
-                  styles["options__share-button"],
-                  areOptionsOpen && styles.open,
-                  successMessageVisible && styles.success
-                )}
-              >
-                <div
-                  className={clsx(
-                    styles["options__action-description"],
-                    !successMessageVisible && styles.open
-                  )}
-                >
-                  <ShareIcon
-                    fill={"var(--black)"}
-                    className={styles["options__share-icon"]}
-                  ></ShareIcon>
-                  <span className={clsx(styles.options__text, "small-text")}>
-                    {localizedData?.audioPreview.shareButton}
-                  </span>
-                </div>
-                <div
-                  className={clsx(
-                    styles["options__success-message"],
-                    successMessageVisible && styles.open
-                  )}
-                >
-                  <Sign className={"w-[16px] h-[16px]"}></Sign>
-                  <span className={clsx(styles.options__text, "small-text")}>
-                    {localizedData?.audioPreview.succesMessage}
-                  </span>
-                </div>
-              </button>
-              <button
-                onClick={optionsClickHandler}
-                className={styles["options__open-button"]}
-              >
-                <DotsIcon fill="var(--grey-2)"></DotsIcon>
-              </button>
-            </div>
+            <OptionsButton audio={audio}></OptionsButton>
           </div>
         </div>
         <div className={styles.info__bottom}>

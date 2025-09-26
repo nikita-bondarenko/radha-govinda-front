@@ -56,12 +56,12 @@ export default function PlaylistControls({
 
   return (
     <section>
-      <div className="container pb-[21px]">
+      <div className="container pb-[21px] [&]:max-w-[500px]">
         <PlaylistMainScreen
           image={audioCategory?.Image}
           title={audioCategory?.Name}
           listLength={`${audioListlength} ${texts?.playlist.controls.audio}`}
-          listDuration={`${audioListTotalHours} ${texts?.playlist.controls.duration}`}
+          listDuration={`${audioListTotalHours} ${texts?.playlist.controls.duration(audioListTotalHours)}`}
         ></PlaylistMainScreen>
         <div className="pt-[15px] flex flex-col gap-[13px] w-full">
           <div className="relative w-full">
@@ -75,7 +75,7 @@ export default function PlaylistControls({
               onClick={play}
               text={texts?.playlist.controls.playButton.play}
             ></PlaylistPlayButton>
-          </div>
+        </div>
           <div className="relative w-full">
             <PlaylistSortButton
               onClick={sort}
