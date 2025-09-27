@@ -1,6 +1,6 @@
 import { Audio } from "@/components/sections/audio-preview/AudioPreview";
 
-export const shuffleAudioList = (audios: Audio[]): string[] => {
+export const shuffleAudioList = (audios: Audio[], ): string[] => {
   return audios
     .map((audio) => ({
       id: audio?.documentId || '',

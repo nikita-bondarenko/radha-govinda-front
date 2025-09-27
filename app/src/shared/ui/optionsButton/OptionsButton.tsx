@@ -41,9 +41,9 @@ export default function OptionsButton({ audio, className }: Props) {
       "//" +
       location.host +
       (locale === "ru" ? "" : "/en") +
-      `/playlist/${audio?.AudioCategory?.documentId}?audio=${audio?.documentId}`;  
+      `/playlist/router?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`;  
 
-    copyToClipboard(linkOld);
+    copyToClipboard(link);
     setTimeout(() => {
       setSuccessMessageVisible(false);
       setAreOptionsOpen(false);

@@ -13,12 +13,15 @@ import {
   setAudio,
   setFlow,
   setIsPlaying,
+  setPassedTime,
   setPlaylist,
   setPlaylistAudioPositions,
+  setProgress,
 } from "@/lib/store/audioSlice";
 import { shuffleAudioList } from "@/utils/shuffleAudioList";
 import { AudioElement } from "@/utils/audioModel";
 import { RootState } from "@/lib/store/types";
+import { useScrollToAudio } from "@/shared/hooks/useScrollToAudio";
 
 type PlaylistBodyProps = {
   audios: Audio[];
@@ -52,7 +55,6 @@ export default function PlaylistBody({
   const [audiosPositionList, setAudiosPositionList] = useState(
     audios.map((audio) => audio?.documentId || "")
   );
-
   const dispatch = useAppDispatch();
   const audio = useAppSelector(selectAudio);
   const flow = useAppSelector(selectAudioFlow);
@@ -113,6 +115,34 @@ export default function PlaylistBody({
     }
     setAudiosPositionList(playlistAudioPositions);
   }, [flow]);
+
+  const { highlightedAudioId } = useScrollToAudio();
+  
+  useEffect(() => {
+    if (highlightedAudioId) {
+      const currentAudio = audios.find(
+        (audio) => audio?.documentId === highlightedAudioId
+      );
+
+      if (currentAudio) {
+        const audioElement = new AudioElement();
+
+        dispatch(setPlaylist(audios));
+        let playlistAudioPositions = [];
+        if (flow === "direct") {
+          playlistAudioPositions = audios.map(
+            (audio) => audio?.documentId || ""
+          );
+        } else {
+          playlistAudioPositions = shuffleAudioList(audios);
+        }
+        dispatch(setPlaylistAudioPositions(playlistAudioPositions));
+        dispatch(setAudio(currentAudio));
+        dispatch(setPassedTime(0));
+        dispatch(setProgress(0));
+      }
+    }
+  }, [highlightedAudioId]);
 
   return (
     <>
