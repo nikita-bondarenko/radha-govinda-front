@@ -141,8 +141,8 @@
 
   .hero-with-image__background {
     --translate-x: 229px;
-    width: calc(100%+var(--translate-x));
-    right: -(var(--translate-x));
+    width: calc(100% + 229px);
+    right: -229px;
   }
 
   .hero-with-image__body {
