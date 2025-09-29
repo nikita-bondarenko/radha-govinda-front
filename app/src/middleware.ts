@@ -33,7 +33,7 @@ export function middleware(request: NextRequest) {
     (locale === "ru" ? "" : "/en") +
     `/playlist/${categoryFromUrl}?audio=${audioFromUrl}`;
 
-  if (isMobile) {
+  if (isMobile) {          
     return NextResponse.redirect(new URL(mobileLink, request.url));
   } else {
     return NextResponse.redirect(new URL(desktopLink, request.url));
