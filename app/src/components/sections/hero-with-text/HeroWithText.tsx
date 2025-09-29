@@ -35,10 +35,10 @@ type Props = {
 const HeroWithText = ({ menu, section, logo, locale, pageSlug }: Props) => {
   const pathname = usePathname();
 
-  const isRuVideosPage = pathname.includes("videos") && !pathname.includes('en')
-const isRuArticlesPage = pathname.includes("articles") && !pathname.includes('en')
-const isEnVideosPage = pathname.includes("videos") && pathname.includes('en')
-const isEnArticlesPage = pathname.includes("articles") && pathname.includes('en')
+  const isRuVideosPage = pathname?.includes("videos") && !pathname?.includes('en')
+const isRuArticlesPage = pathname?.includes("articles") && !pathname?.includes('en')
+const isEnVideosPage = pathname?.includes("videos") && pathname?.includes('en')
+const isEnArticlesPage = pathname?.includes("articles") && pathname?.includes('en')
 const isAnotherPage = !isRuVideosPage &&  !isEnArticlesPage && !isRuArticlesPage && !isEnArticlesPage
   return (
     <section className={styles["hero-with-text"]}>

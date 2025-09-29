@@ -23,7 +23,7 @@ export default function MobileMenuLangButton({ locale, clickHandler }: Props) {
             "underline pointer-events-none underline-offset-[5px]":
               locale === buttonData.locale,
           })}
-          href={buttonData.getHref(pathname)}
+          href={buttonData.getHref(pathname || '')}
         >
           {buttonData.label}
         </Link>
