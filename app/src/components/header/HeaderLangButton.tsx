@@ -19,6 +19,6 @@ const pathname = usePathname()
 const buttonData = langButtons.find(button => button.crossLocale === locale)
 
   return (
-    (buttonData && <Link className={clsx(styles['header__lang-button'], className)} href={buttonData.getHref(pathname)}>{buttonData.label}</Link>)
+    (buttonData && <Link className={clsx(styles['header__lang-button'], className)} href={buttonData.getHref(pathname || '')}>{buttonData.label}</Link>)
   )
 }
