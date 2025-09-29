@@ -7,30 +7,23 @@ export function middleware(request: NextRequest) {
   const isMobile = /mobile/i.test(userAgent);
   const categoryFromUrl = request.nextUrl.searchParams.get("category");
   const audioFromUrl = request.nextUrl.searchParams.get("audio");
+  const localeFromUrl = request.nextUrl.searchParams.get('locale')
 
   const protocol = request.nextUrl.protocol;
   const host = request.nextUrl.host;
-  let locale: string;
-
-  if (
-    request.nextUrl.pathname.split("/").length > 1 &&
-    request.nextUrl.pathname.split("/")[1] === "en"
-  )
-    locale = "en";
-  else locale = "ru";
 
   const desktopLink =
     protocol +
     "//" +
     host +
-    (locale === "ru" ? "" : "/en") +
+    (localeFromUrl === "ru" ? "" : "/en") +
     `/lectures-and-kirtans?category=${categoryFromUrl}&audio=${audioFromUrl}`;
 
   const mobileLink =
     protocol +
     "//" +
     host +
-    (locale === "ru" ? "" : "/en") +
+    (localeFromUrl === "ru" ? "" : "/en") +
     `/playlist/${categoryFromUrl}?audio=${audioFromUrl}`;
 
   if (isMobile) {          
@@ -42,5 +35,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/playlist/router", "/en/playlist/router"], // Matches /playlist/123, /playlist/abc, etc.
+  matcher: ["/playlist/router"], // Matches /playlist/123, /playlist/abc, etc.
 };

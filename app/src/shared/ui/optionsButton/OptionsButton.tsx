@@ -30,18 +30,11 @@ export default function OptionsButton({ audio, className }: Props) {
   const shareButtonClickHandler: React.MouseEventHandler = (e) => {
     e.stopPropagation();
     setSuccessMessageVisible(true);
-    const linkOld =
-      location.protocol +
-      "//" +
-      location.host +
-      (locale === "ru" ? "" : "/en") +
-      `/lectures-and-kirtans?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`;
+ 
 
       const link = location.protocol +
       "//" +
-      location.host +
-      (locale === "ru" ? "" : "/en") +
-      `/playlist/router?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}`;  
+      location.host + `/playlist/router?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}&locale=${locale}`;  
 
     copyToClipboard(link);
     setTimeout(() => {
