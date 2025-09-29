@@ -6,8 +6,6 @@ services:
  
     container_name: rg-frontend
     restart: always
-    extra_hosts:
-      - "admin.radhagovindadasa.com:172.18.0.2"
     networks:
       - traefik_net
 networks:

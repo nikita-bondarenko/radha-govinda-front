@@ -11,7 +11,6 @@ export function middleware(request: NextRequest) {
 
   const protocol = request.nextUrl.protocol;
   const host = request.nextUrl.host;
-
   const desktopLink =
     protocol +
     "//" +
