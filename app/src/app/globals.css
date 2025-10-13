@@ -286,7 +286,7 @@ input[type="range"].progress-bar.with-thumb::-ms-thumb {
 }
 
 .mobile-menu__body {
-  @apply relative z-20 h-full flex flex-col items-end justify-between gap-[60px] pt-[80] pb-[48px] px-[20px] sm:pt-[128px] sm:pb-[234px]
+  @apply relative z-20 h-full flex flex-col items-end justify-between gap-[60px] pt-[80px] pb-[48px] px-[20px] sm:pt-[128px] sm:pb-[234px]
 }
 .play-icon {
   @apply w-[28px] h-[28px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-0
