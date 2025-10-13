@@ -110,9 +110,6 @@ const PlayerControls = (props: Props) => {
     setForceRender((prev) => prev + 1);
   }, [flow, isLooping]);
 
-  useEffect(() => {
-    dispatch(setIsPlaying(false));
-  }, []);
 
   return (
     <div className={clsx(style.controls)}>

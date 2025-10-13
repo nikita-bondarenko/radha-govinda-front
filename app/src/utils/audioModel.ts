@@ -73,19 +73,13 @@ export class AudioElement {
           audioElement.play().catch((error) => {
             console.error("Error restarting audio:", error);
             storeInstance.dispatch(setIsPlaying(false));
+            audioElement.pause()
           });
         } else {
           this.playNextAudio();
         }
       });
 
-      audioElement.addEventListener("error", (e) => {
-        console.error("Audio error:", e);
-        if (storeInstance) {
-          storeInstance.dispatch(setIsPlaying(false));
-          storeInstance.dispatch(setIsLoading(false));
-        }
-      });
 
       audioElement.id = this.AUDIO_ELEMENT_ID;
       audioElement.style.display = "none";
@@ -115,7 +109,8 @@ export class AudioElement {
           playPromise
             .then(() => {
               dispatch(setIsLoading(false));
-              navigator.mediaSession.playbackState = 'playing';
+              if (navigator?.mediaSession?.playbackState)
+                navigator.mediaSession.playbackState = "playing";
               resolve(1);
             })
             .catch((error) => {
@@ -124,21 +119,38 @@ export class AudioElement {
             });
       };
       if (this._element.src !== audio?.Audio.url) {
-        if ('mediaSession' in navigator) {
+        if ("mediaSession" in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
-            title: audio?.Name || '', // Set the audio title here
+            title: audio?.Name || "", // Set the audio title here
             artwork: [
-              audio?.AudioCategory?.Image?.url ?  {
-                src: audio?.AudioCategory?.Image?.url, 
-                sizes: '96x96', // Adjust size to match your design
-                type: 'image/webp'
-              } : {
-                  src: logoUrl || '', 
-                  sizes: '96x96', // Adjust size to match your design
-                  type: 'image/svg+xml'
-              }
-            ]
+              audio?.AudioCategory?.Image?.url
+                ? {
+                    src: audio?.AudioCategory?.Image?.url,
+                    sizes: "96x96", // Adjust size to match your design
+                    type: "image/webp",
+                  }
+                : {
+                    src: logoUrl || "",
+                    sizes: "96x96", // Adjust size to match your design
+                    type: "image/svg+xml",
+                  },
+            ],
           });
+          navigator.mediaSession.setActionHandler("play", () => {
+            tryPlay();
+            dispatch(setIsPlaying(true));
+          });
+          navigator.mediaSession.setActionHandler("pause", () => {
+            this.pause();
+            dispatch(setIsPlaying(false));
+          });
+          navigator.mediaSession.setActionHandler("previoustrack", () => {
+            this.playPrevAudio();
+          });
+          navigator.mediaSession.setActionHandler("nexttrack", () => {
+            this.playNextAudio();
+          });
+    
         }
         this._element.src = audio?.Audio.url;
         this._element.volume = volume / 100;
@@ -160,7 +172,8 @@ export class AudioElement {
   }
   pause() {
     this._element?.pause();
-    navigator.mediaSession.playbackState = 'paused';
+    if (navigator?.mediaSession?.playbackState)
+      navigator.mediaSession.playbackState = "paused";
   }
 
   getCurrentTime() {
@@ -187,7 +200,7 @@ export class AudioElement {
       audio: state.audio,
       playlist: state.playlist,
       playlistAudioPositions: state.playlistAudioPositions,
-      direction: 'prev'
+      direction: "prev",
     });
 
     const newAudio = state.playlist[index];
@@ -206,11 +219,17 @@ export class AudioElement {
       audio: state.audio,
       playlist: state.playlist,
       playlistAudioPositions: state.playlistAudioPositions,
-      direction: 'next'
+      direction: "next",
     });
 
     const newAudio = state.playlist[index];
-    console.log(newAudio, state.playlist, state.playlistAudioPositions.map(id=> state.playlist.find(audio => audio?.documentId  === id)?.Name))
+    console.log(
+      newAudio,
+      state.playlist,
+      state.playlistAudioPositions.map(
+        (id) => state.playlist.find((audio) => audio?.documentId === id)?.Name
+      )
+    );
 
     this.play({ audio: newAudio });
     this.dispatch(setAudio(newAudio));

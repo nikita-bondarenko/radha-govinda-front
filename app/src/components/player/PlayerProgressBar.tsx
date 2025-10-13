@@ -11,6 +11,7 @@ import {
   setProgress,
   setPassedTime,
   setLeftTime,
+  setIsPlaying,
 } from "@/lib/store/audioSlice";
 import { getRangePercent } from "@/utils/getRangePersent";
 import { parseDurationToSeconds } from "@/utils/parseDate";
@@ -124,6 +125,12 @@ const PlayerProgressBar = (props: Props) => {
         // console.log('Updated leftTime with real metadata:', { realDuration, currentTime, left });
       }
     }
+
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid) return () => {
+      audioElement.pause()
+      dispatch(setIsPlaying(false))
+    };
   }, []);
 
   const progressInputHandler: React.ChangeEventHandler = (e) => {
