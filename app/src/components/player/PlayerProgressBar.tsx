@@ -126,11 +126,7 @@ const PlayerProgressBar = (props: Props) => {
       }
     }
 
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    if (isAndroid) return () => {
-      audioElement.pause()
-      dispatch(setIsPlaying(false))
-    };
+
   }, []);
 
   const progressInputHandler: React.ChangeEventHandler = (e) => {

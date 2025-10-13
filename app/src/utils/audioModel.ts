@@ -72,8 +72,8 @@ export class AudioElement {
           audioElement.currentTime = 0;
           audioElement.play().catch((error) => {
             console.error("Error restarting audio:", error);
-            storeInstance.dispatch(setIsPlaying(false));
-            audioElement.pause()
+            // storeInstance.dispatch(setIsPlaying(false));
+            // audioElement.pause()
           });
         } else {
           this.playNextAudio();
