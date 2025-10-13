@@ -124,7 +124,7 @@ const PlayerProgressBar = (props: Props) => {
         // console.log('Updated leftTime with real metadata:', { realDuration, currentTime, left });
       }
     }
-  }, [leftTime, dispatch]);
+  }, []);
 
   const progressInputHandler: React.ChangeEventHandler = (e) => {
     const audioElement = new AudioElement();

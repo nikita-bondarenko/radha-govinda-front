@@ -30,6 +30,10 @@ query Post($documentId: ID!, $locale: I18NLocaleCode, $menuLocale2: I18NLocaleCo
         documentId
       }
     }
+    localizations {
+      Slug
+      locale
+    }
   }
   menu(locale: $menuLocale2) {
     Menu {

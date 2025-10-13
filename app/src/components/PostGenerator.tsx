@@ -15,12 +15,13 @@ export default function PostGenerator({ post, menu, footer, logo }: PostQuery) {
   // Устанавливаем локаль только один раз при монтировании компонента
   useEffect(() => {
     if (post?.locale) {
-       // console.log('PostGenerator: Setting locale to:', post.locale);
       dispatch(setLocale(post.locale as Locale));
     }
   }, [dispatch, post?.locale]);
 
-  return (
+  const isLanguageButtonVisible = !!post?.localizations.find(localization => localization?.locale !== post.locale)
+
+  return (  
     <>
       <main className="main">
         <HeaderSmall
@@ -28,6 +29,7 @@ export default function PostGenerator({ post, menu, footer, logo }: PostQuery) {
           menu={menu}
           logo={logo}
           locale={post?.locale}
+          isLanguageButtonVisible={isLanguageButtonVisible}
         ></HeaderSmall>
         <PageContent
           content={post?.PostContent}

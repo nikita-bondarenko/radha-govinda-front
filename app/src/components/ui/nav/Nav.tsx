@@ -26,13 +26,25 @@ type Props = {
   menu: Menu;
   handleButtonClick?: () => void;
   footer?: boolean;
-  black?: boolean
-  className?: string
+  black?: boolean;
+  className?: string;
 };
-export default function Nav({ menu, handleButtonClick,footer,black, className }: Props) {
+export default function Nav({
+  menu,
+  handleButtonClick,
+  footer,
+  black,
+  className,
+}: Props) {
   return (
-    <nav className={clsx(styles["nav"],footer && styles.footer )}>
-      <ul className={clsx(className, 'flex items-center gap-[40px] md:flex-col md:gap-[14px] md:items-end')}>
+    <nav className={clsx(styles["nav"], footer && styles.footer)}>
+      <ul
+        className={clsx(
+          className,
+          "flex   ",
+          footer ? "flex-col items-start gap-[20px] md:gap-[10px]" : "items-center gap-[40px] md:flex-col md:gap-[14px] md:items-end"
+        )}
+      >
         {menu?.Menu?.map((menuItem) => (
           <NavItem
             onClick={handleButtonClick}

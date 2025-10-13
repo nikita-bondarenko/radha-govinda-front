@@ -8,6 +8,7 @@ export type MobileMenuProps = {
   menu: Menu;
   locale?: string | null | undefined;
   closeMobileMenuButtonHandler: () => void;
+  IsLanguageButtonVisible?: boolean | null;
 };
 
 export default function MobileMenu({
@@ -15,6 +16,7 @@ export default function MobileMenu({
   menu,
   closeMobileMenuButtonHandler,
   locale,
+  IsLanguageButtonVisible = true,
 }: MobileMenuProps) {
   return (
     <Modal isOpen={isMobileMenuOpen}>
@@ -26,10 +28,12 @@ export default function MobileMenu({
             menu={menu}
             handleButtonClick={closeMobileMenuButtonHandler}
           ></Nav>
-          <MobileMenuLangButton
-            locale={locale}
-            clickHandler={closeMobileMenuButtonHandler}
-          ></MobileMenuLangButton>
+          {IsLanguageButtonVisible && (
+            <MobileMenuLangButton
+              locale={locale}
+              clickHandler={closeMobileMenuButtonHandler}
+            ></MobileMenuLangButton>
+          )}
         </div>
       </div>
     </Modal>

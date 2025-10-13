@@ -38,43 +38,31 @@ export const parseParams = async (params: Promise<{ slug: string[], id: string }
     ? slugArray[1]
     : slugArray[0];
 
-  const emptyPagination = {
+
+  const postsPagination: Pagination = {
     start: 0,
-    limit: 0,
+    limit: 3,
+  };
+  const moviesPagination: Pagination = {
+    start: 0,
+    limit: 10,
+  };
+  const audiosPagination: Pagination = {
+    start: 0,
+    limit: 6,
   };
 
-  let postsPagination: Pagination = emptyPagination;
-  let moviesPagination: Pagination = emptyPagination;
-  let audiosPagination: Pagination = emptyPagination;
+ if (slug === "articles") {
+  postsPagination.limit = 6
 
-  if (slug === "home") {
-    postsPagination = {
-      start: 0,
-      limit: 3,
-    };
-    moviesPagination = {
-      start: 0,
-      limit: 10,
-    };
-    audiosPagination = {
-      start: 0,
-      limit: 6,
-    };
-  } else if (slug === "articles") {
-    postsPagination = {
-      start: 0,
-      limit: 6,
-    };
-  } else if (slug === "videos") {
-    moviesPagination = {
-      start: 0,
-      limit: 9999,
-    };
-  } else if (slug === "lectures-and-kirtans" ) {
-    audiosPagination = {
-      start: 0,
-      limit: 9999,
-    };
+  } 
+  
+  if (slug === "videos") {
+    moviesPagination.limit = 9999
+  } 
+  
+  if (slug === "lectures-and-kirtans" ) {
+    audiosPagination.limit = 9999
   }
 
   return {

@@ -17,6 +17,8 @@ export const getIdBySlug = async (
   postType: PostType,
   apolloClient: ApolloClient<NormalizedCacheObject>
 ) => {
+
+  
   switch (postType) {
     case "page":
       const { data } = await apolloClient.query<

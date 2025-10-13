@@ -19,6 +19,7 @@ import PostGenerator from "./PostGenerator";
 import { MetadataPropsType } from "@/app/[[...slug]]/page";
 import { parseParams } from "@/utils/parseParams";
 import DocumentGenerator from "./DocumentGenerator";
+import NotFoundPage from "./not-found/NotFoundPage";
 
 export type Pagination = {
   start: number;
@@ -27,75 +28,97 @@ export type Pagination = {
 
 export type RenderPageProps = MetadataPropsType;
 
-async function RenderPage({
-  params
-}: RenderPageProps) {
+async function RenderPage({ params }: RenderPageProps) {
   const apolloClient = initializeApollo();
-  const {slug, postType, locale, postsPagination, moviesPagination, audiosPagination} = await parseParams(params)
+  const {
+    slug,
+    postType,
+    locale,
+    postsPagination,
+    moviesPagination,
+    audiosPagination,
+  } = await parseParams(params);
 
   const documentId = await getIdBySlug(slug, postType, apolloClient);
-  if (!documentId) return;
 
+console.log('postType',postType)
   if (postType === "page") {
-    const { data: pageData } = await apolloClient.query<
+    const { data } = await apolloClient.query<
       PageQuery,
       PageQueryVariables
     >({
       query: PageDocument,
       variables: {
-        documentId,
-        pagination: audiosPagination,
+        documentId: documentId || '',
+        audiorecordsPagination: audiosPagination,
         sort: ["Date:DESC"],
-        postsPagination2: postsPagination,
-        moviesPagination2: moviesPagination,
+        postsPagination: postsPagination,
+        moviesPagination: moviesPagination,
         locale: locale,
-        audiorecordsLocale2: locale,
-        audioCategoriesLocale2: locale,
-        postCategoriesLocale2: locale,
-        postsLocale2: locale,
-        moviesLocale2: locale,
-        menuLocale2: locale,
-        footerLocale2: locale,
       },
     });
 
-    return (
-        <PageGenerator {...pageData} />
-    );
-  } else if (postType === 'post') {
-    const { data: postData } = await apolloClient.query<
-      PostQuery,
-      PostQueryVariables
-    >({
+    if (!!data.page) {
+      return <PageGenerator {...data} />;
+    } else {
+      return (
+        <NotFoundPage
+          locale={locale}
+          footer={data.footer}
+          logo={data.logo}
+          menu={data.menu}
+        ></NotFoundPage>
+      );
+    }
+  } else if (postType === "post") {
+    const { data } = await apolloClient.query<PostQuery, PostQueryVariables>({
       query: PostDocument,
       variables: {
-        documentId,
+        documentId: documentId || '',
         locale: locale,
         menuLocale2: locale,
         footerLocale2: locale,
       },
     });
 
-    return (
-        <PostGenerator {...postData} />
-    );
-  }  else if (postType === 'doc') {
-    const { data: docData } = await apolloClient.query<
+    if (data.post) {
+      return <PostGenerator {...data} />;
+    } else {
+      return (
+        <NotFoundPage
+          locale={locale}
+          footer={data.footer}
+          logo={data.logo}
+          menu={data.menu}
+        ></NotFoundPage>
+      );
+    }
+  } else if (postType === "doc") {
+    const { data } = await apolloClient.query<
       DocumentQuery,
       DocumentQueryVariables
     >({
       query: DocumentDocument,
       variables: {
-        documentId,
+        documentId: documentId || '',
         locale: locale,
         menuLocale2: locale,
         footerLocale2: locale,
       },
     });
 
-    return (
-        <DocumentGenerator {...docData} />
-    );
+    if (data.doc) {
+      return <DocumentGenerator {...data} />;
+    } else {
+      return (
+        <NotFoundPage
+          locale={locale}
+          footer={data.footer}
+          logo={data.logo}
+          menu={data.menu}
+        ></NotFoundPage>
+      );
+    }
   }
 }
 

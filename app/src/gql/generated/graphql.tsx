@@ -930,6 +930,7 @@ export type MenuRelationResponseCollection = {
 
 export type Movie = {
   __typename?: 'Movie';
+  Date?: Maybe<Scalars['Date']['output']>;
   MovieName: Scalars['String']['output'];
   VideoCategory?: Maybe<VideoCategory>;
   YoutubeLink: Scalars['String']['output'];
@@ -963,6 +964,7 @@ export type MovieEntityResponseCollection = {
 };
 
 export type MovieFiltersInput = {
+  Date?: InputMaybe<DateFilterInput>;
   MovieName?: InputMaybe<StringFilterInput>;
   VideoCategory?: InputMaybe<VideoCategoryFiltersInput>;
   YoutubeLink?: InputMaybe<StringFilterInput>;
@@ -978,6 +980,7 @@ export type MovieFiltersInput = {
 };
 
 export type MovieInput = {
+  Date?: InputMaybe<Scalars['Date']['input']>;
   MovieName?: InputMaybe<Scalars['String']['input']>;
   VideoCategory?: InputMaybe<Scalars['ID']['input']>;
   YoutubeLink?: InputMaybe<Scalars['String']['input']>;
@@ -2468,19 +2471,10 @@ export type MoviesPaginationQuery = { __typename?: 'Query', movies: Array<{ __ty
 export type PageQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
-  pagination?: InputMaybe<PaginationArg>;
-  postsPagination2?: InputMaybe<PaginationArg>;
-  postsSort2?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
-  moviesSort2?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
-  moviesPagination2?: InputMaybe<PaginationArg>;
+  audiorecordsPagination?: InputMaybe<PaginationArg>;
+  postsPagination?: InputMaybe<PaginationArg>;
+  moviesPagination?: InputMaybe<PaginationArg>;
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  audiorecordsLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  audioCategoriesLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  postCategoriesLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  postsLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  moviesLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  menuLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  footerLocale2?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 }>;
 
 
@@ -2517,7 +2511,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', Slug: string, Date?: any | null, locale?: string | null, PostPreviewContent?: string | null, PostTitle: string, PostContent?: string | null, PostCategory?: { __typename?: 'PostCategory', Name: string, documentId: string } | null, SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null, RecomendedPosts?: { __typename?: 'ComponentPostRecomendedPosts', SectionTitle?: string | null, Posts: Array<{ __typename?: 'Post', Date?: any | null, PostPreviewContent?: string | null, PostTitle: string, Slug: string, documentId: string } | null> } | null } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
+export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', Slug: string, Date?: any | null, locale?: string | null, PostPreviewContent?: string | null, PostTitle: string, PostContent?: string | null, PostCategory?: { __typename?: 'PostCategory', Name: string, documentId: string } | null, SEO?: { __typename?: 'ComponentMetaSeo', Title?: string | null, Description?: string | null, Preview510x230?: { __typename?: 'UploadFile', url: string } | null, Preview1200x630?: { __typename?: 'UploadFile', url: string } | null } | null, RecomendedPosts?: { __typename?: 'ComponentPostRecomendedPosts', SectionTitle?: string | null, Posts: Array<{ __typename?: 'Post', Date?: any | null, PostPreviewContent?: string | null, PostTitle: string, Slug: string, documentId: string } | null> } | null, localizations: Array<{ __typename?: 'Post', Slug: string, locale?: string | null } | null> } | null, menu?: { __typename?: 'Menu', Menu?: Array<{ __typename?: 'ComponentMenuElementMenyu', Text?: string | null, id: string, PageLink?: { __typename?: 'Page', Slug: string } | null } | null> | null } | null, footer?: { __typename?: 'Footer', SiteName?: string | null, Documents?: Array<{ __typename?: 'ComponentDocsLinkSsylkaNaDokument', Text?: string | null, id: string, Page?: { __typename?: 'Doc', Slug: string } | null } | null> | null, SocialMedia?: Array<{ __typename?: 'ComponentSocialMediaSsylkaNaSoczset', Href?: string | null, Name?: string | null, id: string, Icon?: { __typename?: 'UploadFile', url: string } | null } | null> | null, SupportForm?: { __typename?: 'ComponentSupportPozhertvovaniya', id: string, Title?: string | null, TextWithDocument?: { __typename?: 'ComponentTextWithDocumentTekstSPrikreplennymDokumentom', Text?: string | null, LinkText?: string | null, LinkPage?: { __typename?: 'Doc', Slug: string } | null } | null, Inputs?: Array<{ __typename?: 'ComponentInputPoleVvoda', Placeholder?: string | null, InputType?: Enum_Componentinputpolevvoda_Inputtype | null, id: string } | null> | null } | null } | null, logo?: { __typename?: 'Logo', logo: { __typename?: 'UploadFile', url: string, formats?: any | null, alternativeText?: string | null } } | null };
 
 export type PostSeoQueryVariables = Exact<{
   documentId: Scalars['ID']['input'];
@@ -2849,7 +2843,7 @@ export type MoviesPaginationLazyQueryHookResult = ReturnType<typeof useMoviesPag
 export type MoviesPaginationSuspenseQueryHookResult = ReturnType<typeof useMoviesPaginationSuspenseQuery>;
 export type MoviesPaginationQueryResult = Apollo.QueryResult<MoviesPaginationQuery, MoviesPaginationQueryVariables>;
 export const PageDocument = gql`
-    query Page($documentId: ID!, $sort: [String], $pagination: PaginationArg, $postsPagination2: PaginationArg, $postsSort2: [String], $moviesSort2: [String], $moviesPagination2: PaginationArg, $locale: I18NLocaleCode, $audiorecordsLocale2: I18NLocaleCode, $audioCategoriesLocale2: I18NLocaleCode, $postCategoriesLocale2: I18NLocaleCode, $postsLocale2: I18NLocaleCode, $moviesLocale2: I18NLocaleCode, $menuLocale2: I18NLocaleCode, $footerLocale2: I18NLocaleCode) {
+    query Page($documentId: ID!, $sort: [String], $audiorecordsPagination: PaginationArg, $postsPagination: PaginationArg, $moviesPagination: PaginationArg, $locale: I18NLocaleCode) {
   page(documentId: $documentId, locale: $locale) {
     Slug
     PageName
@@ -2945,7 +2939,7 @@ export const PageDocument = gql`
       }
     }
   }
-  audiorecords(sort: $sort, pagination: $pagination, locale: $audiorecordsLocale2) {
+  audiorecords(sort: $sort, pagination: $audiorecordsPagination, locale: $locale) {
     createdAt
     Place
     Name
@@ -2967,7 +2961,7 @@ export const PageDocument = gql`
       size
     }
   }
-  posts(pagination: $postsPagination2, sort: $postsSort2, locale: $postsLocale2) {
+  posts(pagination: $postsPagination, sort: $sort, locale: $locale) {
     documentId
     Slug
     PostTitle
@@ -2979,11 +2973,7 @@ export const PageDocument = gql`
       Name
     }
   }
-  movies(
-    sort: $moviesSort2
-    pagination: $moviesPagination2
-    locale: $moviesLocale2
-  ) {
+  movies(sort: $sort, pagination: $moviesPagination, locale: $locale) {
     createdAt
     YoutubeLink
     documentId
@@ -2993,7 +2983,7 @@ export const PageDocument = gql`
       Name
     }
   }
-  audioCategories(locale: $audioCategoriesLocale2) {
+  audioCategories(locale: $locale) {
     Name
     documentId
     Image {
@@ -3002,15 +2992,15 @@ export const PageDocument = gql`
       alternativeText
     }
   }
-  postCategories(locale: $postCategoriesLocale2) {
+  postCategories(locale: $locale) {
     Name
     documentId
   }
-  videoCategories(locale: $postCategoriesLocale2) {
+  videoCategories(locale: $locale) {
     Name
     documentId
   }
-  menu(locale: $menuLocale2) {
+  menu(locale: $locale) {
     Menu {
       PageLink {
         Slug
@@ -3027,7 +3017,7 @@ export const PageDocument = gql`
       alternativeText
     }
   }
-  footer(locale: $footerLocale2) {
+  footer(locale: $locale) {
     SiteName
     Documents {
       Text
@@ -3078,19 +3068,10 @@ export const PageDocument = gql`
  *   variables: {
  *      documentId: // value for 'documentId'
  *      sort: // value for 'sort'
- *      pagination: // value for 'pagination'
- *      postsPagination2: // value for 'postsPagination2'
- *      postsSort2: // value for 'postsSort2'
- *      moviesSort2: // value for 'moviesSort2'
- *      moviesPagination2: // value for 'moviesPagination2'
+ *      audiorecordsPagination: // value for 'audiorecordsPagination'
+ *      postsPagination: // value for 'postsPagination'
+ *      moviesPagination: // value for 'moviesPagination'
  *      locale: // value for 'locale'
- *      audiorecordsLocale2: // value for 'audiorecordsLocale2'
- *      audioCategoriesLocale2: // value for 'audioCategoriesLocale2'
- *      postCategoriesLocale2: // value for 'postCategoriesLocale2'
- *      postsLocale2: // value for 'postsLocale2'
- *      moviesLocale2: // value for 'moviesLocale2'
- *      menuLocale2: // value for 'menuLocale2'
- *      footerLocale2: // value for 'footerLocale2'
  *   },
  * });
  */
@@ -3355,6 +3336,10 @@ export const PostDocument = gql`
         Slug
         documentId
       }
+    }
+    localizations {
+      Slug
+      locale
     }
   }
   menu(locale: $menuLocale2) {

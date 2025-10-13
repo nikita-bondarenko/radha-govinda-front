@@ -25,6 +25,7 @@ const DocumentGenerator = ({menu, logo,doc,footer}: DocumentQuery) => {
         menu={menu}
         logo={logo}
         locale={doc?.locale}
+        isLanguageButtonVisible={true}
       ></HeaderSmall>
       <PageContent
         content={doc?.DocumentContent}

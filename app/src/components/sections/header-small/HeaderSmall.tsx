@@ -9,6 +9,7 @@ type Props = {
     locale: string | null  | undefined;
     pageSlug: string | undefined;
     menu: Menu   | undefined;
+    isLanguageButtonVisible: boolean
 }
 
 const HeaderSmall = (props: Props) => {
@@ -21,7 +22,7 @@ const HeaderSmall = (props: Props) => {
     dark={true}
     lectureBarClassName="hidden"
     isSiteName
-    IsLanguageButtonVisible
+    IsLanguageButtonVisible={props.isLanguageButtonVisible}
   ></Header></div>
   )
 }

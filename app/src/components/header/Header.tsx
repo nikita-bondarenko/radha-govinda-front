@@ -7,21 +7,14 @@ import React, {
   useRef,
   useState,
 } from "react";
-import HeaderNavItem from "./NavItem";
 import HeaderLectureBar, { HeaderButton } from "./HeaderLectureBar";
 import HeaderLangButton from "./HeaderLangButton";
-import { Maybe } from "@/gql/generated/graphql";
-import Modal from "../utils/modal/Modal";
 import styles from "./Header.module.css";
 import clsx from "clsx";
-import CloseIcon from "../svg/CloseIcon";
-import CloseButton from "../ui/closeButton/CloseButton";
 import Nav, { Menu } from "../ui/nav/Nav";
 import SiteName from "./SiteName";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setIsHeaderButtonVisible, setIsMobile } from "@/lib/store/audioSlice";
-import { createPortal } from "react-dom";
-import MobileMenuLangButton from "./MobileMenuLangButton";
 import MobileMenu from "../ui/mobileMenu/MobileMenu";
 import Burger from "../ui/burger/Burger";
 
@@ -119,6 +112,7 @@ export default memo(function Header({
         isMobileMenuOpen={isMobileMenuOpen}
         menu={menu}
         closeMobileMenuButtonHandler={closeMobileMenuButtonHandler}
+        IsLanguageButtonVisible={IsLanguageButtonVisible}
       ></MobileMenu>
     </header>
   );

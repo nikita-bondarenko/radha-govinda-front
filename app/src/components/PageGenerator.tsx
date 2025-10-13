@@ -1,6 +1,6 @@
 "use client"
 import { PageQuery } from "@/gql/generated/graphql";
-import React, { Suspense, useEffect } from "react";
+import React, { memo, Suspense, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Locale } from "@/utils/getLocalizedData";
 import Footer from "./sections/footer/Footer";
@@ -44,7 +44,7 @@ const DIVISION_NAMES = {
   ARTICLES: "Stati"
 } as const;
 
-export default function PageGenerator({
+export default memo(function PageGenerator({
   page,
   menu,
   logo,
@@ -175,4 +175,4 @@ export default function PageGenerator({
       </main>
     </>
   );
-}
+})
