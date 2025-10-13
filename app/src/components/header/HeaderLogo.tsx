@@ -1,7 +1,10 @@
+"use client";
 import Link from "next/link";
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Image } from "../utils/Picture";
 import styles from "./Header.module.css"
+import { setLogoUrl } from "@/lib/store/audioSlice";
+import { useDispatch } from "react-redux";
 
 
 
@@ -12,6 +15,11 @@ export type HeaderLogoProps = {
 };
 
 export default memo(function HeaderLogo({ logo, locale }: HeaderLogoProps) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setLogoUrl(logo?.url || null));  
+  }, [logo, dispatch]);
+
   return (
     <Link
       style={{ "--header-logo-url": `url(${logo?.url})` } as React.CSSProperties}

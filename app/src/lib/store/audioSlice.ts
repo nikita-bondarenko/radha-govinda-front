@@ -19,6 +19,7 @@ export type AudioState = {
   isMobile: boolean;
   isLoading: boolean;
   playlistAudioPositions: string[];
+  logoUrl: string | null | undefined;
 };
 
 const initialState: AudioState = {
@@ -37,6 +38,7 @@ const initialState: AudioState = {
   isMiniPlayerVisible: false,
   isMobile: false,
   playlistAudioPositions: [],
+  logoUrl: null,
 };
 
 const audioSlice = createSlice({
@@ -97,10 +99,15 @@ const audioSlice = createSlice({
     setIsMobile: (state, action: PayloadAction<boolean>) => {
       state.isMobile = action.payload;
     },
+
+    setLogoUrl: (state, action: PayloadAction<string | null | undefined>) => {
+      state.logoUrl = action.payload;
+    },
   },
 });
 
 export const {
+  setLogoUrl,
   setAudio,
   setFlow,
   setVolume,

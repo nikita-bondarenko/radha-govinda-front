@@ -14,7 +14,7 @@ import clsx from "clsx";
 import Nav, { Menu } from "../ui/nav/Nav";
 import SiteName from "./SiteName";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setIsHeaderButtonVisible, setIsMobile } from "@/lib/store/audioSlice";
+import { setIsHeaderButtonVisible, setIsMobile, setLogoUrl } from "@/lib/store/audioSlice";
 import MobileMenu from "../ui/mobileMenu/MobileMenu";
 import Burger from "../ui/burger/Burger";
 
@@ -60,6 +60,7 @@ export default memo(function Header({
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
+
 
     return () => {
       window.removeEventListener("resize", checkMobile);

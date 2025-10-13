@@ -99,6 +99,8 @@ export class AudioElement {
     dispatch(setIsLoading(true));
     const state = store.getState();
     const volume = state.audio.volume;
+    const logoUrl = state.audio.logoUrl;
+
     this.setCurrentTime(state.audio.passedTime);
 
     if (audio?.AudioCategory?.documentId)
@@ -113,6 +115,7 @@ export class AudioElement {
           playPromise
             .then(() => {
               dispatch(setIsLoading(false));
+              navigator.mediaSession.playbackState = 'playing';
               resolve(1);
             })
             .catch((error) => {
@@ -121,6 +124,22 @@ export class AudioElement {
             });
       };
       if (this._element.src !== audio?.Audio.url) {
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: audio?.Name || '', // Set the audio title here
+            artwork: [
+              audio?.AudioCategory?.Image?.url ?  {
+                src: audio?.AudioCategory?.Image?.url, 
+                sizes: '96x96', // Adjust size to match your design
+                type: 'image/webp'
+              } : {
+                  src: logoUrl || '', 
+                  sizes: '96x96', // Adjust size to match your design
+                  type: 'image/svg+xml'
+              }
+            ]
+          });
+        }
         this._element.src = audio?.Audio.url;
         this._element.volume = volume / 100;
         const onCanPlay = () => {
@@ -141,6 +160,7 @@ export class AudioElement {
   }
   pause() {
     this._element?.pause();
+    navigator.mediaSession.playbackState = 'paused';
   }
 
   getCurrentTime() {
