@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import PlayIcon from "../svg/PlayIcon";
+import PlayIcon from "../../shared/ui/icons/PlayIcon";
 import PlaylistButton from "./PlaylistButton";
 
 type PlaylistPlayButtonProps = {

@@ -1,7 +1,7 @@
 import { Audio } from "@/components/sections/audio-preview/AudioPreview";
-import DotsIcon from "@/components/svg/DotsIcon";
-import ShareIcon from "@/components/svg/ShareIcon";
-import Sign from "@/components/svg/Sign";
+import DotsIcon from "@/shared/ui/icons/DotsIcon";
+import ShareIcon from "@/shared/ui/icons/ShareIcon";
+import Sign from "@/shared/ui/icons/Sign";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import { useAppSelector } from "@/lib/store/hooks";
 import { copyToClipboard } from "@/shared/utils";
@@ -31,7 +31,6 @@ export default function OptionsButton({ audio, className }: Props) {
     e.stopPropagation();
     setSuccessMessageVisible(true);
  
-
       const link = location.protocol +
       "//" +
       location.host + `/playlist/router?category=${audio?.AudioCategory?.documentId}&audio=${audio?.documentId}&locale=${locale}`;  

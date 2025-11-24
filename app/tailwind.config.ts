@@ -1,3 +1,4 @@
+import { from } from "@apollo/client";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -17,9 +18,7 @@ export default {
       xs: { max: "572px" },
     },
     extend: {
-      animation: {
-     
-      },
+  
       colors: {
         bg: {
           "light-grey": "var(--bg-light-grey)",

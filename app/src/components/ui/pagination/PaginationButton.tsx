@@ -1,4 +1,4 @@
-import ArrowLeft from "@/components/svg/ArrowLeft";
+import ArrowLeft from "@/shared/ui/icons/ArrowLeft";
 import clsx from "clsx";
 import React from "react";
 

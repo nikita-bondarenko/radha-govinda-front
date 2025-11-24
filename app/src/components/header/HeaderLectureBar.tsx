@@ -18,12 +18,14 @@ import {
   setIsMobile,
   setIsPlaying,
   selectAudioVolume,
+  selectPlaylist,
+  setAudio,
 } from "@/lib/store/audioSlice";
 import { useInView } from "react-intersection-observer";
 import { formatRemainingTime, formatTime } from "@/utils/formatTime";
 import { parseDurationToSeconds } from "@/utils/parseDate";
-import PlayIcon from "../svg/PlayIcon";
-import PauseIcon from "../svg/PauseIcon";
+import PlayIcon from "../../shared/ui/icons/PlayIcon";
+import PauseIcon from "../../shared/ui/icons/PauseIcon";
 import { AudioElement } from "../../utils/audioModel";
 
 export type HeaderButton = {
@@ -56,6 +58,8 @@ export default memo(function HeaderLectureBar({
   const isMiniPlayerVisible = useAppSelector(selectIsMiniPlayerVisible);
   const isMobile = useAppSelector(selectIsMobile);
   const dispatch = useAppDispatch();
+
+  const playlist = useAppSelector(selectPlaylist);
 
   const { ref: inViewRef, inView } = useInView({
     threshold: 0.5,
@@ -101,6 +105,26 @@ export default memo(function HeaderLectureBar({
     }
   };
 
+  const startAudio = () => {
+    console.log(isPlaying, audio, playlist)
+    if (!audio) {
+      
+      const audioElement = new AudioElement();
+
+      let audiorecord = playlist[0];
+        dispatch(setAudio(audiorecord));
+
+      audioElement.play({ audio: audiorecord }).then(() => {
+        dispatch(setIsPlaying(true));
+      });
+    } else if (!isPlaying) {
+        const audioElement = new AudioElement();
+      audioElement.play({ audio }).then(() => {
+        dispatch(setIsPlaying(true));
+      });
+    }
+  };
+
   const handleMiniPlayerClick = useCallback(
     (e: React.MouseEvent) => {
       if (!isClient) return;
@@ -119,7 +143,7 @@ export default memo(function HeaderLectureBar({
   if (audio && isClient && !disableMiniPlayer && !isMobile) {
     // Используем ту же логику, что и в основном плеере
     const getDisplayLeftTime = (): number => {
-      const audioElement = new AudioElement()
+      const audioElement = new AudioElement();
       // Приоритет 1: Если leftTime доступно из реальных метаданных, используем его
       const realDuration = audioElement.getDuration();
       if (realDuration > 0 && isFinite(realDuration) && leftTime > 0) {
@@ -192,10 +216,18 @@ export default memo(function HeaderLectureBar({
 
   // Если нет аудиозаписи или мы на сервере, показываем обычную кнопку
   return (
-    <div ref={inViewRef}>
-      <Link className={clsx(className, style.header__button)} href={href}>
+    <div
+      className={clsx("transition-opacity", {
+        "opacity-0": !!audio && isPlaying,
+      })}
+      ref={inViewRef}
+    >
+      <button
+        onClick={startAudio}
+        className={clsx(className, style.header__button)}
+      >
         {button?.ButtonText}
-      </Link>
+      </button>
     </div>
   );
 });

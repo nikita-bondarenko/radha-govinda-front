@@ -8,7 +8,14 @@ import { localizeHref } from "@/utils/localizeHref";
 import styles from "./AudioPreview.module.css";
 import PreviewSection from "@/components/ui/previewSection/PreviewSection";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { selectAudioFlow, setAudio, setPlaylist, setPlaylistAudioPositions } from "@/lib/store/audioSlice";
+import {
+  selectAudio,
+  selectAudioFlow,
+  selectPlaylist,
+  setAudio,
+  setPlaylist,
+  setPlaylistAudioPositions,
+} from "@/lib/store/audioSlice";
 import { Image } from "@/components/utils/Picture";
 import { shuffleAudioList } from "@/utils/shuffleAudioList";
 
@@ -46,6 +53,8 @@ export default memo(function AudioPreview({
 }: AudioPreviewProps) {
   const dispatch = useAppDispatch();
   const flow = useAppSelector(selectAudioFlow);
+  const playlist = useAppSelector(selectPlaylist);
+  const audio = useAppSelector(selectAudio);
 
   const handleControlButtonClick = () => {
     dispatch(setPlaylist(audiorecords));
@@ -59,6 +68,10 @@ export default memo(function AudioPreview({
     }
     dispatch(setPlaylistAudioPositions(playlistAudioPositions));
   };
+
+  useEffect(() => {
+    if (!audio) dispatch(setPlaylist(audiorecords));
+  }, []);
 
   return (
     <PreviewSection

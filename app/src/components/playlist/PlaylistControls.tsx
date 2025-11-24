@@ -10,7 +10,7 @@ import {
   selectAudioFlow,
 } from "@/lib/store/audioSlice";
 import { useAppSelector } from "@/lib/store/hooks";
-import Shuffle from "../svg/Shuffle";
+import Shuffle from "../../shared/ui/icons/Shuffle";
 import PlaylistButton from "./PlaylistButton";
 import PlaylistPlayButton from "./PlaylistPlayButton";
 import PlaylistShuffleButton from "./PlaylistShuffleButton";

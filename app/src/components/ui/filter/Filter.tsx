@@ -1,5 +1,5 @@
 import { Category } from "@/components/sections/video-catalog/VideoCatalog";
-import Search from "@/components/svg/Search";
+import Search from "@/shared/ui/icons/Search";
 import { Movie } from "@/gql/generated/graphql";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import { getLocalizedData } from "@/utils/getLocalizedData";

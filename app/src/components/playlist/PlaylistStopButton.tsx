@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import PauseIcon from "../svg/PauseIcon";
+import PauseIcon from "../../shared/ui/icons/PauseIcon";
 import PlaylistButton from "./PlaylistButton";
 
 type PlaylistStopButtonProps = {

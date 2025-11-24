@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import CircleArrowsIcon from "../svg/CircleArrowsIcon";
+import CircleArrowsIcon from "../../shared/ui/icons/CircleArrowsIcon";
 import style from "./Player.module.css";
 import clsx from "clsx";
 

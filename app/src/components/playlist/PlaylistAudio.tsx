@@ -13,14 +13,14 @@ import {
   setAudio,
 } from "@/lib/store/audioSlice";
 import { AudioElement } from "@/utils/audioModel";
-import PauseIcon from "../svg/PauseIcon";
-import PlayIcon from "../svg/PlayIcon";
+import PauseIcon from "../../shared/ui/icons/PauseIcon";
+import PlayIcon from "../../shared/ui/icons/PlayIcon";
 import { parseDate } from "@/utils/parseDate";
 
 import styles from "./PlaylistAudio.module.css";
-import ShareIcon from "../svg/ShareIcon";
-import DotsIcon from "../svg/DotsIcon";
-import Sign from "@/components/svg/Sign";
+import ShareIcon from "../../shared/ui/icons/ShareIcon";
+import DotsIcon from "../../shared/ui/icons/DotsIcon";
+import Sign from "@/shared/ui/icons/Sign";
 import { OptionsButton } from "@/shared/ui";
 
 type PlaylistAudioProps = {

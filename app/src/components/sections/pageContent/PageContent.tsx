@@ -1,6 +1,6 @@
 "use client";
 import SiteName from "@/components/header/SiteName";
-import ArrowLeft from "@/components/svg/ArrowLeft";
+import ArrowLeft from "@/shared/ui/icons/ArrowLeft";
 import { parseDate } from "@/utils/parseDate";
 import typograph from "@/utils/typograph";
 import { useRouter } from "next/navigation";

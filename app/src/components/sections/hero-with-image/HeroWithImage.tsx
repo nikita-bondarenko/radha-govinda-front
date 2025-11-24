@@ -9,6 +9,7 @@ import HeaderLectureBar from "@/components/header/HeaderLectureBar";
 import styles from "./HeroWithImage.module.css";
 import clsx from "clsx";
 import Background from "@/components/utils/Background";
+import Player from "@/components/player/Player";
 
 export type HeroWithImageProps = {
   menu?: {
@@ -50,42 +51,45 @@ export default memo(function HeroWithImage({
   pageSlug,
 }: HeroWithImageProps) {
   return (
-    <section className={styles["hero-with-image"]}>
-      <div className={styles['hero-with-image__gradient']} ></div>
-      <Background
-        className={styles["hero-with-image__background"]}
-        image={section.Image}
-        mdImageUrl={section.Image?.url}
-        smImageUrl={section.Image?.url}
-      ></Background>
+    <section className="relative">
+      <div className={styles["hero-with-image"]}>
+        <div className={styles["hero-with-image__gradient"]}></div>
+        <Background
+          className={styles["hero-with-image__background"]}
+          image={section.Image}
+          mdImageUrl={section.Image?.url}
+          smImageUrl={section.Image?.url}
+        ></Background>
 
-      <div className={clsx("container", styles.container)}>
-        <Header
-          {...section}
-          logo={<HeaderLogo {...logo} locale={locale} />}
-          menu={menu}
-          pageSlug={pageSlug}
-          locale={locale}
-        ></Header>
+        <div className={clsx("container", styles.container)}>
+          <Header
+            {...section}
+            logo={<HeaderLogo {...logo} locale={locale} />}
+            menu={menu}
+            pageSlug={pageSlug}
+            locale={locale}
+          ></Header>
 
-        <div className={styles["hero-with-image__body"]}>
-          <div className={styles["hero-with-image__content"]}>
-            <div className={styles["hero-with-image__subtitle"]}>
-              <ReactMarkdown>{section.Subtitle}</ReactMarkdown>
+          <div className={styles["hero-with-image__body"]}>
+            <div className={styles["hero-with-image__content"]}>
+              <div className={styles["hero-with-image__subtitle"]}>
+                <ReactMarkdown>{section.Subtitle}</ReactMarkdown>
+              </div>
+              <h1 className={styles["hero-with-image__title"]}>
+                {section.Title}
+              </h1>
+              {section.IsBigButtonVisible && (
+                <HeaderLectureBar
+                  button={section.BigButton}
+                  className={styles["hero-with-image__big-button"]}
+                ></HeaderLectureBar>
+              )}
             </div>
-            <h1 className={styles["hero-with-image__title"]}>
-              {section.Title}
-            </h1>
-            {section.IsBigButtonVisible && (
-              <HeaderLectureBar
-                button={section.BigButton}
-                className={styles["hero-with-image__big-button"]}
-                disableMiniPlayer={true}
-              ></HeaderLectureBar>
-            )}
           </div>
         </div>
+       
       </div>
+       <Player></Player>
     </section>
   );
 });

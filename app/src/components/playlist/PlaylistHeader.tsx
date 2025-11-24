@@ -4,7 +4,7 @@ import Modal from "../utils/modal/Modal";
 import MobileMenu, { MobileMenuProps } from "../ui/mobileMenu/MobileMenu";
 import Nav, { Menu } from "../ui/nav/Nav";
 import Burger from "../ui/burger/Burger";
-import BoldArrow from "../svg/BoldArrow";
+import BoldArrow from "../../shared/ui/icons/BoldArrow";
 import { useRouter } from "next/navigation";
 import { setLocale } from "@/lib/store/localeSlice";
 import { Locale } from "@/utils/getLocalizedData";

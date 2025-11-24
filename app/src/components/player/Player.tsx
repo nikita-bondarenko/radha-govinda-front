@@ -13,14 +13,14 @@ import {
 import Background from "../utils/Background";
 import style from "./Player.module.css";
 import clsx from "clsx";
-import CircleArrowsIcon from "../svg/CircleArrowsIcon";
-import DifferentDirectionArrows from "../svg/DifferentDirectionArrows";
-import DublePlayIcon from "../svg/DublePlayIcon";
-import PauseIcon from "../svg/PauseIcon";
-import PlayIcon from "../svg/PlayIcon";
-import VolumeIcon from "../svg/VolumeIcon";
+import CircleArrowsIcon from "../../shared/ui/icons/CircleArrowsIcon";
+import DifferentDirectionArrows from "../../shared/ui/icons/DifferentDirectionArrows";
+import DublePlayIcon from "../../shared/ui/icons/DublePlayIcon";
+import PauseIcon from "../../shared/ui/icons/PauseIcon";
+import PlayIcon from "../../shared/ui/icons/PlayIcon";
+import VolumeIcon from "../../shared/ui/icons/VolumeIcon";
 import { parseDate } from "@/utils/parseDate";
-import ListIcon from "../svg/ListIcon";
+import ListIcon from "../../shared/ui/icons/ListIcon";
 import { createPortal } from "react-dom";
 import PlayerImage from "./PlayerImage";
 import PlayerControls from "./PlayerControls";
@@ -46,12 +46,12 @@ export default function Player() {
   const playerRef = useRef<HTMLDivElement>(null);
 
   const player = (
-    <div className={clsx(style.modal)}>
+    // <div className={clsx(style.modal)}>
       <div className={style.wrapper}>
         <div
           ref={playerRef}
           className={clsx(style.body, {
-            "translate-y-[200%]": !isMainPlayerVisible
+            "opacity-0": !isMainPlayerVisible
           })}
         >
          <PlayerImage audio={audio}></PlayerImage>
@@ -61,7 +61,8 @@ export default function Player() {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
-  return modalRoot ? createPortal(player, modalRoot) : null;
+  return player;
+  // return modalRoot ? createPortal(player, modalRoot) : null;
 }

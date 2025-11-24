@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "@/components/providers/StoreProvider";
-import Player from "@/components/player/Player";
+import { GlobalPlayer } from "@/widjets/globalPlayerr/ui";
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${manrope.variable} antialiased`}>
         <StoreProvider>
           {children}
-          <Player></Player>
+          <GlobalPlayer />
         </StoreProvider>
         <div id="modal-root"></div>
       </body>

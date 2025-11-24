@@ -145,18 +145,10 @@ export const selectIsMiniPlayerVisible = (state: RootState) =>
   state.audio.isMiniPlayerVisible;
 export const selectIsMobile = (state: RootState) => state.audio.isMobile;
 export const selectIsMainPlayerVisible = (state: RootState) => {
-  const { audio, isMiniPlayerVisible, isHeaderButtonVisible, isMobile } =
+  const { audio} =
     state.audio;
 
-  if (isMobile) {
-    const result = !!audio;
-    return result;
-  }
-
-  const shouldHidePlayer =
-    !audio || (isMiniPlayerVisible && isHeaderButtonVisible);
-  const forceShowPlayer = audio && !isHeaderButtonVisible;
-  const result = !(shouldHidePlayer && !forceShowPlayer);
+  const result = !!audio ;
   return result;
 };
 export const selectPlaylistAudioPositions = (state: RootState) => state.audio.playlistAudioPositions

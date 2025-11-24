@@ -1,5 +1,5 @@
-import ArrowLeft from "@/components/svg/ArrowLeft";
-import ArrowRight from "@/components/svg/ArrowRight";
+import ArrowLeft from "@/shared/ui/icons/ArrowLeft";
+import ArrowRight from "@/shared/ui/icons/ArrowRight";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import PaginationButton from "./PaginationButton";
 import { useWindowSize } from "@/hooks/useWindowSize";

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import DifferentDirectionArrows from "../svg/DifferentDirectionArrows";
+import DifferentDirectionArrows from "../../shared/ui/icons/DifferentDirectionArrows";
 import style from "./Player.module.css";
 import clsx from "clsx";
 

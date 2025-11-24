@@ -1,9 +1,9 @@
 import React from 'react'
 import { text } from 'stream/consumers';
-import Shuffle from '../svg/Shuffle';
+import Shuffle from '../../shared/ui/icons/Shuffle';
 import PlaylistButton from './PlaylistButton';
-import CircleArrowsIcon from '../svg/CircleArrowsIcon';
-import ParallelArrows from '../svg/ParallelArrows';
+import CircleArrowsIcon from '../../shared/ui/icons/CircleArrowsIcon';
+import ParallelArrows from '../../shared/ui/icons/ParallelArrows';
 type PlaylistSortButtonProps = {
     onClick: () => void
     text?: string

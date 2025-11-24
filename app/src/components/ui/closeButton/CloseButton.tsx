@@ -1,4 +1,4 @@
-import CloseIcon from "@/components/svg/CloseIcon";
+import CloseIcon from "@/shared/ui/icons/CloseIcon";
 import clsx from "clsx";
 import React, { memo } from "react";
 

@@ -1,3 +1,4 @@
+"use client";
 import {
   setLeftTime,
   setPassedTime,
@@ -9,7 +10,6 @@ import {
 } from "@/lib/store/audioSlice";
 import { store } from "@/lib/store/store";
 import { findNextAudioIndex } from "@/utils/findNextAudioIndex";
-import { ur } from "zod/v4/locales";
 import { Audio as AudioType } from "@/components/sections/audio-preview/AudioPreview";
 
 export class AudioElement {
@@ -23,8 +23,14 @@ export class AudioElement {
     this.dispatch = storeInstance.dispatch;
   }
 
+  private isServerRuntime = () => {
+    
+    return typeof window === 'undefined';
+  };
+
   private init(storeInstance: any) {
-    let audioElement = document.getElementById(
+    if (this.isServerRuntime()) return;
+    let audioElement = document?.getElementById(
       this.AUDIO_ELEMENT_ID
     ) as HTMLAudioElement;
     if (!audioElement) {
@@ -80,17 +86,19 @@ export class AudioElement {
         }
       });
 
-
       audioElement.id = this.AUDIO_ELEMENT_ID;
       audioElement.style.display = "none";
-      document.body.append(audioElement);
+      document?.body.append(audioElement);
     }
     this._element = audioElement;
   }
 
   play({ audio }: { audio?: AudioType | null }) {
+    if (this.isServerRuntime()) return;
+
     const dispatch = store.dispatch;
     dispatch(setIsLoading(true));
+    console.log('play')
     const state = store.getState();
     const volume = state.audio.volume;
     const logoUrl = state.audio.logoUrl;
@@ -108,6 +116,8 @@ export class AudioElement {
         if (playPromise)
           playPromise
             .then(() => {
+                  console.log('tryPlay')
+
               dispatch(setIsLoading(false));
               if (navigator?.mediaSession?.playbackState)
                 navigator.mediaSession.playbackState = "playing";
@@ -150,7 +160,6 @@ export class AudioElement {
           navigator.mediaSession.setActionHandler("nexttrack", () => {
             this.playNextAudio();
           });
-    
         }
         this._element.src = audio?.Audio.url;
         this._element.volume = volume / 100;
@@ -171,30 +180,44 @@ export class AudioElement {
     });
   }
   pause() {
+    if (this.isServerRuntime()) return;
+
     this._element?.pause();
     if (navigator?.mediaSession?.playbackState)
       navigator.mediaSession.playbackState = "paused";
   }
 
   getCurrentTime() {
+    if (this.isServerRuntime()) return;
+
     return this._element?.currentTime || 0;
   }
 
   getDuration() {
+    if (this.isServerRuntime()) return;
+
     return this._element?.duration || 0;
   }
 
   setCurrentTime(time: number): void {
+    if (this.isServerRuntime()) return;
+
+    if (this.isServerRuntime()) return;
+
     if (this._element) {
       this._element.currentTime = time;
     }
   }
 
   setVolume(volume: number): void {
+    if (this.isServerRuntime()) return;
+
     if (this._element) this._element.volume = volume / 100;
   }
 
   playPrevAudio() {
+    if (this.isServerRuntime()) return;
+
     const { audio: state } = store.getState();
     const index = findNextAudioIndex({
       audio: state.audio,
@@ -213,6 +236,8 @@ export class AudioElement {
   }
 
   playNextAudio() {
+    if (this.isServerRuntime()) return;
+
     const { audio: state } = store.getState();
 
     const index = findNextAudioIndex({

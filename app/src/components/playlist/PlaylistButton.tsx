@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { ReactNode } from "react";
-import PauseIcon from "../svg/PauseIcon";
+import PauseIcon from "../../shared/ui/icons/PauseIcon";
 
 export type PlaylistButtonProps = {
   isVisible?: boolean;

@@ -64,8 +64,7 @@ export default function PlaylistBody({
     const newAudioList = shuffleAudioList(audios);
     setAudiosPositionList(newAudioList);
 
-    const playlistAudioPositions = shuffleAudioList(audios);
-    dispatch(setPlaylistAudioPositions(playlistAudioPositions));
+    dispatch(setPlaylistAudioPositions(newAudioList));
   };
 
   const sort = () => {

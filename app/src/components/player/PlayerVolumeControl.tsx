@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import VolumeIcon from "../svg/VolumeIcon";
+import VolumeIcon from "../../shared/ui/icons/VolumeIcon";
 import style from "./Player.module.css";
 import clsx from "clsx";
 

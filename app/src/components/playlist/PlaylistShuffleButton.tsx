@@ -1,5 +1,5 @@
 import React from "react";
-import Shuffle from "../svg/Shuffle";
+import Shuffle from "../../shared/ui/icons/Shuffle";
 import PlaylistButton from "./PlaylistButton";
 
 type PlaylistShuffleButtonProps = {

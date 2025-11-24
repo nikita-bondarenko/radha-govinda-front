@@ -1,6 +1,6 @@
 import React from "react";
-import PauseIcon from "../svg/PauseIcon";
-import PlayIcon from "../svg/PlayIcon";
+import PauseIcon from "../../shared/ui/icons/PauseIcon";
+import PlayIcon from "../../shared/ui/icons/PlayIcon";
 import style from "./Player.module.css";
 import clsx from "clsx";
 

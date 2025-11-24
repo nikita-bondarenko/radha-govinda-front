@@ -14,6 +14,7 @@ import {
   selectAudioSelectedCategoryId,
   selectAudioFlow,
   setPlaylistAudioPositions,
+  selectAudio,
 } from "@/lib/store/audioSlice";
 import { useSearchParams } from "next/navigation";
 import { shuffleAudioList } from "@/utils/shuffleAudioList";
@@ -42,6 +43,7 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
   const localizedData = useLocalizedStaticData();
   const dispatch = useAppDispatch();
   const flow = useAppSelector(selectAudioFlow);
+  const audio = useAppSelector(selectAudio);
   const { highlightedAudioId, isInitialLoad, initialCategoryId } =
     useScrollToAudio();
   const handleControlButtonClick = () => {
@@ -56,6 +58,10 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
     }
     dispatch(setPlaylistAudioPositions(playlistAudioPositions));
   };
+
+  useEffect(() => {
+    if (!audio) dispatch(setPlaylist(filteredItems));
+  }, []);
 
   return (
     <section>

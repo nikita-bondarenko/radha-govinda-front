@@ -1,5 +1,5 @@
 "use client"
-import BurgerIcon from "@/components/svg/BurgerIcon";
+import BurgerIcon from "@/shared/ui/icons/BurgerIcon";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";

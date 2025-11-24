@@ -1,5 +1,5 @@
 import React from "react";
-import ListIcon from "../svg/ListIcon";
+import ListIcon from "../../shared/ui/icons/ListIcon";
 import style from "./Player.module.css";
 import clsx from "clsx";
 

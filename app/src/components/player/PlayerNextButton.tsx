@@ -1,5 +1,5 @@
 import React from "react";
-import DublePlayIcon from "../svg/DublePlayIcon";
+import DublePlayIcon from "../../shared/ui/icons/DublePlayIcon";
 import style from "./Player.module.css";
 import clsx from "clsx";
 
