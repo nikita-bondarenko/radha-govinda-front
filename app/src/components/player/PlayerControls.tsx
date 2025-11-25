@@ -27,13 +27,19 @@ import PlayerPlayPauseButton from "./PlayerPlayPauseButton";
 import PlayerNextButton from "./PlayerNextButton";
 import PlayerShuffleButton from "./PlayerShuffleButton";
 import PlayerPlaylistButton from "./PlayerPlaylistButton";
-import PlayerVolumeControl from "./PlayerVolumeControl";
+import {PlayerVolumeControl} from "./PlayerVolumeControl";
 import useLocalizedHref from "@/hooks/useLocalizedHref";
 import { useRouter } from "next/navigation";
 import { store } from "@/lib/store/store";
 import { AudioElement } from "../../utils/audioModel";
 import { shuffleAudioList } from "@/utils/shuffleAudioList";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { ShareBar } from "@/shared/ui/player/ShareBar";
+import { CircleAudioButton } from "@/shared/ui/player/CircleAudioButton";
+import { NextAudioButton } from "@/shared/ui/player/NextAudioButton";
+import { PlayAudioButton } from "@/shared/ui/player/PlayAudioButton";
+import { PrevAudioButton } from "@/shared/ui/player/PrevAudioButton";
+import { ShufflePlaylistButton } from "@/shared/ui/player/ShufflePlaylistButton";
 
 type Props = {};
 
@@ -50,9 +56,8 @@ const PlayerControls = (props: Props) => {
   const router = useRouter();
   const { innerWidth } = useWindowSize();
 
-
   const audioCatalogHref = useMemo(() => {
-      const audioLocale = audio?.locale || currentLocale;
+    const audioLocale = audio?.locale || currentLocale;
 
     return `${audioLocale === "ru" ? "" : "/en"}/${
       innerWidth > 1200 ? "lectures-and-kirtans?category=" : "playlist/"
@@ -95,7 +100,7 @@ const PlayerControls = (props: Props) => {
       dispatch(setIsPlaying(false));
       audioElement.pause();
     } else {
-      audioElement.play({ audio }).then(() => {
+      audioElement.play({ audio })?.then(() => {
         dispatch(setIsPlaying(true));
       });
     }
@@ -110,31 +115,21 @@ const PlayerControls = (props: Props) => {
     setForceRender((prev) => prev + 1);
   }, [flow, isLooping]);
 
-
   return (
     <div className={clsx(style.controls)}>
       <div className={clsx(style.controls__left)}>
-        <PlayerCircleButton
-          key={`circle-${isLooping}-${forceRender}`}
-          selected={isLooping}
-          onClick={handleCircleButtonClick}
+        <CircleAudioButton className="w-[32px] h-[32px] ml-[-5px]" />
+        <PrevAudioButton className="w-[45px] h-[45px]" />
+        <PlayAudioButton
+          defaultColor="#7A66D5"
+          className="w-[38px] h-[38px] mx-[-8px]"
         />
-        <PlayerPrevButton onClick={handlePrevButtonClick} />
-        <PlayerPlayPauseButton
-          onClick={playingButtonClickHandler}
-          isPlaying={isPlaying}
-          isLoading={isLoading}
-        />
-        <PlayerNextButton onClick={handleNextButtonClick} />
-        <PlayerShuffleButton
-          key={`shuffle-${flow}-${forceRender}`}
-          selected={flow === "random"}
-          onClick={handleShuffleButtonClick}
-        />
+        <NextAudioButton className="w-[45px] h-[45px]" />
+        <ShufflePlaylistButton className="w-[32px] h-[32px]" />
       </div>
       <div className={clsx(style.controls__right)}>
-        <PlayerPlaylistButton onClick={handlePlaylistButtonClick} />
-        <PlayerVolumeControl volume={volume} onChange={volumeInputHandler} />
+        <ShareBar className="w-[38px] h-[38px]" audio={audio} />
+        <PlayerVolumeControl/>
       </div>
     </div>
   );

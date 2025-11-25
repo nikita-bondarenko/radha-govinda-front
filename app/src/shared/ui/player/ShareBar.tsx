@@ -1,3 +1,4 @@
+import { Audio } from "@/components/sections/audio-preview/AudioPreview";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import { useAppSelector } from "@/lib/store/hooks";
 import { AudioShare } from "@/shared/ui";
@@ -7,10 +8,10 @@ import clsx from "clsx";
 import { useState, useMemo, useEffect, useRef } from "react";
 type Props = {
   className?: string;
+  audio: Audio
 };
 
-export const ShareBar = ({ className }: Props) => {
-  const audio = useAppSelector((state) => state.audio.audio);
+export const ShareBar = ({ className, audio }: Props) => {
   const locale = useAppSelector((state) => state.locale.locale);
 
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -66,7 +67,7 @@ export const ShareBar = ({ className }: Props) => {
     
 
   return (
-    <div onClick={handleTouch} onTouchStart={handleTouch}  className="relative">
+    <div onClick={handleTouch} onTouchStart={handleTouch}  className="relative peer">
       <div
         className={clsx(
           "absolute top-[-110%] right-0 transition-opacity px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] flex items-center gap-[16px] pointer-events-none md:px-[10px] md:py-[4px] md:gap-[10px] md:rounded-[6px] md:top-[-80%]",

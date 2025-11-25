@@ -10,7 +10,7 @@ type Props = {
 const SelectOption = ({children, isSelected, onClick}: Props) => {
   return (
     <button
-          className={clsx("text-[18px] md:text-[14px] leading-[100%] whitespace-nowrap pb-4", {
+          className={clsx("text-[18px] md:text-[14px] leading-[100%] whitespace-nowrap pb-4 hover:text-[#6351B5] transition-colors", {
             "text-[#6351B5]":isSelected,
             "text-[#818181]":!isSelected
           })}

@@ -1,14 +1,16 @@
-import clsx from 'clsx'
-import React, { CSSProperties } from 'react'
+import clsx from "clsx";
+import React, { CSSProperties } from "react";
 export type IconProps = {
-    src: string,
-    className: string
-}
+  src: string;
+  className: string;
+};
 
-export default function Icon({src, className}:IconProps) {
+export default function Icon({ src, className }: IconProps) {
   return (
-    <span style={{ backgroundImage: `url(${src})`} as CSSProperties} className={clsx('block bg-no-repeat bg-contain bg-center', className, {
-
-    })}></span>
-  )
+    
+    <span
+      style={{ backgroundImage: `url(${src})` } as CSSProperties}
+      className={clsx("block bg-no-repeat bg-contain bg-center", className, {})}
+    ></span>
+  );
 }

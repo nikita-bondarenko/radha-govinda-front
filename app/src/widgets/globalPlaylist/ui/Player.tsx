@@ -24,7 +24,7 @@ export const Player = () => {
             audio?.Date
           )}${audio?.Place ? `, ${audio?.Place}` : ""}`}</span>
         </div>
-        <ShareBar className="w-[38px] h-[38px] mr-[-5px]" />
+        <ShareBar audio={audio} className="w-[38px] h-[38px] mr-[-5px]" />
       </div>
       <ProgressBar
         className="w-full mb-[15px] [&_.body]:gap-[5px] [&_.track]:bg-[#EDEDED]"

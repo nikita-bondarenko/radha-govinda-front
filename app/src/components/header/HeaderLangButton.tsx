@@ -1,24 +1,38 @@
-'use client'
-import Link from 'next/link'
-import React from 'react'
-import styles from "./Header.module.css"
-import clsx from 'clsx'
-import { usePathname } from 'next/navigation'
-import path from 'path'
-import { langButtons } from '@/utils/langButtons'
+"use client";
+import Link from "next/link";
+import React from "react";
+import styles from "./Header.module.css";
+import clsx from "clsx";
+import { usePathname } from "next/navigation";
+import path from "path";
+import { langButtons } from "@/utils/langButtons";
+import { TextSlideUp } from "@/shared/ui/button/TextSlideUp";
 
 export type HeaderLangButtonProps = {
-    pageSlug: string
-    locale?: string | null;
-    className?: string
-}
+  pageSlug: string;
+  locale?: string | null;
+  className?: string;
+};
 
-export default function HeaderLangButton({pageSlug, locale, className}:HeaderLangButtonProps) {
-const pathname = usePathname()
+export default function HeaderLangButton({
+  pageSlug,
+  locale,
+  className,
+}: HeaderLangButtonProps) {
+  const pathname = usePathname();
 
-const buttonData = langButtons.find(button => button.crossLocale === locale)
+  const buttonData = langButtons.find(
+    (button) => button.crossLocale === locale
+  );
 
   return (
-    (buttonData && <Link className={clsx(styles['header__lang-button'], className)} href={buttonData.getHref(pathname || '')}>{buttonData.label}</Link>)
-  )
+    buttonData && (
+      <Link
+        className={clsx(styles["header__lang-button"], className)}
+        href={buttonData.getHref(pathname || "")}
+      >
+        <TextSlideUp>{buttonData.label}</TextSlideUp>
+      </Link>
+    )
+  );
 }

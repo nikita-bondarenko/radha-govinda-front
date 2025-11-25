@@ -1,4 +1,5 @@
 import Icon from "@/components/Icon";
+import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
@@ -22,8 +23,8 @@ type Props = {
 
 export default function SocialMediaLink({ data, className }: Props) {
   return (
-    <Link href={data?.Href || ""}>
-      <Icon src={data?.Icon?.url || ""} className={className}></Icon>
+    <Link className="relative  hover:opacity-50 transition-opacity" href={data?.Href || ""}>
+      <Icon src={data?.Icon?.url || ""} className={clsx(className)}></Icon>
     </Link>
   );
 }

@@ -1,15 +1,11 @@
 "use client";
 
 import React, { memo, ReactNode, useState } from "react";
-import styles from "./Schedule.module.css";
 import Modal from "@/components/utils/modal/Modal";
 import CloseButton from "@/components/ui/closeButton/CloseButton";
 import ReactMarkdown from "react-markdown";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store/store";
-import { getLocalizedData, type Locale } from "@/utils/getLocalizedData";
-import clsx from "clsx";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
+import { Locale } from "@/utils/getLocalizedData";
 
 export type ParentElement = {
   children: ReactNode;
@@ -49,7 +45,7 @@ export const ScheduleItem = memo(
           {data?.Name}
         </div>{" "}
         <button
-          className="justify-self-end text-grey-dark sm:col-start-2 sm:justify-self-start"
+          className="justify-self-end text-grey-dark sm:col-start-2 sm:justify-self-start underline-offset-2 underline hover:text-[#7A66D5] transition-all"
           onClick={() => onDetailsButtonClick(data?.id)}
         >
           {detailsButtonText}

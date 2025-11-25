@@ -19,12 +19,12 @@ import {
 } from "@/lib/store/audioSlice";
 import { AudioElement } from "@/utils/audioModel";
 import { OptionsButton } from "@/shared/ui";
+import { ShareBar } from "@/shared/ui/player/ShareBar";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
   className?: string;
   isPreviewSection?: boolean;
   handleControlButtonClick: () => void;
-  
 };
 
 export default memo(function AudioPreviewItem({
@@ -47,7 +47,7 @@ export default memo(function AudioPreviewItem({
     if (isThisAudioPlaying) {
       dispatch(setIsPlaying(false));
       audioElement.pause();
-    } else  {
+    } else {
       dispatch(setAudio(audio || null));
       audioElement.play({ audio })?.then(() => {
         dispatch(setIsPlaying(true));
@@ -55,21 +55,57 @@ export default memo(function AudioPreviewItem({
     }
   };
 
+  const isThisAudioLoading= useMemo(() => selectedAudioId === audio?.documentId && isLoading, [selectedAudioId])
+
+  const [isCardHover, setIsCardHover] = useState(false);
+  const [isShareButtonHover, setIsShareButtonHover] = useState(false);
+
+  const handleShareButtonMouseEnter = () => {
+    setIsShareButtonHover(true);
+  };
+
+  const handleShareButtonMouseLeave = () => {
+    setIsShareButtonHover(false);
+  };
+
+  const handleCardMouseEnter = () => {
+    setIsCardHover(true);
+  };
+
+  const handleCardMouseLeave = () => {
+    setIsCardHover(false);
+  };
+
   return (
     <div
+      onClick={controlsClickHandler}
+      onMouseEnter={handleCardMouseEnter}
+      onMouseLeave={handleCardMouseLeave}
       id={audio?.documentId}
       className={clsx(
+        "cursor-pointer bg-[var(--grey-3)]",
         styles.audio,
         className,
-        isPreviewSection && styles.preview
+        styles.preview,
+        { "[&]:bg-[#CACACA]": isCardHover && !isShareButtonHover && !isThisAudioLoading }
       )}
     >
-      <button onClick={controlsClickHandler} className={clsx(styles.controls, {"pointer-event-none": isLoading})}>
+      <button
+        className={clsx(styles.controls, {
+          "pointer-event-none": isThisAudioLoading,
+        })}
+      >
         <Background
           className={styles.controls__background}
           imageUrl={audio?.AudioCategory?.Image?.formats?.thumbnail.url}
         ></Background>
-        <div className={styles.controls__button}>
+        <div
+          className={clsx(
+            styles.controls__button,
+            "bg-[var(--grey-2)] transition-all duration-500",
+            { "[&]:bg-[#7A66D5]": isCardHover && !isShareButtonHover && !isThisAudioLoading }
+          )}
+        >
           <PauseIcon
             fill={"white"}
             className={clsx(
@@ -84,7 +120,7 @@ export default memo(function AudioPreviewItem({
               (!isThisAudioPlaying || isLoading) && styles["icon-visible"],
               {
                 "play-button-loading":
-                  isLoading && selectedAudioId === audio?.documentId,
+                  isThisAudioLoading,
               }
             )}
           ></PlayIcon>
@@ -99,7 +135,17 @@ export default memo(function AudioPreviewItem({
             <span className={clsx(styles["info__duration"], "small-text grey")}>
               {audio?.Duration}
             </span>
-            <OptionsButton audio={audio}></OptionsButton>
+            {audio && (
+              <div
+                onMouseEnter={handleShareButtonMouseEnter}
+                onMouseLeave={handleShareButtonMouseLeave}
+              >
+                <ShareBar
+                  className="w-[38px] h-[38px] mt-[-5px] mr-[-10px] sm:w-[33px] sm:h-[33px]"
+                  audio={audio}
+                ></ShareBar>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.info__bottom}>

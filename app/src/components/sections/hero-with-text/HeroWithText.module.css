@@ -10,7 +10,7 @@
   .hero-with-text .container {
     display: flex;
     flex-direction: column;
-    gap: 42px;
+    gap: 36px;
     justify-content: space-between;
   }
   
@@ -53,12 +53,11 @@
     margin-bottom: -5px;
   }
   .hero-with-text__subtitle * {
-    color: #A8A8A8;
+    color: #CACACA;
     font-size: 40px;
     font-weight: 400;
     line-height: 150%;
     letter-spacing: 1px;
-    -webkit-text-stroke-width: 1px;
     padding-bottom: 0.05em;
 
     @apply font-bounded

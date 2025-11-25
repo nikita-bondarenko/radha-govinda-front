@@ -8,21 +8,17 @@
   border-radius: 40px;
   background: var(--main-purple);
   padding: 8px 31px;
-  @apply md:text-[12px] md:leading-[110%] md:tracking-[0.24px] md:px-[19px] md:py-[9px]
+  @apply  md:text-[12px] md:leading-[110%] md:tracking-[0.24px] md:px-[19px] md:py-[9px]
     sm:mt-[5px] sm:py-[13.5px] sm:text-center sm:w-full;
 }
 
 /* Стили для мини-плеера */
 .header__button--mini-player {
-  @apply flex items-center gap-[12px] cursor-pointer;
+  @apply flex items-center gap-[12px];
   height: 40px;
   min-width: 214px;
   max-width: 300px;
   transition: all 0.3s ease;
-}
-
-.header__button--mini-player:hover {
-  opacity: 0.9;
 }
 
 .header__button__play-button {

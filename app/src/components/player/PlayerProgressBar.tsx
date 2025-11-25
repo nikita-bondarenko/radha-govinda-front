@@ -18,9 +18,8 @@ import { getRangePercent } from "@/utils/getRangePersent";
 import { parseDurationToSeconds } from "@/utils/parseDate";
 import { AudioElement } from "../../utils/audioModel";
 
-type Props = {};
 
-const PlayerProgressBar = (props: Props) => {
+const PlayerProgressBar = () => {
   const [thumbTranslate, setThumbTranslate] = useState(0);
   const dispatch = useAppDispatch();
   const progress = useAppSelector(selectAudioProgress);

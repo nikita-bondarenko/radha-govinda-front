@@ -99,27 +99,26 @@ export default memo(function HeaderLectureBar({
       dispatch(setIsPlaying(false));
       audioElement.pause();
     } else {
-      audioElement.play({ audio }).then(() => {
+      audioElement.play({ audio })?.then(() => {
         dispatch(setIsPlaying(true));
       });
     }
   };
 
   const startAudio = () => {
-    console.log(isPlaying, audio, playlist)
+    console.log(isPlaying, audio, playlist);
     if (!audio) {
-      
       const audioElement = new AudioElement();
 
       let audiorecord = playlist[0];
-        dispatch(setAudio(audiorecord));
+      dispatch(setAudio(audiorecord));
 
-      audioElement.play({ audio: audiorecord }).then(() => {
+      audioElement.play({ audio: audiorecord })?.then(() => {
         dispatch(setIsPlaying(true));
       });
     } else if (!isPlaying) {
-        const audioElement = new AudioElement();
-      audioElement.play({ audio }).then(() => {
+      const audioElement = new AudioElement();
+      audioElement.play({ audio })?.then(() => {
         dispatch(setIsPlaying(true));
       });
     }
@@ -146,7 +145,12 @@ export default memo(function HeaderLectureBar({
       const audioElement = new AudioElement();
       // Приоритет 1: Если leftTime доступно из реальных метаданных, используем его
       const realDuration = audioElement.getDuration();
-      if (realDuration > 0 && isFinite(realDuration) && leftTime > 0) {
+      if (
+        realDuration &&
+        realDuration > 0 &&
+        isFinite(realDuration) &&
+        leftTime > 0
+      ) {
         return leftTime;
       }
 
@@ -182,6 +186,7 @@ export default memo(function HeaderLectureBar({
       <div
         ref={inViewRef}
         className={clsx(
+          "[]hidden",
           className,
           style.header__button,
           style["header__button--mini-player"]
@@ -224,9 +229,21 @@ export default memo(function HeaderLectureBar({
     >
       <button
         onClick={startAudio}
-        className={clsx(className, style.header__button)}
+        className={clsx(
+          className,
+          style.header__button,
+          // ВСЯ АНИМАЦИЯ — вот эти 4 класса:
+          "group relative overflow-hidden",
+          "transition-all duration-500 ease-out",
+          "hover:scale-[1.01] hover:brightness-110",
+          "active:scale-95"
+        )}
       >
-        {button?.ButtonText}
+        {/* Тонкое, почти незаметное свечение — как у логотипа */}
+        <span className="pointer-events-none absolute inset-0 rounded-full bg-white/20 scale-0 blur-xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-100 opacity-0" />
+
+        {/* Текст кнопки */}
+        <span className="relative z-10">{button?.ButtonText}</span>
       </button>
     </div>
   );

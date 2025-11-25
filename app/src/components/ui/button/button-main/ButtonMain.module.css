@@ -8,6 +8,6 @@
   border-radius: 40px;
   background: var(--main-purple);
   padding: 8px 31px;
-  @apply w-fit md:text-[12px] md:leading-[110%] md:tracking-[0.24px] md:px-[19px] md:py-[9px]
+  @apply transition-all duration-500 w-fit md:text-[12px] md:leading-[110%] md:tracking-[0.24px] md:px-[19px] md:py-[9px]
     sm:py-[13.5px] sm:text-center sm:w-full;
 }

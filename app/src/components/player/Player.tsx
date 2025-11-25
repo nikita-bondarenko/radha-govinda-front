@@ -25,6 +25,7 @@ import { createPortal } from "react-dom";
 import PlayerImage from "./PlayerImage";
 import PlayerControls from "./PlayerControls";
 import PlayerProgressBar from "./PlayerProgressBar";
+import { ProgressBar } from "@/shared/ui/player/ProgressBar";
 
 type Position = {
   clientX: number;
@@ -34,19 +35,9 @@ type Position = {
 export default function Player() {
   const audio = useAppSelector(selectAudio);
   const isMainPlayerVisible = useAppSelector(selectIsMainPlayerVisible);
-
-  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
-  const dispatch = useAppDispatch();
-  
-  useEffect(() => {
-    const modalRoot = document.getElementById("modal-root");
-    setModalRoot(modalRoot);
-  }, []);
-
   const playerRef = useRef<HTMLDivElement>(null);
 
   const player = (
-    // <div className={clsx(style.modal)}>
       <div className={style.wrapper}>
         <div
           ref={playerRef}
@@ -57,12 +48,10 @@ export default function Player() {
          <PlayerImage audio={audio}></PlayerImage>
           <div className={clsx(style.right)}>
             <PlayerControls></PlayerControls>
-            <PlayerProgressBar></PlayerProgressBar>
+            <ProgressBar className="w-[360px]" timeDisplayPosition="bottom"/>
           </div>
         </div>
       </div>
-    // </div>
   );
   return player;
-  // return modalRoot ? createPortal(player, modalRoot) : null;
 }

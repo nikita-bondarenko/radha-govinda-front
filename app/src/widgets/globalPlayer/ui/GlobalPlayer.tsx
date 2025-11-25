@@ -14,7 +14,7 @@ import { VolumeBar } from "./VolumeBar";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import clsx from "clsx";
 import { CloseAudioBar } from "./CloseAudioBar";
-import { setIsGlobalPlaylistOpen } from "@/lib/store/audioSlice";
+import { setIsGlobalPlaylistOpen, setIsPlaying } from "@/lib/store/audioSlice";
 
 export const GlobalPlayer = () => {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
@@ -25,6 +25,7 @@ export const GlobalPlayer = () => {
   useEffect(() => {
     const modalRoot = document.getElementById("modal-root");
     setModalRoot(modalRoot);
+    dispatch(setIsPlaying(false))
   }, []);
 
   const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
@@ -32,7 +33,6 @@ export const GlobalPlayer = () => {
     setTimeout(() => {
       dispatch(setIsGlobalPlaylistOpen(true));
     }, 100);
-    
   };
 
   const player = (
@@ -62,7 +62,7 @@ export const GlobalPlayer = () => {
           timeDisplayPosition="sides"
         />
         <div className="flex gap-[10px]">
-          <ShareBar className="w-[38px] h-[38px]" />
+          <ShareBar audio={audio} className="w-[38px] h-[38px]" />
           <VolumeBar className="w-[37px] h-[37px]" />
         </div>
       </div>
@@ -83,7 +83,7 @@ export const GlobalPlayer = () => {
           />
         </div>
         <div className="flex items-center gap-[2px]">
-          <ShareBar className="w-[31px] h-[31px]" />
+          <ShareBar audio={audio} className="w-[31px] h-[31px]" />
           <CloseAudioBar className="w-[31px] h-[31px]" />
         </div>
       </div>

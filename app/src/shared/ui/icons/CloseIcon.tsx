@@ -6,7 +6,7 @@ export default function CloseIcon({  className, fill = 'black' }: SvgIconProps) 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={clsx(className, "image")}
+      className={clsx(className, "image [&_*]:transition-all [&_*]:duration-300")}
       viewBox="0 0 18 18"
       fill="none"
     >

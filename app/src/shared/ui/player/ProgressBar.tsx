@@ -18,12 +18,12 @@ import clsx from "clsx";
 
 type Props = {
   timeDisplayPosition?: "sides" | "bottom";
-  className?:string
+  className?: string;
 };
 
 export const ProgressBar: React.FC<Props> = ({
   timeDisplayPosition,
-  className
+  className,
 }) => {
   const dispatch = useAppDispatch();
   const progress = useAppSelector(selectAudioProgress); // только для стартовой позиции
@@ -164,13 +164,16 @@ export const ProgressBar: React.FC<Props> = ({
     };
   }, [isDragging, liveProgress]);
 
-    const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
-     e.stopPropagation()
-    };
-  
+  const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
+    e.stopPropagation();
+  };
 
   return (
-    <div onClick={handleTouch} onTouchStart={handleTouch}  className={clsx("", className)}>
+    <div
+      onClick={handleTouch}
+      onTouchStart={handleTouch}
+      className={clsx("", className)}
+    >
       <div
         className={clsx("small-text grey body", {
           "grid grid-cols-[32px_auto_32px] gap-[20px]":
@@ -182,9 +185,12 @@ export const ProgressBar: React.FC<Props> = ({
           ref={trackRef}
           onMouseDown={handlePointerDown}
           onTouchStart={handlePointerDown}
-          className={clsx("relative h-[16px] flex items-center shrink-0 cursor-pointer", {
-            "col-span-2": timeDisplayPosition === "bottom",
-          })}
+          className={clsx(
+            "relative h-[16px] flex items-center shrink-0 cursor-pointer",
+            {
+              "col-span-2": timeDisplayPosition === "bottom",
+            }
+          )}
         >
           <div
             className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[4px] bg-white rounded-full  select-none track"
@@ -192,7 +198,7 @@ export const ProgressBar: React.FC<Props> = ({
           >
             {/* Заполнение — мгновенно следует за мышью */}
             <div
-              className="h-full bg-[var(--main-purple)] rounded-l-full transition-none"
+              className={clsx("h-full bg-[var(--main-purple)] rounded-l-full", {"transition-all": !isDragging})}
               style={{ width: `${liveProgress}%` }}
             />
 
@@ -212,16 +218,20 @@ export const ProgressBar: React.FC<Props> = ({
           </div>
         </div>
 
-     {timeDisplayPosition &&   <span
-          className={clsx("text-[12px]", {
-            "-order-1": timeDisplayPosition === "sides",
-          })}
-        >
-          {formatTime(passedTime)}
-        </span>}
-    { timeDisplayPosition &&    <span className="justify-self-end text-[12px]">
-          {formatTime(getDisplayLeftTime())}
-        </span>}
+        {timeDisplayPosition && (
+          <span
+            className={clsx("text-[12px] select-none", {
+              "-order-1": timeDisplayPosition === "sides",
+            })}
+          >
+            {formatTime(passedTime)}
+          </span>
+        )}
+        {timeDisplayPosition && (
+          <span className="justify-self-end text-[12px] select-none">
+            {formatTime(getDisplayLeftTime())}
+          </span>
+        )}
       </div>
     </div>
   );

@@ -51,7 +51,7 @@
 }
 
 .tabs__button {
-  @apply px-[19px] pt-[9px] pb-[11px] rounded-full bg-transparent-white2 font-mulish font-semibold text-[16px] text-black leading-[110%] tracking-[0.32px] transition-colors hover:bg-white
+  @apply px-[19px] pt-[9px] pb-[11px] rounded-full bg-transparent-white2 font-mulish font-semibold text-[16px] text-black leading-[110%] tracking-[0.32px] transition-colors duration-500 hover:bg-purple hover:text-white 
 }
 
 .tabs__button.active {

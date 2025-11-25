@@ -85,7 +85,7 @@ export default function PlaylistBody({
       );
     }
     dispatch(setAudio(audioToBePlayed || null));
-    audioElement.play({ audio: audioToBePlayed }).then(() => {
+    audioElement.play({ audio: audioToBePlayed })?.then(() => {
       dispatch(setIsPlaying(true));
     });
 

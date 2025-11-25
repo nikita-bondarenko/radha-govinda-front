@@ -4,6 +4,7 @@ import { parseDate } from "@/utils/parseDate";
 import clsx from "clsx";
 import Background from "../utils/Background";
 import { Audio } from "../sections/audio-preview/AudioPreview";
+import typograph from "@/utils/typograph";
 
 type Props = {
     audio: Audio
@@ -16,7 +17,7 @@ const PlayerImage = ({audio}: Props) => {
         <Background imageUrl={audio?.AudioCategory?.Image?.url} image={audio?.AudioCategory?.Image}></Background>
       </div>
       <div className={clsx(style.info)}>
-        <h4 className={clsx(style.name, "small-text")}>{audio?.Name}</h4>
+        <h4 className={clsx(style.name, "small-text")}>{typograph(audio?.Name)}</h4>
         <p className={clsx(style.description, "small-text grey")}>{`${parseDate(
           audio?.Date
         )} ${audio?.Place ? `, ${audio?.Place}` : ""}`}</p>

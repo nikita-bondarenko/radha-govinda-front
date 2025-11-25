@@ -42,15 +42,15 @@
 }
 
 .controls {
-    @apply flex gap-[125px] items-center md:justify-center
+    @apply flex gap-[145px] items-center md:justify-center
 }
 
 .controls__left {
-  @apply flex items-center gap-[21px] md:translate-x-[7px] sm:gap-[24px] sm:translate-x-[-1px];
+  @apply flex items-center gap-[11px] md:translate-x-[7px] sm:gap-[24px] sm:translate-x-[-1px];
 }
 
 .controls__right {
-    @apply flex items-center gap-[48px] md:hidden
+    @apply flex items-center gap-[20px] md:hidden
 }
 
 .flow__circle, .flow__random {

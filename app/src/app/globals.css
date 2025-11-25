@@ -114,7 +114,7 @@ section {
 }
 
 .markdown p {
-  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%] mb-[16px] last:mb-0 md:mb-[14px] md:last:mb-0;
+  @apply text-[16px] text-black leading-[110%] tracking-[0.32px] md:text-[14px] sm:text-[14px] sm:leading-[100%] mb-[16px] last:mb-0 md:mb-[14px] md:last:mb-0 transition-all  duration-500;
 }
 
 

@@ -38,16 +38,16 @@ const Filter = <T,>({
     }
   }, [initialCategoryId]);
 
- useEffect(() => {
-  const url = new URL(window.location.href);
+  useEffect(() => {
+    const url = new URL(window.location.href);
 
-  if (selectedCategoryId) {
-    url.searchParams.set('category', selectedCategoryId);
-  } else {
-    url.searchParams.delete('category');
-  }
-  window.history.pushState({}, '', url.toString());
-}, [selectedCategoryId]);
+    if (selectedCategoryId) {
+      url.searchParams.set("category", selectedCategoryId);
+    } else {
+      url.searchParams.delete("category");
+    }
+    window.history.pushState({}, "", url.toString());
+  }, [selectedCategoryId]);
 
   useEffect(() => {
     let filteredItems: T[] = items;
@@ -88,14 +88,22 @@ const Filter = <T,>({
             />
           ))}
         </div>
-        <div className="relative">
+        <div className="relative group">
           <input
-            className="rounded-full border-[#818181] border p-[12px] pl-[46px] text-[14px] leading-[110%] w-[280px] md:w-[320px] sm:w-full"
+            className="rounded-full border border-[#818181] p-[12px] pl-[46px] text-[14px] leading-[110%] w-[280px] md:w-[320px] sm:w-full
+               transition-all duration-500 focus:outline-none
+               focus:border-[#7A66D5] focus:ring-4 focus:ring-[#7A66D5]/15
+               group-hover:border-[#7A66D5] group-hover:ring-4 group-hover:ring-[#7A66D5]/10"
             placeholder={localizedData?.section.filter.input.placeholder || ""}
             type="text"
             onChange={(e) => setSearchInputValue(e.target.value)}
           />
-          <Search className="w-[24px] h-[24px] absolute top-1/2 -translate-y-1/2 left-[19px]" />
+
+          <Search
+            className="w-[24px] h-[24px] absolute top-1/2 -translate-y-1/2 left-[19px] pointer-events-none
+               text-[#818181] transition-all duration-500
+               group-hover:text-[#7A66D5] group-hover:scale-110"
+          />
         </div>
       </div>
 
