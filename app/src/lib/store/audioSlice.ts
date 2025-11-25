@@ -20,6 +20,7 @@ export type AudioState = {
   isLoading: boolean;
   playlistAudioPositions: string[];
   logoUrl: string | null | undefined;
+  isGlobalPlaylistOpen: boolean
 };
 
 const initialState: AudioState = {
@@ -39,6 +40,7 @@ const initialState: AudioState = {
   isMobile: false,
   playlistAudioPositions: [],
   logoUrl: null,
+  isGlobalPlaylistOpen: false
 };
 
 const audioSlice = createSlice({
@@ -103,6 +105,9 @@ const audioSlice = createSlice({
     setLogoUrl: (state, action: PayloadAction<string | null | undefined>) => {
       state.logoUrl = action.payload;
     },
+    setIsGlobalPlaylistOpen:(state, action: PayloadAction<boolean>) => {
+      state.isGlobalPlaylistOpen = action.payload;
+    },
   },
 });
 
@@ -125,6 +130,7 @@ export const {
   setIsMobile,
   setIsLoading,
   setPlaylistAudioPositions,
+  setIsGlobalPlaylistOpen
 } = audioSlice.actions;
 
 export const selectAudio = (state: RootState) => state.audio.audio;

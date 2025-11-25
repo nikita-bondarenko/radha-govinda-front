@@ -17,11 +17,13 @@ import { AudioElement } from "@/utils/audioModel";
 import clsx from "clsx";
 
 type Props = {
-  timeDisplayPosition: "sides" | "bottom";
+  timeDisplayPosition?: "sides" | "bottom";
+  className?:string
 };
 
 export const ProgressBar: React.FC<Props> = ({
-  timeDisplayPosition = "bottom",
+  timeDisplayPosition,
+  className
 }) => {
   const dispatch = useAppDispatch();
   const progress = useAppSelector(selectAudioProgress); // только для стартовой позиции
@@ -72,7 +74,7 @@ export const ProgressBar: React.FC<Props> = ({
         audioEl.getDuration() ||
         parseDurationToSeconds(audio?.Duration || "0:00");
 
-      if (duration && duration > 0) {
+      if (current && duration && duration > 0) {
         const percent = (current / duration) * 100;
         setLiveProgress(percent);
         dispatch(setProgress(percent));
@@ -162,10 +164,15 @@ export const ProgressBar: React.FC<Props> = ({
     };
   }, [isDragging, liveProgress]);
 
+    const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
+     e.stopPropagation()
+    };
+  
+
   return (
-    <div className="flex flex-col gap-[1px] w-[360px] md:w-[289px] sm:w-full">
+    <div onClick={handleTouch} onTouchStart={handleTouch}  className={clsx("", className)}>
       <div
-        className={clsx("small-text grey", {
+        className={clsx("small-text grey body", {
           "grid grid-cols-[32px_auto_32px] gap-[20px]":
             timeDisplayPosition === "sides",
           "grid grid-cols-[1fr_1fr] gap-0": timeDisplayPosition === "bottom",
@@ -180,7 +187,7 @@ export const ProgressBar: React.FC<Props> = ({
           })}
         >
           <div
-            className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[4px] bg-white rounded-full  select-none"
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[4px] bg-white rounded-full  select-none track"
             style={{ touchAction: "none" }}
           >
             {/* Заполнение — мгновенно следует за мышью */}
@@ -205,16 +212,16 @@ export const ProgressBar: React.FC<Props> = ({
           </div>
         </div>
 
-        <span
+     {timeDisplayPosition &&   <span
           className={clsx("text-[12px]", {
             "-order-1": timeDisplayPosition === "sides",
           })}
         >
           {formatTime(passedTime)}
-        </span>
-        <span className="justify-self-end text-[12px]">
+        </span>}
+    { timeDisplayPosition &&    <span className="justify-self-end text-[12px]">
           {formatTime(getDisplayLeftTime())}
-        </span>
+        </span>}
       </div>
     </div>
   );

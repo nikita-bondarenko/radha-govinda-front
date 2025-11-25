@@ -1,5 +1,5 @@
 .modal {
-  @apply opacity-0 pointer-events-none fixed top-0 left-0 right-0 bottom-0 z-50 transition-transform duration-500 translate-x-[-110%];
+  @apply opacity-0 pointer-events-none fixed top-0 left-0 right-0 bottom-0 z-[100] transition-transform duration-500 translate-x-[-110%];
 }
 
 .modal.open {

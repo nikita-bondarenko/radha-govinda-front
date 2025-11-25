@@ -49,7 +49,7 @@ export default memo(function AudioPreviewItem({
       audioElement.pause();
     } else  {
       dispatch(setAudio(audio || null));
-      audioElement.play({ audio }).then(() => {
+      audioElement.play({ audio })?.then(() => {
         dispatch(setIsPlaying(true));
       });
     }

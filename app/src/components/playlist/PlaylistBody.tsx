@@ -116,7 +116,7 @@ export default function PlaylistBody({
   }, [flow]);
 
   const { highlightedAudioId } = useScrollToAudio();
-  
+
   useEffect(() => {
     if (highlightedAudioId) {
       const currentAudio = audios.find(
@@ -155,6 +155,7 @@ export default function PlaylistBody({
         play={play}
       ></PlaylistControls>
       <PlaylistAudioList
+        className=" mt-[-90px]"
         audiosPositionList={audiosPositionList}
         audios={audios}
       ></PlaylistAudioList>

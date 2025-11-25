@@ -14,11 +14,13 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 type PlaylistAudioListProps = {
   audios: Audio[];
   audiosPositionList: string[];
+  className?: string
 };
 
 export default function PlaylistAudioList({
   audios,
   audiosPositionList,
+  className
 }: PlaylistAudioListProps) {
   const [isRenderFinished, setIsRenderFinished] = useState(false);
   const [isTransitionReady, setIsTransitionReady] = useState(false);
@@ -50,7 +52,7 @@ export default function PlaylistAudioList({
     dispatch(setPlaylistAudioPositions(playlistAudioPositions));
   };
   return (
-    <div className="container  mt-[-90px]">
+    <div className={clsx("container ", className)}>
       <div className="flex flex-col gap-[10px] relative" ref={wrapper}>
         {audios.map((audio) => (
           <PlaylistAudio

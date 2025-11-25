@@ -23,8 +23,9 @@ export const PlayAudioButton = ({ className, defaultColor }: Props) => {
   const audio = useAppSelector(selectAudio);
 
   const dispatch = useAppDispatch();
-  const handleClick = () => {
-    console.log("handleClick");
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // console.log("handleClick");
     const audioElement = new AudioElement();
     if (isPlaying) {
       dispatch(setIsPlaying(false));
@@ -54,15 +55,16 @@ export const PlayAudioButton = ({ className, defaultColor }: Props) => {
     }
   }, [isHover]);
 
-  useEffect(() => {
-    console.log(isLoading, isPlaying);
-  }, [isLoading, isPlaying]);
+  const handleTouch = (e: React.TouchEvent) => {
+    e.stopPropagation();
+  };
 
   return (
     <button
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
+      onTouchStart={handleTouch}
       className={clsx(className, "p-[5px] relative", {
         "pointer-event-none": isLoading,
       })}

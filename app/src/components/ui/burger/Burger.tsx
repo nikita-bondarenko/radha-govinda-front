@@ -36,7 +36,7 @@ export default function Burger({
       <button
         onClick={burgerHandler}
         className={clsx(
-          "hidden md:block h-[16px] w-[20px] z-[200] absolute top-[25px] right-[19px]",
+          "hidden md:block h-[16px] w-[20px] z-[150] absolute top-[25px] right-[19px]",
           {
             "pointer-events-none": isMenuBeingAnimated,
           }

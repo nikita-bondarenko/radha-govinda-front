@@ -1,9 +1,7 @@
-import {
-  selectAudioVolume,
-  setVolume,
-} from "@/lib/store/audioSlice";
+import { selectAudioVolume, setVolume } from "@/lib/store/audioSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { AudioVolume } from "@/shared/ui/icons/AudioVolume";
+import { AudioElement } from "@/utils/audioModel";
 import clsx from "clsx";
 import { useMemo, useRef, useState, useEffect } from "react";
 
@@ -33,9 +31,13 @@ export const VolumeBar = ({ className }: Props) => {
     const rect = trackRef.current.getBoundingClientRect();
     const y = clientY - rect.top;
     const height = rect.height;
-    const percent = Math.round(Math.max(0, Math.min(100, ((height - y) / height) * 100)));
+    const percent = Math.round(
+      Math.max(0, Math.min(100, ((height - y) / height) * 100))
+    );
     setLiveVolume(percent);
     dispatch(setVolume(percent));
+    const audioElement = new AudioElement();
+    audioElement.setVolume(volume);
   };
 
   const handlePointerDown = (e: React.MouseEvent | React.TouchEvent) => {
@@ -47,7 +49,8 @@ export const VolumeBar = ({ className }: Props) => {
 
   const handlePointerMove = (e: MouseEvent | TouchEvent) => {
     if (!isDragging) return;
-    const clientY = "touches" in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+    const clientY =
+      "touches" in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
     updateVolume(clientY);
   };
 
@@ -58,7 +61,9 @@ export const VolumeBar = ({ className }: Props) => {
 
     document.addEventListener("mousemove", handlePointerMove);
     document.addEventListener("mouseup", handlePointerUp);
-    document.addEventListener("touchmove", handlePointerMove, { passive: false });
+    document.addEventListener("touchmove", handlePointerMove, {
+      passive: false,
+    });
     document.addEventListener("touchend", handlePointerUp);
 
     return () => {
@@ -145,7 +150,7 @@ export const VolumeBar = ({ className }: Props) => {
       <button
         ref={buttonRef}
         onClick={(e) => {
-          e.stopPropagation();   // критично!
+          e.stopPropagation(); // критично!
           setIsBarOpen((prev) => !prev);
         }}
         onMouseEnter={() => setIsHover(true)}

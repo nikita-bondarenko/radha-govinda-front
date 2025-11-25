@@ -5,12 +5,13 @@ import { useInView } from "react-intersection-observer";
 
 type Props = {
   text?: string;
+  className?: string
 };
 
 const GAP = 10;
 const SPEED = 50; // px/s — регулируй под себя
 
-export const AudioName = ({ text }: Props) => {
+export const AudioName = ({ text,className }: Props) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
   const textRef = useRef<HTMLDivElement | null>(null);
@@ -110,7 +111,7 @@ export const AudioName = ({ text }: Props) => {
           inViewRef(el);
         }}
         style={{ height: textHeight || "1.1em" }}
-        className="w-[232px] relative overflow-hidden text-[16px] leading-[110%]"
+        className={clsx(" relative overflow-hidden text-[16px] leading-[110%]", className)}
       >
         <div
           style={{ height: textHeight || "1.1em" }}

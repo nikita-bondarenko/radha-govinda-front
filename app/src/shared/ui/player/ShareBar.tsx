@@ -1,10 +1,8 @@
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
-import { setFlow, setPlaylistAudioPositions } from "@/lib/store/audioSlice";
 import { useAppSelector } from "@/lib/store/hooks";
 import { AudioShare } from "@/shared/ui";
 import Sign from "@/shared/ui/icons/Sign";
 import { copyToClipboard } from "@/shared/utils";
-import { shuffleAudioList } from "@/utils/shuffleAudioList";
 import clsx from "clsx";
 import { useState, useMemo, useEffect, useRef } from "react";
 type Props = {
@@ -62,18 +60,23 @@ export const ShareBar = ({ className }: Props) => {
 
   const localizedData = useLocalizedStaticData();
 
+    const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
+       e.stopPropagation()
+      };
+    
+
   return (
-    <div className="relative">
+    <div onClick={handleTouch} onTouchStart={handleTouch}  className="relative">
       <div
         className={clsx(
-          "absolute top-[-110%] right-0 transition-opacity px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] flex items-center gap-[16px] pointer-events-none",
+          "absolute top-[-110%] right-0 transition-opacity px-[17px] py-[8px] rounded-[10px] border-[1px] border-[var(--grey-2)] bg-[var(--grey-3)] flex items-center gap-[16px] pointer-events-none md:px-[10px] md:py-[4px] md:gap-[10px] md:rounded-[6px] md:top-[-80%]",
           {
             "opacity-0": !isTooltipOpen,
           }
         )}
       >
-        <Sign className={"w-[16px] h-[16px]"}></Sign>
-        <span className={"whitespace-nowrap small-text"}>
+        <Sign className={"w-[16px] h-[16px] md:w-[14px] md:h-[14px] sm:w-[12px] sm:h-[12px]"}></Sign>
+        <span className={"whitespace-nowrap text-[16px] leading-[110%] md:text-[14px] sm:text-[12px]"}>
           {localizedData?.audioPreview.succesMessage}
         </span>
       </div>
