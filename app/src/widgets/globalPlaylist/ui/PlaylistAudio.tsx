@@ -1,27 +1,23 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { Audio } from "../sections/audio-preview/AudioPreview";
 import clsx from "clsx";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
 import {
   selectAudioIsPlaying,
   selectAudioIsLoading,
-  selectAudioVolume,
   selectAudioId,
   setIsPlaying,
   setAudio,
 } from "@/lib/store/audioSlice";
 import { AudioElement } from "@/utils/audioModel";
-import PauseIcon from "../../shared/ui/icons/PauseIcon";
-import PlayIcon from "../../shared/ui/icons/PlayIcon";
-import { parseDate } from "@/utils/parseDate";
 
-import styles from "./PlaylistAudio.module.css";
-import ShareIcon from "../../shared/ui/icons/ShareIcon";
-import DotsIcon from "../../shared/ui/icons/DotsIcon";
-import Sign from "@/shared/ui/icons/Sign";
+import { parseDate } from "@/utils/parseDate";
 import { OptionsButton } from "@/shared/ui";
+import PauseIcon from "@/shared/ui/icons/PauseIcon";
+import PlayIcon from "@/shared/ui/icons/PlayIcon";
+import { Audio } from "@/components/sections/audio-preview/AudioPreview";
+import { ShareBar } from "@/shared/ui/player/ShareBar";
 
 type PlaylistAudioProps = {
   audio: Audio;
@@ -58,7 +54,7 @@ export default function PlaylistAudio({
       audioElement.pause();
     } else {
       dispatch(setAudio(audio || null));
-      audioElement.play({ audio }).then(() => {
+      audioElement.play({ audio })?.then(() => {
         dispatch(setIsPlaying(true));
       });
     }
@@ -115,7 +111,10 @@ export default function PlaylistAudio({
           </span>
         </div>
         <div className="flex flex-col justify-between justify-self-end items-end shrink-0">
-          <OptionsButton audio={audio}></OptionsButton>
+          <ShareBar
+            className="w-[30px] h-[30px] mt-[-10px] mr-[-9px] sm:w-[30px] sm:h-[30px]"
+            audio={audio}
+          ></ShareBar>
           <span className="text-black text-[7px] opacity-50">
             {audio?.Duration}
           </span>

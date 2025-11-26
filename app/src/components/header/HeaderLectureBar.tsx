@@ -27,6 +27,7 @@ import { parseDurationToSeconds } from "@/utils/parseDate";
 import PlayIcon from "../../shared/ui/icons/PlayIcon";
 import PauseIcon from "../../shared/ui/icons/PauseIcon";
 import { AudioElement } from "../../utils/audioModel";
+import MusicBar, { MusicBars } from "./MusicBars";
 
 export type HeaderButton = {
   __typename?: "ComponentBigButtonBolshayaKnopka";
@@ -194,6 +195,7 @@ export default memo(function HeaderLectureBar({
         data-hide-main-player={isClient && inView}
         onClick={handleMiniPlayerClick}
       >
+        <MusicBars isPlaying={isPlaying}/>
         <button
           onClick={handlePlayPause}
           className={style["header__button__play-button"]}

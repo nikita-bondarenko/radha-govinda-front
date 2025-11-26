@@ -1,16 +1,32 @@
+import { Audio } from "@/components/sections/audio-preview/AudioPreview";
+import { ItemsPerPage } from "@/components/ui/pagination/Pagination";
 import { setSelectedCategoryId } from "@/lib/store/audioSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export const useScrollToAudio = () => {
+const breakpoints = {
+  md: 1200,
+  sm: 740,
+};
+
+type Props = {
+  itemsPerPage: ItemsPerPage;
+  items: Audio[];
+};
+
+export const useScrollToAudio = ({ itemsPerPage, items }: Props) => {
   const [highlightedAudioId, setHighlightedAudioId] = useState<string | null>(
     null
   );
 
+  const [audioId, setAudioId] = useState<string | null>(null);
+
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const searchParams = useSearchParams();
+
+  const [initPage, setInitPage] = useState<number>();
 
   const [initialCategoryId, setInitialCategoryId] = useState<string | null>(
     null
@@ -19,11 +35,13 @@ export const useScrollToAudio = () => {
   const dispatch = useAppDispatch();
 
   const scrollToAudio = (audioId: string) => {
-    setHighlightedAudioId(audioId);
-
     setTimeout(() => {
-      setHighlightedAudioId(null);
-    }, 4000);
+      setHighlightedAudioId(audioId);
+
+      setTimeout(() => {
+        setHighlightedAudioId(null);
+      }, 4000);
+    }, 500);
 
     const element = document.getElementById(audioId);
     console.log(element);
@@ -39,7 +57,7 @@ export const useScrollToAudio = () => {
         } catch (e) {
           console.log("scroll error message:", e);
         }
-      }, 600);
+      }, 200);
     }
   };
 
@@ -53,16 +71,34 @@ export const useScrollToAudio = () => {
     }
 
     if (audioFromUrl) {
-      scrollToAudio(audioFromUrl);
-    } 
+      setAudioId(audioFromUrl);
+    }
     setIsInitialLoad(false);
   }, [searchParams, dispatch]);
 
   useEffect(() => {
-    scrollTo({ top: 2000, left: 0, behavior: "smooth" });
-  }, []);
+    const innerWidth = window.innerWidth;
+    console.log(itemsPerPage);
+    let itemsPerPageActual: number | undefined = undefined;
+    itemsPerPageActual = itemsPerPage.lg;
+    if (innerWidth <= breakpoints.sm) itemsPerPageActual = itemsPerPage.sm;
+    if (innerWidth <= breakpoints.md) itemsPerPageActual = itemsPerPage.md;
+
+    if (itemsPerPageActual && audioId) {
+      const itemIndex = items.findIndex(
+        (items) => items?.documentId === audioId
+      );
+      const initPage = Math.floor(itemIndex / itemsPerPageActual) + 1;
+      console.log(initPage);
+      setInitPage(initPage);
+      setTimeout(() => {
+        scrollToAudio(audioId);
+      }, 300);
+    }
+  }, [audioId]);
 
   return {
+    initPage,
     highlightedAudioId,
     isInitialLoad,
     initialCategoryId,

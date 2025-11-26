@@ -11,8 +11,8 @@ type Props = {
 const PaginationButton = (props: Props) => {
   return (
     <button
-      className={clsx("w-[30px] h-[30px] flex items-center justify-center cursor-pointer", {
-        "opacity-60":props.disabled
+      className={clsx("w-[30px] h-[30px] flex items-center justify-center cursor-pointer transition-opacity hover:opacity-50", {
+        "opacity-60 pointer-events-none":props.disabled
       })}
       onClick={props.onClick}
       disabled={props.disabled}

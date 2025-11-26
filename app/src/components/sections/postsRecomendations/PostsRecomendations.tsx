@@ -29,7 +29,7 @@ const PostsRecomendations = (props: Props) => {
       </h2>
       <HorizontalCarusel listClassNames="gap-[20px] md:gap-[10px]" scrollbarClassNames="sm:hidden">
         {props.section?.Posts.map((post) => (
-          <PostPreview className="w-[704px] sm:w-[320px] flex-shrink-0" post={post}></PostPreview>
+          <PostPreview key={post?.documentId} className="w-[704px] sm:w-[320px] flex-shrink-0" post={post}></PostPreview>
         ))}
       </HorizontalCarusel>
     </section>

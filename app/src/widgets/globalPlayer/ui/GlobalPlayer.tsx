@@ -32,7 +32,7 @@ export const GlobalPlayer = () => {
     console.log("touch");
     setTimeout(() => {
       dispatch(setIsGlobalPlaylistOpen(true));
-    }, 100);
+    }, 400);
   };
 
   const player = (

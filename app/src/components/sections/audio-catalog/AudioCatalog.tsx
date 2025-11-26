@@ -19,23 +19,15 @@ import {
 import { useSearchParams } from "next/navigation";
 import { shuffleAudioList } from "@/utils/shuffleAudioList";
 import { useScrollToAudio } from "@/shared/hooks/useScrollToAudio";
+import Pagination from "@/components/ui/pagination/Pagination";
+import clsx from "clsx";
 
 type Props = {
   audios: Audio[];
   audioCategories: Category[];
 };
 
-const audioItemHeight = {
-  sm: 62,
-  md: 80,
-  lg: 120,
-};
-
-const audioCatalogGap = {
-  sm: 10,
-  md: 10,
-  lg: 20,
-};
+const itemsPerPage = { lg: 8, md: 8, sm: 6 };
 
 const AudioCatalog = ({ audioCategories, audios }: Props) => {
   const [filteredItems, setFilteredItems] = useState<Audio[]>(audios);
@@ -44,8 +36,8 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
   const dispatch = useAppDispatch();
   const flow = useAppSelector(selectAudioFlow);
   const audio = useAppSelector(selectAudio);
-  const { highlightedAudioId, isInitialLoad, initialCategoryId } =
-    useScrollToAudio();
+  const { highlightedAudioId, isInitialLoad, initialCategoryId, initPage } =
+    useScrollToAudio({ items: filteredItems, itemsPerPage });
   const handleControlButtonClick = () => {
     dispatch(setPlaylist(filteredItems));
     let playlistAudioPositions = [];
@@ -81,30 +73,20 @@ const AudioCatalog = ({ audioCategories, audios }: Props) => {
         handleFilteredItemsSelection={setFilteredItems}
         initialCategoryId={initialCategoryId}
       />
-
-      <InfiniteVirtualGrid
+      <Pagination<Audio>
+        className="flex flex-col gap-[20px] md:gap-[10px] sm:gap-[10px]"
         items={filteredItems}
-        renderItem={(audio, index, isHighlighted) => (
-          <AudioItem
+        itemsPerPage={itemsPerPage}
+        initPage={initPage}
+        renderItem={(audio) => (
+          <div className={clsx('transition-all duration-500',{"scale-[1.02] shadow-xl": audio?.documentId === highlightedAudioId})}>
+            <AudioItem
             handleControlButtonClick={handleControlButtonClick}
-            className={`w-full h-full`}
+            className={clsx(`w-full h-full`, {'[&]:bg-[#B6A9F1]':audio?.documentId === highlightedAudioId})}
             audio={audio}
           />
+          </div>
         )}
-        getItemKey={(audio) => audio?.documentId || ""}
-        itemsPerPage={12}
-        gap={audioCatalogGap}
-        itemHeight={audioItemHeight}
-        className="container"
-        loadThreshold={200}
-        viewportBuffer={12}
-        highlightedAudioId={highlightedAudioId || undefined}
-        smoothScroll={!isInitialLoad}
-        columns={{
-          sm: 1,
-          md: 1,
-          lg: 1,
-        }}
       />
     </section>
   );

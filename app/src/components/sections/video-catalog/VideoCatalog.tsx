@@ -6,6 +6,7 @@ import MovieItem from "@/components/ui/movieItem/MovieItem";
 import InfiniteVirtualGrid from "@/components/ui/infiniteVirtualGrid/InfiniteVirtualGrid";
 import { searchFilteringCondition } from "@/utils/searchFilteringCondition";
 import { useLocalizedStaticData } from "@/hooks/useLocalizedStaticData";
+import Pagination from "@/components/ui/pagination/Pagination";
 
 export type Category = {
   __typename?: string;
@@ -39,34 +40,16 @@ const VideoCatalog = ({ movies, videoCategories }: Props) => {
         handleFilteredItemsSelection={setFilteredItems}
       />
 
-      <InfiniteVirtualGrid
+        <Pagination<Movie>
+        className="grid grid-cols-2 gap-[20px] md:gap-[10px] sm:grid-cols-1 sm:gap-[20px]"
         items={filteredItems}
+        itemsPerPage={{ lg: 6, md: 6, sm: 4 }}
         renderItem={(movie) => (
           <MovieItem
-            className="aspect-[16/9] [&_iframe]:w-full [&_iframe]:h-full w-full h-full"
+            className="aspect-[16/9] [&_iframe]:w-full [&_iframe]:h-full w-full h-full rounded-[10px] overflow-hidden"
             movie={movie}
           />
         )}
-        getItemKey={(movie) => movie?.documentId || ""}
-        itemsPerPage={12}
-        aspectRatio={{
-          sm: 16 / 9,
-          md: 16 / 9,
-          lg: 16 / 9,
-        }}
-        gap={{
-          sm: 20,
-          md: 10,
-          lg: 20,
-        }}
-        className="container"
-        loadThreshold={800}
-        viewportBuffer={12}
-        columns={{
-          sm: 1,
-          md: 2,
-          lg: 2,
-        }}
       />
     </section>
   );

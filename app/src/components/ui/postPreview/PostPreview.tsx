@@ -46,7 +46,7 @@ export default function PostPreview({ post, className }: PostPreviewProps) {
             <ReactMarkdown>{post?.PostPreviewContent}</ReactMarkdown>
           </div>
         </div>
-        <ButtonMain className={clsx(styles.button, "group-hover:bg-[#FFFFFF] group-hover:text-[#7A66D5]")}>
+        <ButtonMain className={clsx(styles.button, "group-hover:bg-[#FFFFFF] group-hover:text-[#7A66D5] sm:group-hover:bg-[#7A66D5] sm:group-hover:text-[#FFFFFF]")}>
           {localizedData?.postPreview.detailsButton}
         </ButtonMain>
       </div>

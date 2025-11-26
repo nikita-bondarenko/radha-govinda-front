@@ -54,11 +54,7 @@
   }
   .hero-with-text__subtitle * {
     color: #CACACA;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 150%;
-    letter-spacing: 1px;
-    padding-bottom: 0.05em;
+   
 
     @apply font-bounded
   

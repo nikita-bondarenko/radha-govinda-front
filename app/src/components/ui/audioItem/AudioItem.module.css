@@ -1,8 +1,8 @@
 .audio {
   @apply 
-    rounded-[10px] p-[10px] pr-[22px] flex gap-[15px] min-h-[100px] transition-all duration-500
-    md:p-[7px] md:pr-[15px] md:min-h-[80px] md:gap-[15px]
-    sm:rounded-[5px] sm:p-[4px] sm:pb-[3px] sm:pr-[8px] sm:min-h-[62px] sm:gap-[7px];
+    rounded-[10px] p-[10px] pr-[22px] flex gap-[15px]  h-[120px] transition-all duration-500
+    md:p-[7px] md:pr-[15px] md:h-[80px] md:gap-[15px]
+    sm:rounded-[5px] sm:p-[4px] sm:pb-[3px] sm:pr-[8px] sm:h-[62px] sm:gap-[7px];
 }
 
 .audio .info__duration {

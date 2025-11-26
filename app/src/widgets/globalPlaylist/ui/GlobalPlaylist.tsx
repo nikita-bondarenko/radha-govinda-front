@@ -1,6 +1,4 @@
 "use client";
-import { useAppSelector } from "@/lib/store/hooks";
-import { Handler } from "./Handler";
 import { Player } from "./Player";
 import { Playlist } from "./Playlist";
 import { Layout } from "./Layout";

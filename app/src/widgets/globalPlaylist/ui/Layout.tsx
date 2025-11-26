@@ -22,7 +22,7 @@ export const Layout = ({ player, playlist }: Props) => {
 
   useEffect(() => {
     if (innerWidth > 1200) {
-      console.log('setting false')
+      // console.log('setting false')
         dispatch(setIsGlobalPlaylistOpen(false));
     }
   }, [innerWidth]);
@@ -43,7 +43,7 @@ export const Layout = ({ player, playlist }: Props) => {
   }, [isOpen]);
 
   const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
-    console.log('setting false')
+    // console.log('setting false')
     dispatch(setIsGlobalPlaylistOpen(false));
   };
 
@@ -68,7 +68,7 @@ export const Layout = ({ player, playlist }: Props) => {
   const playlistWrapper = createRef<HTMLDivElement>();
 
   useEffect(() => {
-    console.log(isOpen)
+    // console.log(isOpen)
     const el = playlistWrapper.current;
     if (!el) return;
 
@@ -76,7 +76,7 @@ export const Layout = ({ player, playlist }: Props) => {
       const scrollTop = el.scrollTop;
       // Например, считаем, что пользователь «проскроллил», если отошёл от верха > 5px
       setIsPlaylistScrolled(scrollTop > 5);
-      console.log("scrollTop:", scrollTop);
+      // console.log("scrollTop:", scrollTop);
     };
     if (isOpen) {
       el.addEventListener("scroll", handleScroll);

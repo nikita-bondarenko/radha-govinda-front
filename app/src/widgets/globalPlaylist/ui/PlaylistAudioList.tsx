@@ -1,7 +1,6 @@
 "use client"
 import React, { createRef, useEffect, useState } from "react";
-import { Audio } from "../sections/audio-preview/AudioPreview";
-import PlaylistAudio from "./PlaylistAudio";
+import { Audio } from "../../../components/sections/audio-preview/AudioPreview";
 import clsx from "clsx";
 import {
   selectAudioFlow,
@@ -10,6 +9,7 @@ import {
 } from "@/lib/store/audioSlice";
 import { shuffleAudioList } from "@/utils/shuffleAudioList";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import PlaylistAudio from "./PlaylistAudio";
 
 type PlaylistAudioListProps = {
   audios: Audio[];
@@ -39,7 +39,7 @@ export default function PlaylistAudioList({
   }, []);
 
   const getTranslateY = (id?: string) =>
-    audiosPositionList.indexOf(id || "") * 72;
+    audiosPositionList?.indexOf(id || "") * 72;
 
   const controlsClickHandler = () => {
     dispatch(setPlaylist(audios));

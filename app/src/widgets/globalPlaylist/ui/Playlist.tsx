@@ -1,4 +1,4 @@
-import PlaylistAudioList from "@/components/playlist/PlaylistAudioList";
+import PlaylistAudioList from "@/widgets/globalPlaylist/ui/PlaylistAudioList";
 import {
   selectPlaylist,
   selectPlaylistAudioPositions,
