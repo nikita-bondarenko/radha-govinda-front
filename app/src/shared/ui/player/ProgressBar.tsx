@@ -198,7 +198,7 @@ export const ProgressBar: React.FC<Props> = ({
           >
             {/* Заполнение — мгновенно следует за мышью */}
             <div
-              className={clsx("h-full bg-[var(--main-purple)] rounded-l-full", {"transition-all": !isDragging})}
+              className={clsx("h-full bg-[var(--main-purple)] rounded-l-full", {"transition-all duration-300": !isDragging})}
               style={{ width: `${liveProgress}%` }}
             />
 
@@ -208,7 +208,7 @@ export const ProgressBar: React.FC<Props> = ({
                 "absolute top-1/2 bg-[var(--main-purple)] rounded-full shadow-md",
                 isDragging
                   ? "w-[16px] h-[16px] shadow-lg"
-                  : "w-[10px] h-[10px] transition-all duration-200"
+                  : "w-[10px] h-[10px] transition-all duration-300"
               )}
               style={{
                 left: `${liveProgress}%`,
