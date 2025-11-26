@@ -20,6 +20,7 @@ import {
   selectAudioVolume,
   selectPlaylist,
   setAudio,
+  selectAudioIsLoading,
 } from "@/lib/store/audioSlice";
 import { useInView } from "react-intersection-observer";
 import { formatRemainingTime, formatTime } from "@/utils/formatTime";
@@ -56,7 +57,7 @@ export default memo(function HeaderLectureBar({
   const progress = useAppSelector(selectAudioProgress);
   const leftTime = useAppSelector(selectAudioLeftTime);
   const passedTime = useAppSelector(selectAudioPassedTime);
-  const isMiniPlayerVisible = useAppSelector(selectIsMiniPlayerVisible);
+  const isLoading = useAppSelector(selectAudioIsLoading);
   const isMobile = useAppSelector(selectIsMobile);
   const dispatch = useAppDispatch();
 
@@ -195,12 +196,12 @@ export default memo(function HeaderLectureBar({
         data-hide-main-player={isClient && inView}
         onClick={handleMiniPlayerClick}
       >
-        <MusicBars isPlaying={isPlaying}/>
+        <MusicBars isPlaying={isPlaying && !isLoading}/>
         <button
           onClick={handlePlayPause}
-          className={style["header__button__play-button"]}
+          className={clsx(style["header__button__play-button"], {'pointer-events-none':isLoading})}
         >
-          {isPlaying ? (
+          {isPlaying && !isLoading ? (
             <PauseIcon fill="white" className="w-[20px] h-[20px]" />
           ) : (
             <PlayIcon fill="white" className="w-[20px] h-[20px]" />
