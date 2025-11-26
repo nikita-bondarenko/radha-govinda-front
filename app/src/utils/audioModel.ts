@@ -24,8 +24,7 @@ export class AudioElement {
   }
 
   private isServerRuntime = () => {
-    
-    return typeof window === 'undefined';
+    return typeof window === "undefined";
   };
 
   private init(storeInstance: any) {
@@ -98,7 +97,7 @@ export class AudioElement {
 
     const dispatch = store.dispatch;
     dispatch(setIsLoading(true));
-    console.log('play')
+    console.log("play");
     const state = store.getState();
     const volume = state.audio.volume;
     const logoUrl = state.audio.logoUrl;
@@ -116,7 +115,7 @@ export class AudioElement {
         if (playPromise)
           playPromise
             .then(() => {
-                  console.log('tryPlay')
+              console.log("tryPlay");
 
               dispatch(setIsLoading(false));
               if (navigator?.mediaSession?.playbackState)
@@ -129,6 +128,9 @@ export class AudioElement {
             });
       };
       if (this._element.src !== audio?.Audio.url) {
+        this.dispatch(setProgress(0));
+        this.dispatch(setLeftTime(0));
+        this.dispatch(setPassedTime(0));
         if ("mediaSession" in navigator) {
           navigator.mediaSession.metadata = new MediaMetadata({
             title: audio?.Name || "", // Set the audio title here

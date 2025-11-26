@@ -44,16 +44,16 @@ export const useScrollToAudio = ({ itemsPerPage, items }: Props) => {
     }, 500);
 
     const element = document.getElementById(audioId);
-    console.log(element);
+    // console.log(element);
     if (element) {
       const scrollTop =
         window.scrollY + element.getBoundingClientRect().y - 100;
-      console.log(window.scrollY, element.getBoundingClientRect().y, scrollTop);
+      // console.log(window.scrollY, element.getBoundingClientRect().y, scrollTop);
 
       setTimeout(() => {
         try {
           document.body.scrollTo({ top: scrollTop, behavior: "smooth" });
-          console.log(scrollTop);
+          // console.log(scrollTop);
         } catch (e) {
           console.log("scroll error message:", e);
         }
@@ -71,14 +71,17 @@ export const useScrollToAudio = ({ itemsPerPage, items }: Props) => {
     }
 
     if (audioFromUrl) {
-      setAudioId(audioFromUrl);
+      setTimeout(() => {
+        setAudioId(audioFromUrl);
+      }, 300);
     }
     setIsInitialLoad(false);
   }, [searchParams, dispatch]);
 
   useEffect(() => {
+    if (!items.every(audio => audio?.AudioCategory?.documentId === initialCategoryId))  return
     const innerWidth = window.innerWidth;
-    console.log(itemsPerPage);
+    // console.log(itemsPerPage);
     let itemsPerPageActual: number | undefined = undefined;
     itemsPerPageActual = itemsPerPage.lg;
     if (innerWidth <= breakpoints.sm) itemsPerPageActual = itemsPerPage.sm;
@@ -89,13 +92,13 @@ export const useScrollToAudio = ({ itemsPerPage, items }: Props) => {
         (items) => items?.documentId === audioId
       );
       const initPage = Math.floor(itemIndex / itemsPerPageActual) + 1;
-      console.log(initPage);
+      // console.log(initPage);
       setInitPage(initPage);
       setTimeout(() => {
         scrollToAudio(audioId);
       }, 300);
     }
-  }, [audioId]);
+  }, [audioId, items, initialCategoryId]);
 
   return {
     initPage,
