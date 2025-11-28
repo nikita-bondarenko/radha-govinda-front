@@ -23,7 +23,7 @@ export const Layout = ({ player, playlist }: Props) => {
   useEffect(() => {
     if (innerWidth > 1200) {
       // console.log('setting false')
-        dispatch(setIsGlobalPlaylistOpen(false));
+      dispatch(setIsGlobalPlaylistOpen(false));
     }
   }, [innerWidth]);
 
@@ -55,7 +55,7 @@ export const Layout = ({ player, playlist }: Props) => {
     if (isDragged) {
     } else {
       if (height < innerHeight * 0.5) {
-        console.log('setting false')
+        console.log("setting false");
         dispatch(setIsGlobalPlaylistOpen(false));
       } else if (height > innerHeight * 0.7) {
         setHeight(innerHeight);
@@ -79,14 +79,14 @@ export const Layout = ({ player, playlist }: Props) => {
       // console.log("scrollTop:", scrollTop);
     };
     if (isOpen) {
+      document.body.style.overflowY = "hidden";
       el.addEventListener("scroll", handleScroll);
       return () => {
         el.removeEventListener("scroll", handleScroll);
+        document.body.style.overflowY = "auto";
       };
     }
   }, [isOpen]);
-
-
 
   return (
     <div

@@ -18,7 +18,6 @@ import {
   setIsPlaying,
 } from "@/lib/store/audioSlice";
 import { AudioElement } from "@/utils/audioModel";
-import { OptionsButton } from "@/shared/ui";
 import { ShareBar } from "@/shared/ui/player/ShareBar";
 export type AudioPreviewItemProps = {
   audio: Maybe<Audio>;
