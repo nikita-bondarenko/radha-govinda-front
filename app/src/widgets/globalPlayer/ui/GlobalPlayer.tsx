@@ -14,12 +14,13 @@ import { VolumeBar } from "./VolumeBar";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import clsx from "clsx";
 import { CloseAudioBar } from "./CloseAudioBar";
-import { setIsGlobalPlaylistOpen, setIsPlaying } from "@/lib/store/audioSlice";
+import { selectIsBigPlayerVisible, setIsGlobalPlaylistOpen, setIsPlaying } from "@/lib/store/audioSlice";
 
 export const GlobalPlayer = () => {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
 
   const audio = useAppSelector((state) => state.audio.audio);
+  const isBigPlayerVisible = useAppSelector(selectIsBigPlayerVisible)
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -29,7 +30,6 @@ export const GlobalPlayer = () => {
   }, []);
 
   const handleTouch = (e: React.MouseEvent | React.TouchEvent) => {
-    console.log("touch");
     setTimeout(() => {
       dispatch(setIsGlobalPlaylistOpen(true));
     }, 400);
@@ -38,8 +38,8 @@ export const GlobalPlayer = () => {
   const player = (
     <div
       className={clsx(
-        "fixed bottom-0 left-0 w-screen bg-gradient-to-b from-[#D6D2E8] to-[#EDEDED] z-[50] transition-transform",
-        { "translate-y-[200px]": !audio }
+        "fixed bottom-0 left-0 w-screen bg-gradient-to-b from-[#D6D2E8] to-[#EDEDED] z-[50] transition-transform duration-700",
+        { "translate-y-[200px]": !audio || isBigPlayerVisible }
       )}
     >
       <div className="container py-[5px] flex justify-between gap-[20px] items-center md:hidden">

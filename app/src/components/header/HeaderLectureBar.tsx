@@ -11,10 +11,7 @@ import {
   selectAudioProgress,
   selectAudioLeftTime,
   selectAudioPassedTime,
-  selectIsMiniPlayerVisible,
   selectIsMobile,
-  toggleIsPlaying,
-  setIsMiniPlayerVisible,
   setIsMobile,
   setIsPlaying,
   selectAudioVolume,
@@ -86,11 +83,6 @@ export default memo(function HeaderLectureBar({
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!isClient) return;
-
-    dispatch(setIsMiniPlayerVisible(inView));
-  }, [inView, dispatch, isClient, audio]);
 
   const handlePlayPause = (e: React.MouseEvent) => {
     if (!isClient) return;
@@ -133,9 +125,6 @@ export default memo(function HeaderLectureBar({
       if ((e.target as HTMLElement).closest("button")) {
         return;
       }
-
-      // Скрываем мини-плеер, чтобы показать основной
-      dispatch(setIsMiniPlayerVisible(false));
     },
     [dispatch, isClient]
   );

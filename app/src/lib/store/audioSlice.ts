@@ -15,7 +15,7 @@ export type AudioState = {
   progress: number;
   leftTime: number;
   passedTime: number;
-  isMiniPlayerVisible: boolean;
+  isBigPlayerVisible: boolean;
   isMobile: boolean;
   isLoading: boolean;
   playlistAudioPositions: string[];
@@ -36,7 +36,7 @@ const initialState: AudioState = {
   progress: 0,
   leftTime: 0,
   passedTime: 0,
-  isMiniPlayerVisible: false,
+  isBigPlayerVisible: false,
   isMobile: false,
   playlistAudioPositions: [],
   logoUrl: null,
@@ -92,8 +92,8 @@ const audioSlice = createSlice({
     setPassedTime: (state, action: PayloadAction<number>) => {
       state.passedTime = action.payload;
     },
-    setIsMiniPlayerVisible: (state, action: PayloadAction<boolean>) => {
-      state.isMiniPlayerVisible = action.payload;
+    setIsBigPlayerVisible: (state, action: PayloadAction<boolean>) => {
+      state.isBigPlayerVisible = action.payload;
     },
     setIsHeaderButtonVisible: (state, action: PayloadAction<boolean>) => {
       state.isHeaderButtonVisible = action.payload;
@@ -125,7 +125,7 @@ export const {
   setIsLooping,
   toggleIsLooping,
   setSelectedCategoryId,
-  setIsMiniPlayerVisible,
+  setIsBigPlayerVisible,
   setIsHeaderButtonVisible,
   setIsMobile,
   setIsLoading,
@@ -147,8 +147,8 @@ export const selectAudioPassedTime = (state: RootState) =>
 export const selectAudioLeftTime = (state: RootState) => state.audio.leftTime;
 export const selectAudioId = (state: RootState) =>
   state.audio.audio?.documentId;
-export const selectIsMiniPlayerVisible = (state: RootState) =>
-  state.audio.isMiniPlayerVisible;
+export const selectIsBigPlayerVisible = (state: RootState) =>
+  state.audio.isBigPlayerVisible;
 export const selectIsMobile = (state: RootState) => state.audio.isMobile;
 export const selectIsMainPlayerVisible = (state: RootState) => {
   const { audio} =
