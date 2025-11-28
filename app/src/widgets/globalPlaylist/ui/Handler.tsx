@@ -62,9 +62,11 @@ export const Handler = ({ height, setHeight, isDragged, setIsDragged  }: Props) 
     <div
       onTouchStart={handleMoveStart}
       onMouseDown={handleMoveStart}
-      className="w-full h-[22px] flex items-center justify-center cursor-pointer"
+      className="w-full h-[22px] flex items-center justify-center cursor-pointer relative z-0"
     >
       <div className="h-[4px] w-[37px] rounded-full bg-[#D9D9D9]"></div>
+      <div className="z-10 absolute top-1/2 -translate-y-1/2 left-0 w-full h-[110px]">
+      </div>
     </div>
   );
 };

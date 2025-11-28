@@ -62,6 +62,7 @@ export default {
       },
     },
   },
+
   plugins: [
     function({ addUtilities }: { addUtilities: any }) {
       addUtilities({

@@ -30,19 +30,19 @@ export default function PostPreview({ post, className }: PostPreviewProps) {
       onClick={handleClick}
       className={clsx(
         className,
-        " group bg-gradient-to-b from-[#D6D2E8] to-[#E5E5E5]  transition-all rounded-[10px] overflow-hidden flex flex-col cursor-pointer relative z-0"
+        "group  bg-gradient-to-b from-[#D6D2E8] to-[#E5E5E5]  transition-all rounded-[10px] overflow-hidden flex flex-col cursor-pointer relative z-0"
       )}
     >
-      <div className=" bg-[#7A66D5] absolute top-0 left-0 w-full h-full z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+      <div className=" bg-[#7A66D5] absolute top-0 left-0 w-full h-full z-10 opacity-0 group-hover:opacity-100 md:group-hover:opacity-0 transition-opacity duration-700"></div>
       <div className="grow px-[20px] py-[40px] flex flex-col justify-between gap-[20px] sm:gap-[10px] sm:p-0 z-20">
         <div className={clsx(styles.content)}>
           <div className={clsx(styles.content__top)}>
-            <h3 className={clsx(styles.title, 'group-hover:text-white transition-all  duration-700')}>{post?.PostTitle}</h3>
-            <span className={clsx("small-text grey transition-all  duration-700 group-hover:text-white group-hover:opacity-50")}>
+            <h3 className={clsx(styles.title, 'group-hover:text-white transition-all  duration-700 md:group-hover:text-black')}>{post?.PostTitle}</h3>
+            <span className={clsx("small-text grey transition-all  duration-700 group-hover:text-white group-hover:opacity-50 md:group-hover:text-[var(--black-2)] md:group-hover:opacity-100")}>
               {parseDate(post?.Date)}
             </span>
           </div>
-          <div className={clsx(styles.text, "markdown group-hover:[&_*]:text-white ")}>
+          <div className={clsx(styles.text, "markdown group-hover:[&_*]:text-white md:group-hover:[&_*]:text-black")}>
             <ReactMarkdown>{post?.PostPreviewContent}</ReactMarkdown>
           </div>
         </div>

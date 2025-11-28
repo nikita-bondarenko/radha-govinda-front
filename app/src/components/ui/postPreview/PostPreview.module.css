@@ -12,7 +12,7 @@
 
 .title {
 
-@apply text-[24px] font-semibold leading-[120%] mb-[15px] md:text-[18px] sm:text-[16px] sm:mb-[14px]
+@apply text-[24px] font-semibold leading-[120%] mb-[15px] md:text-[18px] sm:font-medium sm:tracking-tight sm:text-[16px] sm:mb-[14px]
 }
 
 
@@ -23,6 +23,10 @@
   -webkit-box-orient: vertical;
   white-space: normal;
     @apply max-w-[915px] line-clamp-5 sm:line-clamp-[10];
+}
+
+.text p {
+    @apply sm:leading-[110%] sm:font-light
 }
 
 .button {

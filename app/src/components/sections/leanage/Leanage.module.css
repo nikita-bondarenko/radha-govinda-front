@@ -3,7 +3,7 @@
 }
 
 .list {
-  @apply flex gap-[20px] md:gap-[16px] sm:flex-col sm:gap-[20px] xs:flex-col;
+  @apply flex gap-[20px] md:gap-[16px] sm:flex-col sm:gap-[30px]  xs:flex-col;
 }
 
 .member:not(.first) {
@@ -31,7 +31,7 @@
 }
 
 .first.member .member__picture {
-  @apply aspect-[591/581]  sm:aspect-[320/332];
+  @apply aspect-[591/581] ;
 }
 
 .member__content {

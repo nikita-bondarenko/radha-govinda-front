@@ -20,7 +20,7 @@ export const Player = () => {
             text={audio?.Name}
             className="w-full md:text-[14px] md:font-bold md:leading-[120%] md:text-black md:mb-[5px]"
           />
-          <span className="font-semibold black opacity-50 text-[12px] leading-[110%]">{`${parseDate(
+          <span className="font-semibold black opacity-50 text-[12px] leading-[110%] pointer-events-none">{`${parseDate(
             audio?.Date
           )}${audio?.Place ? `, ${audio?.Place}` : ""}`}</span>
         </div>

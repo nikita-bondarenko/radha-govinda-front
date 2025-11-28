@@ -56,9 +56,9 @@ const isAnotherPage = !isRuVideosPage &&  !isEnArticlesPage && !isRuArticlesPage
         ></Header>
 
         <div className={styles["hero-with-text__body"]}>
-          <div className={clsx(styles["hero-with-text__content"], "relative h-[410px] lg:h-[28.5vw] sm:h-[29vw] pointer-events-none")}>
+          <div className={clsx(styles["hero-with-text__content"], "relative h-[410px] lg:h-[28.5vw] sm:h-[32vw] xs:h-[calc(60px_+_30vw)] pointer-events-none")}>
             <h1
-              className={clsx(styles["hero-with-text__title"], "ml-[-20px] md:ml-[-1vw] absolute bottom-[70px] md:bottom-[50px] left-0 w-full", {
+              className={clsx(styles["hero-with-text__title"], "ml-[-20px] md:ml-[-1vw] absolute bottom-[70px] md:bottom-[50px] xs:bottom-[70px] left-0 w-full", {
                 "text-[374px] lg:text-[24.5vw] sm:text-[23vw]": isRuVideosPage,
                 "text-[342px] lg:text-[22.3vw] sm:text-[21vw] ": isRuArticlesPage,
                 "text-[351px] [&]:ml-0 lg:text-[23vw] sm:text-[21vw]  ": isEnVideosPage,

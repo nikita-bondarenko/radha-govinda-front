@@ -30,7 +30,6 @@ export type AudioPreviewItemProps = {
 export default memo(function AudioPreviewItem({
   audio,
   className,
-  isPreviewSection,
   handleControlButtonClick,
 }: AudioPreviewItemProps) {
   const dispatch = useAppDispatch();
@@ -87,7 +86,7 @@ export default memo(function AudioPreviewItem({
         styles.audio,
         className,
         styles.preview,
-        { "[&]:bg-[#CACACA]": isCardHover && !isShareButtonHover && !isThisAudioLoading }
+        { "[&]:bg-[#CACACA] [&]:md:bg-[var(--grey-3)]": isCardHover && !isShareButtonHover && !isThisAudioLoading }
       )}
     >
       <button
@@ -103,7 +102,7 @@ export default memo(function AudioPreviewItem({
           className={clsx(
             styles.controls__button,
             "bg-[var(--grey-2)] transition-all duration-500",
-            { "[&]:bg-[#7A66D5]": isCardHover && !isShareButtonHover && !isThisAudioLoading }
+            { "[&]:bg-[#7A66D5] [&]:md:bg-[var(--grey-2)]": isCardHover && !isShareButtonHover && !isThisAudioLoading }
           )}
         >
           <PauseIcon

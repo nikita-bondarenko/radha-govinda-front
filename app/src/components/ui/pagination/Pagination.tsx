@@ -313,7 +313,7 @@ const Pagination = <T,>({
             {paginationButtons.map(({ isActive, disabled, text }, index) => (
               <button
                 onClick={() => handlePageButtonClick(text)}
-                key={text + index}
+                key={text === '...' ? Math.round(Math.random() * 100) : text}
                 className={clsx(
                   "text-[18px] leading-[100%] transition-colors hover:text-[#7A66D5] p-[4px]",
                   {

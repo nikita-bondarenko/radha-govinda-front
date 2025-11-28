@@ -104,7 +104,7 @@ export const AudioName = ({ text,className }: Props) => {
 
   // === 3. Рендер ===
   return (
-    <div className="relative">
+    <div className="relative pointer-events-none">
       <div
         ref={(el) => {
           containerRef.current = el;
