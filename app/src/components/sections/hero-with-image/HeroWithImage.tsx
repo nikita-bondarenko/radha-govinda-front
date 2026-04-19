@@ -51,7 +51,7 @@ export default memo(function HeroWithImage({
   pageSlug,
 }: HeroWithImageProps) {
   return (
-    <section className="relative">
+    <section className={styles["hero-section"]}>
       <div className={styles["hero-with-image"]}>
         <div className={styles["hero-with-image__gradient"]}></div>
         <Background

@@ -1,3 +1,8 @@
+.hero-section {
+    position: relative;
+    margin-bottom: 80px;
+}
+
 .hero-with-image {
   position: relative;
   overflow: hidden;
@@ -6,7 +11,7 @@
 }
 
 .hero-with-image .container {
-  min-height: 700px;
+  min-height: 605px;
   display: flex;
   flex-direction: column;
   gap: 200px;
@@ -63,7 +68,7 @@
 .hero-with-image__title {
   color: var(--white);
   font-weight: 400;
-  font-size: 86px;
+  font-size: 78px;
   margin-right: -20px;
 
   letter-spacing: 1px;
@@ -88,7 +93,7 @@
 
 @media (max-width: 1500px) {
   .hero-with-image__title {
-    font-size: 5.4vw;
+    font-size: 5vw;
     letter-spacing: 1.4px;
   }
   .hero-with-image__subtitle * {
@@ -97,6 +102,10 @@
 }
 
 @media (max-width: 1200px) {
+    .hero-section {
+        margin-bottom: 0;
+    }
+
   .hero-with-image {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
