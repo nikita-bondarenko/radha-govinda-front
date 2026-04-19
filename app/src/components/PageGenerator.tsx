@@ -15,7 +15,7 @@ const AudioPreview = dynamic(() => import("./sections/audio-preview/AudioPreview
 const BlogPreview = dynamic(() => import("./sections/blog-preview/BlogPreview"), { ssr: true });
 const VideoPreview = dynamic(() => import("./sections/video-preview/VideoPreview"), { ssr: true });
 const Leanage = dynamic(() => import("./sections/leanage/Leanage"), { ssr: true });
-const Biography = dynamic(() => import("./sections/biography/Biography"), { ssr: true });
+const Biography = dynamic(() => import("./sections/new-biography/Biography"), { ssr: true });
 const Schedule = dynamic(() => import("./sections/schedule/Schedule"), { ssr: true });
 const HeroWithText = dynamic(() => import("./sections/hero-with-text/HeroWithText"), { ssr: true });
 const VideoCatalog = dynamic(() => import("./sections/video-catalog/VideoCatalog"), { ssr: true });
@@ -139,7 +139,7 @@ export default memo(function PageGenerator({
       }
       
       case COMPONENT_TYPES.BIOGRAPHY: {
-        return <Biography key={index} section={section} />;
+        return <Biography key={index} section={section} locale={page?.locale} />;
       }
       
       case COMPONENT_TYPES.SCHEDULE: {
