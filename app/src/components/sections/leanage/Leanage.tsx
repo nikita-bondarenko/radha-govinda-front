@@ -24,10 +24,10 @@ export default function Leanage({ section }: LeanageProps) {
         {section?.SectionTitle}
       </h2>
       <ul className={styles.list}>
-        {section?.LineageMember?.map((member, index) => (
+        {section?.LineageMember?.map((member) => (
           <li
             key={member?.id}
-            className={clsx(styles.member, index === 0 && styles.first)}
+            className={clsx(styles.member)}
           >
             <div className={styles.top}>
               <div className={styles.member__picture}>

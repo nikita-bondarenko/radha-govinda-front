@@ -1,54 +1,73 @@
 .title {
-  @apply mb-[29px] md:mb-[22px] sm:mb-[19px];
+  margin-bottom: 30px;
 }
 
 .list {
-  @apply flex gap-[20px] md:gap-[16px] sm:flex-col sm:gap-[30px]  xs:flex-col;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.member:not(.first) {
-    @apply flex-1 sm:w-full
+.member {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .top {
-    @apply flex items-end h-[581px] md:h-[33vw] sm:h-auto mb-[15px] md:mb-[20px] sm:mb-[10px]
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 320/333;
 }
 
-.first.member {
-  @apply  w-[591px] shrink-0 md:w-[33vw] sm:w-full;
+@media (min-width: 768px) {
+    .list {
+        gap: 24px;
+    }
+
+    .member {
+        flex-direction: row;
+        gap: 24px;
+    }
+
+    .top {
+        max-width: 30vw;
+        min-width: 30vw;
+        aspect-ratio: 1/1;
+    }
 }
 
-.member:nth-child(2) .member__picture img {
-    @apply sm:translate-y-[-10%]
-}
+@media (min-width: 1024px) {
+    .list {
+        gap: 30px;
+    }
 
-.member:nth-child(3) .member__picture img {
-    @apply sm:translate-y-[-4%]
+    .member {
+        gap: 30px;
+    }
+
+    .top {
+        max-width: 24vw;
+        min-width: 24vw;
+    }
 }
 
 .member__picture {
-  @apply overflow-hidden rounded-[10px] aspect-square   sm:aspect-[320/199];
-}
-
-.first.member .member__picture {
-  @apply aspect-[591/581] ;
+  @apply overflow-hidden rounded-[10px] w-full;
 }
 
 .member__content {
-  @apply flex flex-col gap-[8px] md:gap-[5px] sm:gap-[8px];
+  @apply flex flex-col gap-[16px] md:gap-[12px] sm:gap-[8px];
 }
 
 .name {
-    @apply text-brown font-manrope font-semibold text-[20px] leading-[120%] md:text-[16px] sm:text-[14px]
+    @apply text-brown font-manrope font-semibold text-[30px] max-w-[65%] sm:max-w-full lgm:max-w-[75%] leading-[120%] lgm:text-[24px] md:text-[18px] sm:text-[14px]
 }
+
 .role {
-    @apply text-[18px] tracking-[0.36px] leading-[120%] text-brown md:text-[14px]
+    @apply text-[20px] tracking-[0.36px] leading-[120%] max-w-[75%] md:max-w-full text-brown md:text-[14px]
 }
 
 .description {
-    @apply text-[16px] leading-[110%] tracking-[0.32px] text-brown opacity-75 md:text-[14px]
-}
-
-.first.member .description {
-    @apply max-w-[527px] md:max-w-none
+    @apply text-[18px] leading-[110%] tracking-[0.32px] max-w-[75%] md:max-w-full text-brown opacity-75 md:text-[14px]
 }
