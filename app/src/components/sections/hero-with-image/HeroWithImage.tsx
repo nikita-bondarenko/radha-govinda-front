@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 
 import Header from "@/components/header/Header";
 import Picture, { Image } from "@/components/utils/Picture";
-import TextEditorInterpreter from "@/components/utils/TextEditorInterpreter";
 import HeaderLogo, { HeaderLogoProps } from "@/components/header/HeaderLogo";
 import HeaderLectureBar from "@/components/header/HeaderLectureBar";
 import styles from "./HeroWithImage.module.css";

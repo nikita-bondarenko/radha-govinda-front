@@ -1,6 +1,6 @@
 .hero-section {
     position: relative;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 }
 
 .hero-with-image {
@@ -68,7 +68,7 @@
 .hero-with-image__title {
   color: var(--white);
   font-weight: 400;
-  font-size: 78px;
+  font-size: 65px;
   margin-right: -20px;
 
   letter-spacing: 1px;
@@ -93,7 +93,7 @@
 
 @media (max-width: 1500px) {
   .hero-with-image__title {
-    font-size: 5vw;
+    font-size: 4.2vw;
     letter-spacing: 1.4px;
   }
   .hero-with-image__subtitle * {
