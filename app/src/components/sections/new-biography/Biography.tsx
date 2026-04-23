@@ -3,26 +3,19 @@
 import React, {useState} from "react";
 import clsx from "clsx";
 import Background from "@/components/utils/Background";
-import { Image } from "@/components/utils/Picture";
+import {Image} from "@/components/utils/Picture";
 import {parseMarkdown} from "@/lib/markdown";
 import styles from "./Biography.module.css";
-import {ScheduleItem} from "@/components/sections/schedule/Schedule";
 import {useLocalizedStaticData} from "@/hooks/useLocalizedStaticData";
-import ButtonMain from "@/components/ui/button/button-main/ButtonMain";
 
 export type Biography = {
-  section: {
-    __typename?: "ComponentHomePageBiografiya";
-    SectionTitle?: string | null;
-    BioigrafyPeriods?: Array<{
-      __typename?: "ComponentHomePageBiografy";
-      PeriodName?: string | null;
-      PeriodDescription?: string | null;
-      id: string;
-    } | null> | null;
-    Image?: Image;
-  };
-  locale?: string | null;
+    section: {
+        __typename?: "ComponentHomePageBiografiya";
+        SectionTitle?: string | null;
+        Content?: string;
+        Image?: Image;
+    };
+    locale?: string | null;
 };
 
 const MD_CONTENT_EN = `
@@ -97,35 +90,34 @@ const MD_CONTENT_RU = `
 [Послушайте подкаст Его Святейшества Шрилы Шиварамы Свами — «Радха Говинда Даса вступает в ванапрастха-ашрам».](https://sivaramaswami.media/audio/20251004_TUR_SRS_Radha_Govinda_Vanacari_EN.mp3)
 `
 
-export default function NewBiography({ section, locale }: Biography) {
+export default function NewBiography({section}: Biography) {
     const [isFullTextVisible, setFullTextVisible] = useState(false);
-    const mdContent = locale === 'en' ? MD_CONTENT_EN : MD_CONTENT_RU;
     const localizedData = useLocalizedStaticData()
-  return (
-    <section className={clsx(styles.section)}>
-      <div className={styles.gradient}></div>
-      <Background
-        className={clsx(styles.background)}
-        imageUrl={'/sections/biography/bio-new.jpg'}
-      ></Background>
-      <div className={clsx("container")}>
-        <h2 className={clsx(styles.title, "section-heading")}>
-            {locale === 'en' ? "Biography" : "Биография"}
-        </h2>
-        <div className={clsx(styles.body)}>
-          <div className={clsx(styles.display, !isFullTextVisible && styles.displayCollapsed)}>
-              {parseMarkdown(mdContent)}
-          </div>
-            {!isFullTextVisible && (
-                <button
-                    className="text-[18px] sm:text-[14px] justify-self-end text-grey-dark sm:col-start-2 sm:justify-self-start underline-offset-2 underline hover:text-[#7A66D5] transition-all sm:block hidden"
-                    onClick={() => setFullTextVisible(true)}
-                >
-                    {localizedData?.postPreview.detailsButton}
-                </button>
-            )}
-        </div>
-      </div>
-    </section>
-  );
+    return (
+        <section className={clsx(styles.section)}>
+            <div className={styles.gradient}></div>
+            <Background
+                className={clsx(styles.background)}
+                imageUrl={section.Image?.url}
+            ></Background>
+            <div className={clsx("container")}>
+                <h2 className={clsx(styles.title, "section-heading")}>
+                    {section.SectionTitle}
+                </h2>
+                <div className={clsx(styles.body)}>
+                    <div className={clsx(styles.display, !isFullTextVisible && styles.displayCollapsed)}>
+                        {parseMarkdown(section.Content)}
+                    </div>
+                    {!isFullTextVisible && (
+                        <button
+                            className="text-[18px] sm:text-[14px] justify-self-end text-grey-dark sm:col-start-2 sm:justify-self-start underline-offset-2 underline hover:text-[#7A66D5] transition-all sm:block hidden"
+                            onClick={() => setFullTextVisible(true)}
+                        >
+                            {localizedData?.postPreview.detailsButton}
+                        </button>
+                    )}
+                </div>
+            </div>
+        </section>
+    );
 }
